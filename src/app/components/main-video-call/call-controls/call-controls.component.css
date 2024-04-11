@@ -1,0 +1,36 @@
+.video-controls{
+    background-color: rgb(67, 67, 67);
+    border-top: 1px solid white;
+    /* width: 100%; */
+    height: fit-content;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    color: antiquewhite;
+}
+
+.icons{
+    display: flex;
+    gap: 20px;
+}
+
+button{
+    border: 1px solid transparent;
+    font-size: 20px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button:hover{
+    color: blueviolet;
+    transition: 0.2s ease;
+}
+
+button:active{
+    border: 1px solid blueviolet;
+    border-radius: 50%;
+}

@@ -1,0 +1,29 @@
+<div class="main-preview-screen">
+    <div class="preview-left-video" style="flex-direction: column;" >
+        <div class="video-container"></div>
+        <app-call-controls></app-call-controls>
+    </div>
+    <div class="preview-right-form">
+        <div class="preview-form" formGroup="meetingcreds">
+            <mat-form-field>
+                <mat-label>Meeting ID</mat-label>
+                <input matInput
+                placeholder="abcd2"
+                formControlName="meetingId"
+                required>
+                <!-- <mat-error *ngIf="meetingId.invalid">Invalid Meeting ID</mat-error> -->
+                
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Meeting Pin</mat-label>
+                <input matInput>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Display Name</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </div>
+    </div>
+</div>

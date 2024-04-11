@@ -1,0 +1,28 @@
+.main-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aqua;
+}
+
+.main-video-container{
+    width: 60vw;
+    height: 60vh;
+    /* background-color: black; */
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* .video-box{
+    background-color: black;
+    width: 100%;
+    height: 100%;
+} */
+

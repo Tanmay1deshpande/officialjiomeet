@@ -10,6 +10,7 @@ export class CallControlsComponent {
 
   
   isLocalVideoOn = false;
+  isLocalMicOn = false;
   isScreenShare = false;
   micMuted = true;
   videoMuted = true;
@@ -100,6 +101,26 @@ export class CallControlsComponent {
 
   async toggleVideo() {
     await this.mediaservice.toggleVideoStatus();
+  }
+
+  async toggleVideoCam() {
+    await this.mediaservice
+      .toggleLocalVideoStatus()
+      .then(() => {
+        this.isLocalVideoOn = !this.isLocalVideoOn;
+        console.log('video toggled')
+      })
+      .catch(() => {});
+  }
+  
+  async toggleAudio() {
+    await this.mediaservice
+      .toggleLocalMicStatus()
+      .then(() => {
+        this.isLocalMicOn = !this.isLocalMicOn;
+        console.log('Mic toggled')
+      })
+      .catch(() => {});
   }
 
   async leave() {

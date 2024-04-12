@@ -1,7 +1,20 @@
 <div class="main-preview-screen">
     <div class="preview-left-video" style="flex-direction: column;" >
         <div id="localpeer" class="video-container"></div>
-        <app-call-controls></app-call-controls>
+        <div class="video-controls">
+            <div class="icons">
+            
+                <button class="controls" mat-icon-button  (click)="toggleAudio()" >
+                    <mat-icon *ngIf="isLocalMicOn" >mic</mat-icon>
+                    <mat-icon *ngIf="!isLocalMicOn" >mic_off</mat-icon>
+                </button>
+                <button  class="controls" mat-icon-button  (click)="toggleVideo()" >
+                    <mat-icon *ngIf="isLocalVideoOn" >videocam</mat-icon>
+                    <mat-icon *ngIf="!isLocalVideoOn" >videocam_off</mat-icon>
+                </button>
+
+            </div>
+        </div>
     </div>
     <div class="preview-right-form">
         <form class="preview-form" [formGroup]="meetingcreds" (ngSubmit)="join()"  ngNativeValidate>
@@ -14,8 +27,6 @@
                 formControlName="meetingId"
                 (keydown.enter)="$event.preventDefault()"
                 required>
-                <!-- <mat-error *ngIf="meetingId.invalid">Invalid Meeting ID</mat-error> -->
-                
             </mat-form-field>
 
             <mat-form-field>
@@ -24,8 +35,7 @@
                 matInput
                 maxlength="5"
                 formControlName="meetingPin"
-                required
-                >
+                required>
             </mat-form-field>
 
             <mat-form-field>
@@ -34,11 +44,11 @@
                 matInput
                 type="text"
                 formControlName="displayName"
-                placeholder="Ex. John"
-                >
+                placeholder="Ex. John">
             </mat-form-field>
 
             <button class="join-btn" type="button" (click)="join()">JOIN</button>
+            
         </form>
     </div>
 </div>

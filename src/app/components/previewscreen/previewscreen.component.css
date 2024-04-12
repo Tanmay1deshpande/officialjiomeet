@@ -50,3 +50,22 @@
 .join-btn:active{
     border: 2px solid rgb(121, 121, 121);
 }
+
+.controls{
+    border: 1px solid transparent;
+    font-size: 20px;
+    padding: 4px;
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+
+.controls:hover{
+    color: blueviolet;
+    transition: 0.2s ease;
+}
+
+.controls:active{
+    border: 1px solid blueviolet;
+    border-radius: 50%;
+}

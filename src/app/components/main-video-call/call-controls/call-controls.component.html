@@ -1,18 +1,10 @@
 <div class="video-controls">
     <div class="icons">
-        <!-- <mat-icon *ngIf="isUnMuted()" >mic</mat-icon>
-        <mat-icon *ngIf="isMuted()" >mic_off</mat-icon>
-        <mat-icon *ngIf="isVideoOn()" >videocam</mat-icon>
-        <mat-icon *ngIf="isVideoOff()" >videocam_off</mat-icon>
-        <mat-icon *ngIf="isChatOff()" >chat</mat-icon>
-        <mat-icon *ngIf="isChatOn()" >arrow_back</mat-icon> 
-        <mat-icon *ngIf="isScreenShareOn()" >screen_share</mat-icon> 
-        <mat-icon *ngIf="isScreenShareOff()" >stop_screen_share</mat-icon> -->
 
-        <button mat-icon-button  (click)="toggleMic()" >
+        <button mat-icon-button  (click)="toggleAudio()" >
             <mat-icon>mic</mat-icon>
         </button>
-        <button mat-icon-button  (click)="toggleVideo()" >
+        <button mat-icon-button  (click)="toggleVideoCam()" >
             <mat-icon>videocam</mat-icon>
         </button>
         <button mat-icon-button  >
@@ -27,5 +19,6 @@
         <button mat-icon-button (click)="leave()" >
             <mat-icon>backspace</mat-icon>
         </button>
+
     </div>
 </div>

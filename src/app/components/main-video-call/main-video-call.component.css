@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: aqua;
+    background-color: rgb(197, 255, 255);
 }
 
 .main-video-container{
@@ -16,6 +16,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.main-video{
+    background-color: black;
+    border-radius: 10px;
+    width: 70vw;
+    height: 80vh;
 }
 
 

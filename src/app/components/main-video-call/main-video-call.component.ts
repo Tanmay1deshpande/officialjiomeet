@@ -1,7 +1,6 @@
 import { Component, ViewChild, OnInit, ElementRef, NgModule, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Output, Renderer2} from '@angular/core';
 import { EventManager, IJMRemotePeer, JMClient, IJMInfoEventTypes, IJMMediaSetting, IJMJoinMeetingParams, IJMLocalAudioTrack, IJMLocalPeer, IJMLocalScreenShareTrack, IJMLocalVideoTrack, IJMPreviewManager, IJMRemoteAudioTrack, IJMRemoteScreenShareTrack, IJMRemoteVideoTrack, IJMConnectionStateEvent, IJMRequestMediaType } from '@jiomeet/core-sdk-web';
 import { async } from 'rxjs';
-import { MatIconModule } from '@angular/material/icon';
 import { MediaserviceService } from '../../services/mediaservice.service';
 import {CommonModule} from '@angular/common';
 
@@ -14,30 +13,31 @@ export class MainVideoCallComponent {
 
   showloader!: boolean;
   loaderService: any;
-  @ViewChild('network')
-  networkIndicator!: ElementRef;
-  @Output() changeControl = new EventEmitter();
-  isLocalVideoOn = false;
-  isScreenShare = false;
-  micMuted = true;
-  videoMuted = true;
-  signalQuality='NONE'
+	@ViewChild('videoElement') videoElement!:ElementRef;
+  optionsController={
+    more:false
+  }
+
+  // @ViewChild('network')
+  // networkIndicator!: ElementRef;
+  // @Output() changeControl = new EventEmitter();
+  // isLocalVideoOn = false;
+  // isScreenShare = false;
+  // micMuted = true;
+  // videoMuted = true;
+  // signalQuality='NONE'
 
   constructor(
     public mediaservice: MediaserviceService,
   ){}
 
-	@ViewChild('videoElement') videoElement!:ElementRef;
 
 	ngOnInit(){
-    this.showloader = true;
-    this.loaderService.showLoader();
+    // this.showloader = true;
+    // this.loaderService.showLoader();
 		this.startCamera();
-    this.showloader = true;
-    this.loaderService.hideLoader();
-
-    
-    
+    // this.showloader = true;
+    // this.loaderService.hideLoader();
 	}
 
 	async startCamera(){
@@ -48,6 +48,14 @@ export class MainVideoCallComponent {
 			// console.error("Error", error);
 		}	
 	}
-  
 
+  
+  changeController(){
+    this.optionsController.more=!this.optionsController.more;
+  }
+  async subscribeToVideo(peer:any){
+    const videoTrack = await this.mediaservice.jmClient.subscribeMedia(peer,"video");
+    videoTrack.play(peer.peerId);
+  }
+  
 }

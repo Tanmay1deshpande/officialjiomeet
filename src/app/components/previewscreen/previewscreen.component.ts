@@ -28,10 +28,12 @@ export class PreviewscreenComponent {
   ){}
 
   ngOnInit(){
+    
     this.meetingcreds = this.formbuilder.group({
-      meetingId: new FormControl('',[Validators.required]),
-      meetingPin: new FormControl('',[Validators.required]),
-      displayName: new FormControl('',[Validators.required])
+    
+      meetingId: new FormControl(''),
+      meetingPin: new FormControl(''),
+      displayName: new FormControl('')
   });
   
 
@@ -74,17 +76,71 @@ async toggleAudio() {
     })
     .catch(() => {});
 }
+
+
 join() {
+  
+  console.log('hello');
+  console.log(this.meetingcreds.value);
+
+
   this.mediaservice.joinCall(
-    this.form.value.meetingId,
-    this.form.value.pin,
-    this.form.value.name,
+    this.meetingcreds.value.meetingId,
+    this.meetingcreds.value.meetingPin,
+    this.meetingcreds.value.displayName,
     {
       isMicMuted: !this.isLocalMicOn,
       VideoMuted: !this.isLocalVideoOn,
     }
   );
 }
+
+onPaste(event: ClipboardEvent) {
+    setTimeout(() => {
+      const value = (event.target as HTMLInputElement).value;
+      if (value.includes('-')) {
+        (event.target as HTMLInputElement).value = value.replace(/-/g, ' ');
+      } else if (!/\s/.test(value)) {
+        if (!/^[1-9]\d*$/.test(value)) {
+          const meetingId = this.getParameterByName('meetingId', value);
+          const pin = this.getParameterByName('pwd', value);
+          if (meetingId) {
+            this.form.patchValue({ meetingId });
+          }
+          if (pin) {
+            this.form.patchValue({ pin });
+          }
+          (event.target as HTMLInputElement).value = `${meetingId?.substring(
+            0,
+            3
+          )} ${meetingId?.substring(3, 6)} ${meetingId?.substring(6)}`;
+          return;
+        }
+        (event.target as HTMLInputElement).value = `${value.substring(
+          0,
+          3
+        )} ${value.substring(3, 6)} ${value.substring(6)}`;
+      }
+    }, 0);
+  }
+
+  getParameterByName(name: string, url?: string) {
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, '\\$&');
+    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    const results = regex.exec(url);
+    if (!results) {
+      return null;
+    }
+    if (!results[2]) {
+      return '';
+    }
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+
+
 
 ngOnDestroy(): void {
   this.subs.forEach((s) => {

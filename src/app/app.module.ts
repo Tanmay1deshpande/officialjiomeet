@@ -13,6 +13,7 @@ import { MainVideoCallComponent } from './components/main-video-call/main-video-
 import { CallControlsComponent } from './components/main-video-call/call-controls/call-controls.component';
 import { PreviewscreenComponent } from './components/previewscreen/previewscreen.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    ReactiveFormsModule,
+    FormsModule
     
   ],
   providers: [],

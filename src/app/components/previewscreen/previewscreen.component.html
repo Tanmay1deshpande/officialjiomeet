@@ -4,14 +4,15 @@
         <app-call-controls></app-call-controls>
     </div>
     <div class="preview-right-form">
-        <div class="preview-form" formGroup="meetingcreds">
+        <form class="preview-form" [formGroup]="meetingcreds" (ngSubmit)="join()"  ngNativeValidate>
             <h4 style="font-weight: 600; font-size: 25px;">Enter Your Meeting Details</h4>
 
             <mat-form-field>
-                <mat-label>Meeting ID</mat-label>
+                <mat-label >Meeting ID</mat-label>
                 <input matInput
                 placeholder="Ex. abcd2"
                 formControlName="meetingId"
+                (keydown.enter)="$event.preventDefault()"
                 required>
                 <!-- <mat-error *ngIf="meetingId.invalid">Invalid Meeting ID</mat-error> -->
                 
@@ -22,7 +23,7 @@
                 <input 
                 matInput
                 maxlength="5"
-                formControlName="meetingId"
+                formControlName="meetingPin"
                 required
                 >
             </mat-form-field>
@@ -32,12 +33,12 @@
                 <input 
                 matInput
                 type="text"
-                formControlName="meetingId"
+                formControlName="displayName"
                 placeholder="Ex. John"
                 >
             </mat-form-field>
 
-            <button class="join-btn" (click)="join()">JOIN</button>
-        </div>
+            <button class="join-btn" type="button" (click)="join()">JOIN</button>
+        </form>
     </div>
 </div>

@@ -25,7 +25,6 @@ export class MainVideoCallComponent {
 
   constructor(
     public mediaservice: MediaserviceService,
-    private renderer:Renderer2 
   ){}
 
 	@ViewChild('videoElement') videoElement!:ElementRef;
@@ -37,37 +36,8 @@ export class MainVideoCallComponent {
     this.showloader = true;
     this.loaderService.hideLoader();
 
-    window.onbeforeunload = async () => {
-      await this.leave();
-  };
-    this.mediaservice.getLocalParticipant().subscribe((data) => {
-      switch (data.action) {
-        case 'videoOn':
-          this.videoMuted = false;
-          break
-        case 'videoOff':
-          this.videoMuted = true;
-          break
-        case 'startShare':
-          this.isScreenShare = true;
-          break
-        case 'stopShare':
-          this.isScreenShare = false;
-          break
-        case 'audioOff':
-          this.micMuted=true;
-          break
-        case 'audioOn':
-          this.micMuted=false;
-          break
-        case 'networkQuality':
-          this.signalQuality=data?.data;
-          this.updateNetworkQuality();
-          break
-        default:
-          break
-      }
-    })
+    
+    
 	}
 
 	async startCamera(){
@@ -78,53 +48,6 @@ export class MainVideoCallComponent {
 			// console.error("Error", error);
 		}	
 	}
-
-  async toggleMic(){
-    await this.mediaservice.toggleLocalMicStatus()
-  }
-
-  async toggleVideo() {
-    await this.mediaservice.toggleVideoStatus();
-  }
-
-  updateNetworkQuality(){
-    switch(this.signalQuality){
-      case "GOOD":
-        this.renderer.setStyle(this.networkIndicator.nativeElement,'backgroundColor', '#0E8147');
-        break
-      case "BAD":
-        this.renderer.setStyle(this.networkIndicator.nativeElement,'backgroundColor', '#FA7D19');
-        break;
-      case "VERYBAD":
-        this.renderer.setStyle(this.networkIndicator.nativeElement,'backgroundColor', '#F50031');
-        break;
-    }
-  }
-
-  async toggleScreenShare() {
-    if (this.isScreenShare) {
-      await this.stopScreenShare();
-    } else {
-      await this.startScreenShare();
-    }
-
-  }
-  toggleMore() {
-    this.changeControl.emit();
-  }
-
-  async stopScreenShare() {
-    await this.mediaservice.stopScreenShare();
-
-  }
-
-  async leave() {
-    await this.mediaservice.leaveMeeting();
-  }
-
-  async startScreenShare() {
-    await this.mediaservice.startScreenShare();
-  }
-
+  
 
 }

@@ -5,10 +5,12 @@
     </div>
     <div class="preview-right-form">
         <div class="preview-form" formGroup="meetingcreds">
+            <h4 style="font-weight: 600; font-size: 25px;">Enter Your Meeting Details</h4>
+
             <mat-form-field>
                 <mat-label>Meeting ID</mat-label>
                 <input matInput
-                placeholder="abcd2"
+                placeholder="Ex. abcd2"
                 formControlName="meetingId"
                 required>
                 <!-- <mat-error *ngIf="meetingId.invalid">Invalid Meeting ID</mat-error> -->
@@ -17,12 +19,22 @@
 
             <mat-form-field>
                 <mat-label>Meeting Pin</mat-label>
-                <input matInput>
+                <input 
+                matInput
+                maxlength="5"
+                formControlName="meetingId"
+                required
+                >
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Display Name</mat-label>
-                <input matInput>
+                <input 
+                matInput
+                type="text"
+                formControlName="meetingId"
+                placeholder="Ex. John"
+                >
             </mat-form-field>
         </div>
     </div>

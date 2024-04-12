@@ -8,7 +8,6 @@ import { MatFormFieldModule, MatLabel } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-// import { MatIconButton } from '@angular/material/icon/button';
 
 import { MainVideoCallComponent } from './components/main-video-call/main-video-call.component';
 import { CallControlsComponent } from './components/main-video-call/call-controls/call-controls.component';

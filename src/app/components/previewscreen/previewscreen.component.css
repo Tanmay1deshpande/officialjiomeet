@@ -11,6 +11,7 @@
     align-items: center;
     justify-content: center;
     width: 50%;
+    gap: 20px;
 }
 
 .video-container{
@@ -23,8 +24,8 @@
 .preview-form{
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    margin: 0px 20vw 20vh 0px;
 }
 
 .example-container mat-form-field + mat-form-field {

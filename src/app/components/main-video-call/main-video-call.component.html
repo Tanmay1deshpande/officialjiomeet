@@ -1,10 +1,19 @@
 <div class="main-container">
     <div class="main-video-container">
         <!-- <div class="video-box-container"  > -->
-        <div id="localpeer" class="main-video"></div>
-        <app-call-controls></app-call-controls>
-            <!-- <div class="user-profile"  ></div> -->
-        <!-- </div> -->
+        <div id="remotepeer" class="main-video">
+            <div class="main-video-top">
+                <p class="remote-username">Customer</p>
+            </div>
+            <div class="main-video-bottom">
+                <app-call-controls></app-call-controls>
+                <div id="localpeer" class="main-video-local">
+                    <p class="local-username" style="margin: 5px; z-index: 999; position: absolute;" > You </p>
+                </div>
+            </div>
+        </div>
+        <!-- <app-call-controls></app-call-controls> -->
+           
 
         
     </div>

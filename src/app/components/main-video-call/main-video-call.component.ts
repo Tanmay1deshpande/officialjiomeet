@@ -3,6 +3,7 @@ import { EventManager, IJMRemotePeer, JMClient, IJMInfoEventTypes, IJMMediaSetti
 import { async } from 'rxjs';
 import { MediaserviceService } from '../../services/mediaservice.service';
 import {CommonModule} from '@angular/common';
+import { JMDeviceManager } from '@jiomeet/core-sdk-web';
 
 @Component({
   selector: 'app-main-video-call',
@@ -13,6 +14,8 @@ export class MainVideoCallComponent {
 
   showloader!: boolean;
   loaderService: any;
+  subs: any[] = [];
+  localpeer: any;
 	@ViewChild('videoElement') videoElement!:ElementRef;
   optionsController={
     more:false
@@ -35,19 +38,37 @@ export class MainVideoCallComponent {
 	ngOnInit(){
     // this.showloader = true;
     // this.loaderService.showLoader();
-		this.startCamera();
+		// this.startCamera();
     // this.showloader = true;
     // this.loaderService.hideLoader();
+
+    this.registerDevices();
+
+    this.mediaservice.createPreview();
+    this.subs.push(
+      this.mediaservice.getLocalParticipant().subscribe(async (data) => {
+        if (data.action == 'videoOn') {
+          const videoTrack = data.localpeer;
+          videoTrack.play('localpeer');
+        }
+      })
+    );
 	}
 
-	async startCamera(){
-		try{
-			const stream=await navigator.mediaDevices.getUserMedia({video:true});
-			this.videoElement.nativeElement.srcObject = stream;
-		}catch(error){
-			// console.error("Error", error);
-		}	
-	}
+  async registerDevices() {
+    await JMDeviceManager.getMediaPermissions(true, true);
+  
+    JMDeviceManager.getDevices();
+  }
+
+	// async startCamera(){
+	// 	try{
+	// 		const stream=await navigator.mediaDevices.getUserMedia({video:true});
+	// 		this.videoElement.nativeElement.srcObject = stream;
+	// 	}catch(error){
+	// 		// console.error("Error", error);
+	// 	}	
+	// }
 
   
   changeController(){

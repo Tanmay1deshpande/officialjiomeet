@@ -12,6 +12,10 @@
                     <mat-icon *ngIf="isLocalVideoOn" >videocam</mat-icon>
                     <mat-icon *ngIf="!isLocalVideoOn" >videocam_off</mat-icon>
                 </button>
+                <button  class="controls" mat-icon-button  (click)="toggleBlur()" >
+                    <mat-icon *ngIf="isBackgroundBlur" >blur_on</mat-icon>
+                    <mat-icon *ngIf="!isBackgroundBlur" >blur_off</mat-icon>
+                </button>
 
             </div>
         </div>
@@ -25,6 +29,7 @@
                 <input matInput
                 placeholder="Ex. abcd2"
                 formControlName="meetingId"
+                type="text"
                 (keydown.enter)="$event.preventDefault()"
                 required>
             </mat-form-field>
@@ -33,6 +38,7 @@
                 <mat-label>Meeting Pin</mat-label>
                 <input 
                 matInput
+                type="text"
                 maxlength="5"
                 formControlName="meetingPin"
                 required>

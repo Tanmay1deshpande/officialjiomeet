@@ -40,6 +40,7 @@
     border: none;
     font-size: 16px;
     cursor: pointer;
+    border: 2px solid transparent;
 }
 
 .join-btn:hover{

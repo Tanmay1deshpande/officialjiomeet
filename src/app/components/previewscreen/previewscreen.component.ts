@@ -19,6 +19,7 @@ export class PreviewscreenComponent {
   localpeer: any;
   isLocalMicOn = false;
   isLocalVideoOn = false;
+  isBackgroundBlur = false;
   vb = 0;
   subs: any[] = [];
 
@@ -77,6 +78,16 @@ async toggleAudio() {
     .catch(() => {});
 }
 
+async toggleBlur(){
+  await this.mediaservice.
+  backgroundBlur()
+  .then(()=>{
+    this.isBackgroundBlur = !this.isBackgroundBlur;
+    console.log('Background blur toggled')
+  })
+  .catch(()=>{});
+}
+
 
 join() {
   
@@ -85,9 +96,9 @@ join() {
 
 
   this.mediaservice.joinCall(
-    this.meetingcreds.value.meetingId,
-    this.meetingcreds.value.meetingPin,
-    this.meetingcreds.value.displayName,
+    this.meetingcreds.value.meetingId.toString(),
+    this.meetingcreds.value.meetingPin.toString(),
+    this.meetingcreds.value.displayName.toString(),
     {
       isMicMuted: !this.isLocalMicOn,
       VideoMuted: !this.isLocalVideoOn,

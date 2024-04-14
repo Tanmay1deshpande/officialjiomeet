@@ -127,4 +127,8 @@ export class CallControlsComponent {
     await this.mediaservice.leaveMeeting();
   }
 
+  async toggleRemotepeerMic(){
+    await this.mediaservice.toggleRemotepeerAudio();
+  }
+
 }

@@ -388,8 +388,35 @@ export class MediaserviceService {
       })
 
       .catch(() => {
-        console.log('errpr While Joining');
+        console.log('errpr While Joining',meetingId,pin,userName);
+        alert('Error while joining meeting')
       });
+  }
+
+  async toggleRemotepeerAudio(){
+    await this.jmClient.softMutePeersAudio();
+  }
+
+  // async backgroundBlur1(){
+  //   await this.jmClient.setBackgroundBlurring('5');
+  // }
+
+  async backgroundBlur() {
+    try {
+      await this.jmClient
+        .setBackgroundBlurring('5')
+        .then(() => {
+          this.localParticipant$.next({
+            localpeer: this.getLocalUser(),
+            sourceType: 'blur',
+          });
+        })
+
+        .catch(() => { });
+
+    } catch (error) {
+      console.log('Failed to set background as blur', error);
+    }
   }
 }
 

@@ -4,7 +4,7 @@
         getNumberOfTiles
     }} " [class.screenSharing]="isScreenSharing">
         <div *ngFor="let user of participantsInCall; let i=index"
-            id={{user?.peerId}}
+            id="remotepeer"
             class="video-{{i+1}} tile videoContainer"
             [class.dominant-speaker]="dominantSpeaker ? dominantSpeaker?.peerId==user?.peerId:false"
         >

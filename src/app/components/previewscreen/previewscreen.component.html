@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="preview-right-form">
-        <form class="preview-form" [formGroup]="meetingcreds" (ngSubmit)="join()"  ngNativeValidate>
+        <form class="preview-form" [formGroup]="meetingcreds" (submit)="join()">
             <h4 style="font-weight: 600; font-size: 25px;">Enter Your Meeting Details</h4>
 
             <mat-form-field>

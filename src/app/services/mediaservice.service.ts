@@ -69,6 +69,10 @@ export class MediaserviceService {
               audioTrack.play();
             }
           } else if (action === 'VIDEO_MUTE') {
+            if (value === false) {
+              const videoTrack = await this.jmClient.subscribeMedia(remotePeer, 'video');
+              videoTrack.play('remotepeer');
+            }
           } else if (action === 'SCREEN_SHARE') {
             if (value) {
               this.participantsUpdated$.next({
@@ -351,39 +355,39 @@ export class MediaserviceService {
         this.router.navigate(['/main-video']);
         setTimeout(async () => {
           this.addJMEventListeners();
-          // let sourceType: 'image' | 'none' | 'blur' = 'none';
-          // let localUserConfig = {
-          //   trackSettings: {
-          //     audioMuted: mediaconf.isMicMuted,
-          //     videoMuted: mediaconf.VideoMuted,
-          //     audioInputDeviceId: '',
-          //     audioOutputDeviceId: '',
-          //     videoDeviceId: '',
-          //   },
+          let sourceType: 'image' | 'none' | 'blur' = 'none';
+          let localUserConfig = {
+            trackSettings: {
+              audioMuted: mediaconf.isMicMuted,
+              videoMuted: mediaconf.VideoMuted,
+              audioInputDeviceId: '',
+              audioOutputDeviceId: '',
+              videoDeviceId: '',
+            },
 
-          //   virtualBackgroundSettings: {
-          //     isVirtualBackground: false,
-          //     sourceType,
-          //     sourceValue: '',
-          //   },
+            virtualBackgroundSettings: {
+              isVirtualBackground: false,
+              sourceType,
+              sourceValue: '',
+            },
 
-          // };
+          };
 
-          // await this.jmClient.publish(localUserConfig).then(() => {
-          //   if (!this.preview.previewInstance.localUserSettings?.videoMuted) {
-          //     this.localParticipant$.next({
-          //       localpeer: this.getLocalUser(),
-          //       action: this.videoIsMute ? 'videoOff' : 'videoOn',
-          //     });
-          //   }
+          await this.jmClient.publish(localUserConfig).then(() => {
+            if (!this.preview.previewInstance.localUserSettings?.videoMuted) {
+              this.localParticipant$.next({
+                localpeer: this.getLocalUser(),
+                action: this.videoIsMute ? 'videoOff' : 'videoOn',
+              });
+            }
 
-          //   if (!this.preview.previewInstance.localUserSettings.audioMuted) {
-          //     this.localParticipant$.next({
-          //       localpeer: this.getLocalUser(),
-          //       action: this.audioIsMute ? 'audioOff' : 'audioOn',
-          //     });
-          //   }
-          // });
+            if (!this.preview.previewInstance.localUserSettings.audioMuted) {
+              this.localParticipant$.next({
+                localpeer: this.getLocalUser(),
+                action: this.audioIsMute ? 'audioOff' : 'audioOn',
+              });
+            }
+          });
 
         }, 500);
         console.log('joinedSuccessfully');

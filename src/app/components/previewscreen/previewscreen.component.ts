@@ -45,17 +45,6 @@ export class PreviewscreenComponent {
       meetingPin: new FormControl('',[maxLengthValidatorForPin()]),
       displayName: new FormControl('')
   });
-
-  // function noSpacesValidator(): ValidatorFn {
-  //   return (control: FormControl): {[key: string]: any} | null => {
-  //     if (control.value && (control.value as string).indexOf(' ') >= 0) {
-  //       return { 'noSpaces': true }; // Invalid
-  //     }
-  //     return null; // Valid
-  //   };
-  // }
-  
-
   
     this.registerDevices();
 
@@ -119,7 +108,7 @@ async toggleBlur(){
 
 join() {
 
-  console.log('hello');
+  console.log('Thank you for joining');
   console.log(this.meetingcreds.value);
 
 

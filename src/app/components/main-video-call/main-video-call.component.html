@@ -1,42 +1,52 @@
 <div class="main-container">
     <div class="main-video-container">
-        <!-- <div class="video-box-container"  > -->
-        <div id="remotepeer" class="main-video">
-            <div class="main-video-top">
-                <p class="remote-username">Customer</p>
+
+        <div class="gallery-view">
+            <app-gallery></app-gallery>
+            <div id="localpeer" class="main-video-local">
+                <p class="local-username" style="margin: 5px; z-index: 999; position: absolute;" > You </p>
             </div>
-            <div class="main-video-bottom">
-                <app-call-controls></app-call-controls>
-                <div class="overlay-btns">
-                    <button 
-                            mat-icon-button 
-                            matTooltip="face-overlay"
-                            (click)="toggleFaceOverlay()" 
-                            style="background-color: aliceblue;">
-                            <mat-icon>face</mat-icon>
-                    </button>
-                    <button 
-                            mat-icon-button 
-                            matTooltip="pan-overlay"
-                            (click)="togglePanOverlay()" 
-                            style="background-color: aliceblue;">
-                            <mat-icon>credit_card</mat-icon>
-                    </button>
-                    <button 
-                            mat-icon-button 
-                            matTooltip="flip camera"
-                            (click)="togglePanOverlay()" 
-                            style="background-color: aliceblue;">
-                            <mat-icon>flip</mat-icon>
-                    </button>
-                </div>
-                <div id="localpeer" class="main-video-local">
-                    <p class="local-username" style="margin: 5px; z-index: 999; position: absolute;" > You </p>
-                </div>
+        </div>
+
+        <div class="main-video">
+            
+                <!-- <div class="main-video-top">
+                    <p class="remote-username">Customer</p>
+                </div> -->
+
+                <div class="main-video-bottom">
+
+                    <app-call-controls></app-call-controls>
+
+                    <div class="overlay-btns">
+                            <button 
+                                    mat-icon-button 
+                                    matTooltip="face-overlay"
+                                    (click)="toggleFaceOverlay()" 
+                                    style="background-color: aliceblue;">
+                                    <mat-icon>face</mat-icon>
+                            </button>
+                            <button 
+                                    mat-icon-button 
+                                    matTooltip="pan-overlay"
+                                    (click)="togglePanOverlay()" 
+                                    style="background-color: aliceblue;">
+                                    <mat-icon>credit_card</mat-icon>
+                            </button>
+                            <button 
+                                    mat-icon-button 
+                                    matTooltip="flip camera"
+                                    (click)="togglePanOverlay()" 
+                                    style="background-color: aliceblue;">
+                                    <mat-icon>flip</mat-icon>
+                            </button>
+                    </div>
+
             </div>
         </div>
         <!-- <app-call-controls></app-call-controls> -->
            
+       <!--  PAN & Face overlay divs to be rolled out conditionally -->
         <div class="pan-overlay-out" *ngIf="enablePanOverlay">
             <div class="pan-overlay-in" id="pan-overlay"></div>
           </div>
@@ -44,7 +54,6 @@
         <div *ngIf="enableFaceOverlay" class="face-overlay-out">
             <div class="face-overlay-in" id="face-overlay"></div>
         </div>
-        
         
     </div>
 </div>

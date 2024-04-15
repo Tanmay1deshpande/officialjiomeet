@@ -15,15 +15,22 @@ import { CallControlsComponent } from './components/main-video-call/call-control
 import { PreviewscreenComponent } from './components/previewscreen/previewscreen.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+<<<<<<< Updated upstream
 import { LoaderComponent } from './components/loader/loader/loader.component';
 import { LoaderModule } from './components/loader/loader/loader.module';
+=======
+import { ParticipantsViewComponent } from './components/main-video-call/participants-view/participants-view.component';
+import { GalleryComponent } from './components/main-video-call/gallery/gallery.component';
+>>>>>>> Stashed changes
 
 @NgModule({
   declarations: [
     AppComponent,
     MainVideoCallComponent,
     CallControlsComponent,
-    PreviewscreenComponent
+    PreviewscreenComponent,
+    ParticipantsViewComponent,
+    GalleryComponent
   ],
   imports: [
     BrowserModule,

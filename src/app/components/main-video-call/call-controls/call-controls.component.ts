@@ -52,10 +52,10 @@ export class CallControlsComponent {
         case 'audioOn':
           this.micMuted=false;
           break
-        case 'networkQuality':
-          this.signalQuality=data?.data;
-          this.updateNetworkQuality();
-          break
+        // case 'networkQuality':
+        //   this.signalQuality=data?.data;
+        //   this.updateNetworkQuality();
+        //   break
         default:
           break
       }

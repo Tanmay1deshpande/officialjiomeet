@@ -1,9 +1,7 @@
 .main-container{
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding-top: 10px;
     background-color: rgb(197, 255, 255);
 }
 
@@ -19,10 +17,10 @@
 }
 
 .main-video{
-    background-color: black;
+    background-color: rgb(0, 0, 0);
     border-radius: 10px;
-    width: 90vw;
-    height: 87vh;
+    width: 94vw;
+    height: 91vh;
     display: flex;
     flex-direction: column;
     /* justify-content: space-between;
@@ -39,6 +37,7 @@
     justify-content: space-between;
     align-items: flex-end;
     height: 20%;
+    z-index: 4;
 }
 
 .main-video-local{
@@ -66,4 +65,61 @@
     background-color: rgb(43, 43, 43);
     border-radius: 5px;
     width: fit-content;
+}
+
+.overlay-btns{
+    display: flex;
+    gap: 20px;
+}
+
+.pan-overlay-out {
+    /* border: solid 1px black; */
+    mix-blend-mode: hard-light;
+    z-index: 2;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    /* filter: blur(5px); */
+}
+  
+.pan-overlay-in {
+    width: 310px;
+    height: 200px;
+    position: absolute;
+    top: 120px;
+    left: 29%;
+    z-index: 10;
+    border-radius: 10px;
+    background-color: gray;
+    filter: none;
+    backdrop-filter: none;
+    /* box-shadow: 0 0 0 9999px rgb(0 0 0 / 80%); */
+}
+  
+.face-overlay-out {
+    /* border: 1px solid black; */
+    mix-blend-mode: hard-light;
+    z-index: 2;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    /* filter: blur(5px); */
+    /* backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px); */
+}
+  
+.face-overlay-in {
+    width: 200px;
+    height: 260px;
+    position: absolute;
+    top: 60px;
+    left: 36%;
+    /* border: 2px solid green; */
+    z-index: 10;
+    border-radius: 50%;
+    background-color: gray;
+    filter: none;
+    /* backdrop-filter: none; */
 }

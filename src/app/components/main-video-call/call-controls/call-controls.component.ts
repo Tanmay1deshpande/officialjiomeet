@@ -14,6 +14,8 @@ export class CallControlsComponent {
   isScreenShare = false;
   micMuted = true;
   videoMuted = true;
+  enablePanOverlay: boolean = true
+  enableFaceOverlay: boolean = true
   @Output() changeControl = new EventEmitter();
   signalQuality='NONE'
   @ViewChild('network')
@@ -130,5 +132,16 @@ export class CallControlsComponent {
   async toggleRemotepeerMic(){
     await this.mediaservice.toggleRemotepeerAudio();
   }
+
+  togglePanOverlay(){
+    this.enablePanOverlay = !this.enablePanOverlay;
+    console.log('pan toggled')
+  }
+
+  toggleFaceOverlay(){
+    this.enableFaceOverlay = !this.enableFaceOverlay;
+    console.log('facetoggled')
+  }
+  
 
 }

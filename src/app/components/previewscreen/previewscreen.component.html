@@ -30,8 +30,18 @@
                 placeholder="Ex. abcd2"
                 formControlName="meetingId"
                 type="text"
+                
                 (keydown.enter)="$event.preventDefault()"
                 required>
+                <mat-error *ngIf="meetingcreds.get('meetingId')?.hasError('firstCharSpace')">
+                    First character cannot be whitespace.
+                </mat-error>
+                <mat-error *ngIf="meetingcreds.get('meetingId')?.hasError('noSpaces')">
+                    Whitespace is not allowed.
+                </mat-error>
+                <mat-error *ngIf="meetingcreds.get('meetingId')?.hasError('maxLen')">
+                    MeetingID has to be of 10 digits.
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field>
@@ -42,6 +52,9 @@
                 maxlength="5"
                 formControlName="meetingPin"
                 required>
+                <mat-error *ngIf="meetingcreds.get('meetingPin')?.hasError('maxLenPin')">
+                    Meeting Pin has to be of 5 digits.
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field>

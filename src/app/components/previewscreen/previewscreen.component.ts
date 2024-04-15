@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import {FormControl, Validators, FormsModule, ReactiveFormsModule, FormBuilder, FormGroup} from '@angular/forms';
+import {FormControl, ValidatorFn, Validators, FormsModule, ReactiveFormsModule, FormBuilder, FormGroup} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {merge} from 'rxjs';
 import { MediaserviceService } from 'src/app/services/mediaservice.service';
-import { JMDeviceManager } from '@jiomeet/core-sdk-web';
+import { JMClient, JMDeviceManager } from '@jiomeet/core-sdk-web';
+import { addressValidator, firstCharNotSpaceValidator, noSpacesValidator, maxLengthValidator, maxLengthValidatorForPin } from './whitespace-validator';
+
 
 @Component({
   selector: 'app-previewscreen',
@@ -22,6 +24,7 @@ export class PreviewscreenComponent {
   isBackgroundBlur = false;
   vb = 0;
   subs: any[] = [];
+  jmClient = new JMClient();
 
   constructor(
     private formbuilder: FormBuilder,
@@ -32,10 +35,19 @@ export class PreviewscreenComponent {
     
     this.meetingcreds = this.formbuilder.group({
     
-      meetingId: new FormControl(''),
-      meetingPin: new FormControl(''),
+      meetingId: new FormControl('',[firstCharNotSpaceValidator(), noSpacesValidator(), maxLengthValidator()]),
+      meetingPin: new FormControl('',[maxLengthValidatorForPin()]),
       displayName: new FormControl('')
   });
+
+  // function noSpacesValidator(): ValidatorFn {
+  //   return (control: FormControl): {[key: string]: any} | null => {
+  //     if (control.value && (control.value as string).indexOf(' ') >= 0) {
+  //       return { 'noSpaces': true }; // Invalid
+  //     }
+  //     return null; // Valid
+  //   };
+  // }
   
 
   
@@ -106,50 +118,50 @@ join() {
   );
 }
 
-onPaste(event: ClipboardEvent) {
-    setTimeout(() => {
-      const value = (event.target as HTMLInputElement).value;
-      if (value.includes('-')) {
-        (event.target as HTMLInputElement).value = value.replace(/-/g, ' ');
-      } else if (!/\s/.test(value)) {
-        if (!/^[1-9]\d*$/.test(value)) {
-          const meetingId = this.getParameterByName('meetingId', value);
-          const pin = this.getParameterByName('pwd', value);
-          if (meetingId) {
-            this.form.patchValue({ meetingId });
-          }
-          if (pin) {
-            this.form.patchValue({ pin });
-          }
-          (event.target as HTMLInputElement).value = `${meetingId?.substring(
-            0,
-            3
-          )} ${meetingId?.substring(3, 6)} ${meetingId?.substring(6)}`;
-          return;
-        }
-        (event.target as HTMLInputElement).value = `${value.substring(
-          0,
-          3
-        )} ${value.substring(3, 6)} ${value.substring(6)}`;
-      }
-    }, 0);
-  }
+// onPaste(event: ClipboardEvent) {
+//     setTimeout(() => {
+//       const value = (event.target as HTMLInputElement).value;
+//       if (value.includes('-')) {
+//         (event.target as HTMLInputElement).value = value.replace(/-/g, ' ');
+//       } else if (!/\s/.test(value)) {
+//         if (!/^[1-9]\d*$/.test(value)) {
+//           const meetingId = this.getParameterByName('meetingId', value);
+//           const pin = this.getParameterByName('pwd', value);
+//           if (meetingId) {
+//             this.form.patchValue({ meetingId });
+//           }
+//           if (pin) {
+//             this.form.patchValue({ pin });
+//           }
+//           (event.target as HTMLInputElement).value = `${meetingId?.substring(
+//             0,
+//             3
+//           )} ${meetingId?.substring(3, 6)} ${meetingId?.substring(6)}`;
+//           return;
+//         }
+//         (event.target as HTMLInputElement).value = `${value.substring(
+//           0,
+//           3
+//         )} ${value.substring(3, 6)} ${value.substring(6)}`;
+//       }
+//     }, 0);
+//   }
 
-  getParameterByName(name: string, url?: string) {
-    if (!url) {
-      url = window.location.href;
-    }
-    name = name.replace(/[\[\]]/g, '\\$&');
-    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-    const results = regex.exec(url);
-    if (!results) {
-      return null;
-    }
-    if (!results[2]) {
-      return '';
-    }
-    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-  }
+//   getParameterByName(name: string, url?: string) {
+//     if (!url) {
+//       url = window.location.href;
+//     }
+//     name = name.replace(/[\[\]]/g, '\\$&');
+//     const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+//     const results = regex.exec(url);
+//     if (!results) {
+//       return null;
+//     }
+//     if (!results[2]) {
+//       return '';
+//     }
+//     return decodeURIComponent(results[2].replace(/\+/g, ' '));
+//   }
 
 
 

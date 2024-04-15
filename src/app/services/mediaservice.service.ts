@@ -170,6 +170,7 @@ export class MediaserviceService {
   async leaveMeeting() {
     await this.jmClient.leaveMeeting();
     this.participantsUpdated$.next({ user: [], state: 'localLeft' });
+    this.router.navigate(['/preview']);
   }
 
   async startScreenShare() {

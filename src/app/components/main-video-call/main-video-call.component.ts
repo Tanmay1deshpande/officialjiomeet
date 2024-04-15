@@ -16,6 +16,8 @@ export class MainVideoCallComponent {
   loaderService: any;
   subs: any[] = [];
   localpeer: any;
+  enablePanOverlay: boolean = false
+  enableFaceOverlay: boolean = false
 	@ViewChild('videoElement') videoElement!:ElementRef;
   optionsController={
     more:false
@@ -77,6 +79,18 @@ export class MainVideoCallComponent {
   async subscribeToVideo(peer:any){
     const videoTrack = await this.mediaservice.jmClient.subscribeMedia(peer,"video");
     videoTrack.play(peer.peerId);
+  }
+
+  togglePanOverlay(){
+    this.enablePanOverlay = !this.enablePanOverlay;
+    this.enableFaceOverlay=false
+    console.log('pan toggled')
+  }
+
+  toggleFaceOverlay(){
+    this.enableFaceOverlay = !this.enableFaceOverlay;
+    this.enablePanOverlay=false
+    console.log('facetoggled')
   }
   
 }

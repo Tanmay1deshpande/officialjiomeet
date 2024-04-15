@@ -45,6 +45,13 @@
             (click)="toggleRemotepeerMic()" >
             <mat-icon>volume_off</mat-icon>
         </button>
+        <button  
+            class="controls" 
+            mat-icon-button  
+            (click)="setBgBlur()" >
+            <mat-icon *ngIf="isBackgroundBlur" >blur_on</mat-icon>
+            <mat-icon *ngIf="!isBackgroundBlur" >blur_off</mat-icon>
+        </button>
         
 
     </div>

@@ -20,6 +20,7 @@ export class MediaserviceService {
   selectedMic: string | undefined;
   preview: any;
   currentDominantSpeaker: any;
+  isBgBlur: boolean = true;
 
   private participantsStatus$: BehaviorSubject<any> = new BehaviorSubject(null);
   private participantsUpdated$: Subject<any> = new Subject();
@@ -350,39 +351,39 @@ export class MediaserviceService {
         this.router.navigate(['/main-video']);
         setTimeout(async () => {
           this.addJMEventListeners();
-          let sourceType: 'image' | 'none' | 'blur' = 'none';
-          let localUserConfig = {
-            trackSettings: {
-              audioMuted: mediaconf.isMicMuted,
-              videoMuted: mediaconf.VideoMuted,
-              audioInputDeviceId: '',
-              audioOutputDeviceId: '',
-              videoDeviceId: '',
-            },
+          // let sourceType: 'image' | 'none' | 'blur' = 'none';
+          // let localUserConfig = {
+          //   trackSettings: {
+          //     audioMuted: mediaconf.isMicMuted,
+          //     videoMuted: mediaconf.VideoMuted,
+          //     audioInputDeviceId: '',
+          //     audioOutputDeviceId: '',
+          //     videoDeviceId: '',
+          //   },
 
-            virtualBackgroundSettings: {
-              isVirtualBackground: false,
-              sourceType,
-              sourceValue: '',
-            },
+          //   virtualBackgroundSettings: {
+          //     isVirtualBackground: false,
+          //     sourceType,
+          //     sourceValue: '',
+          //   },
 
-          };
+          // };
 
-          await this.jmClient.publish(localUserConfig).then(() => {
-            if (!this.preview.previewInstance.localUserSettings?.videoMuted) {
-              this.localParticipant$.next({
-                localpeer: this.getLocalUser(),
-                action: this.videoIsMute ? 'videoOff' : 'videoOn',
-              });
-            }
+          // await this.jmClient.publish(localUserConfig).then(() => {
+          //   if (!this.preview.previewInstance.localUserSettings?.videoMuted) {
+          //     this.localParticipant$.next({
+          //       localpeer: this.getLocalUser(),
+          //       action: this.videoIsMute ? 'videoOff' : 'videoOn',
+          //     });
+          //   }
 
-            if (!this.preview.previewInstance.localUserSettings.audioMuted) {
-              this.localParticipant$.next({
-                localpeer: this.getLocalUser(),
-                action: this.audioIsMute ? 'audioOff' : 'audioOn',
-              });
-            }
-          });
+          //   if (!this.preview.previewInstance.localUserSettings.audioMuted) {
+          //     this.localParticipant$.next({
+          //       localpeer: this.getLocalUser(),
+          //       action: this.audioIsMute ? 'audioOff' : 'audioOn',
+          //     });
+          //   }
+          // });
 
         }, 500);
         console.log('joinedSuccessfully');
@@ -403,6 +404,7 @@ export class MediaserviceService {
   // }
 
   async backgroundBlur() {
+    if(this.isBgBlur){
     try {
       await this.preview
         .setBackgroundBlurring('5')
@@ -411,12 +413,31 @@ export class MediaserviceService {
             localpeer: this.getLocalUser(),
             sourceType: 'blur',
           });
+          this.isBgBlur = !this.isBgBlur
         })
 
         .catch(() => { });
 
     } catch (error) {
       console.log('Failed to set background as blur', error);
+    } 
+    }else if(!this.isBgBlur){
+      try {
+        await this.preview
+          .setBackgroundBlurring('0')
+          .then(() => {
+            this.localParticipant$.next({
+              localpeer: this.getLocalUser(),
+              sourceType: 'none',
+            });
+            this.isBgBlur = !this.isBgBlur
+          })
+  
+          .catch(() => { });
+  
+      } catch (error) {
+        console.log('Failed to remove blur background', error);
+      } 
     }
   }
 }

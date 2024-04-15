@@ -8,7 +8,7 @@
 .main-video-container{
     /* width: 60vw;
     height: 60vh; */
-    background-color: black;
+    background-color: rgb(18, 18, 18);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -45,8 +45,9 @@
     align-items: center;
     height: 20%;
     z-index: 4;
-    width: 94vw;
+    width: 97vw;
     height: fit-content;
+    position: relative;
 }
 
 .main-video-local{

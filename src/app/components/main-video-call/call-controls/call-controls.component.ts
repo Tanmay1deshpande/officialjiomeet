@@ -1,4 +1,5 @@
 import { Component, ElementRef, EventEmitter, Output, Renderer2, ViewChild } from '@angular/core';
+import { JMClient } from '@jiomeet/core-sdk-web';
 import { MediaserviceService } from 'src/app/services/mediaservice.service';
 
 @Component({
@@ -11,15 +12,18 @@ export class CallControlsComponent {
   
   isLocalVideoOn = false;
   isLocalMicOn = false;
+  isBackgroundBlur = false;
   isScreenShare = false;
   micMuted = true;
   videoMuted = true;
+  preview: any;
   enablePanOverlay: boolean = true
   enableFaceOverlay: boolean = true
   @Output() changeControl = new EventEmitter();
   signalQuality='NONE'
   @ViewChild('network')
   networkIndicator!: ElementRef;
+  jmClient = new JMClient();
 
   constructor(
     private mediaservice: MediaserviceService,
@@ -143,5 +147,22 @@ export class CallControlsComponent {
     console.log('facetoggled')
   }
   
+  async setBgBlur(){
+    await this.mediaservice.
+    backgroundBlur()
+    .then(()=>{
+      this.isBackgroundBlur = !this.isBackgroundBlur;
+      console.log('Background blur toggled')
+    })
+    .catch(()=>{});
+  }
 
+  // async setBgBlur(){
+  //   if(this.isBackgroundBlur){
+  //   await this.preview.setBackgroundBlurring('5');
+  //   this.isBackgroundBlur = !this.isBackgroundBlur;
+  //   } else if (!this.isBackgroundBlur){
+  //     await this.jmClient.setBackgroundBlurring('0');
+  //   }
+  // }
 }

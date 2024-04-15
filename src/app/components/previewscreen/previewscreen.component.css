@@ -26,6 +26,7 @@
     flex-direction: column;
     justify-content: center;
     margin: 0px 20vw 14vh 0px;
+    gap: 10px;
 }
 
 .example-container mat-form-field + mat-form-field {

@@ -5,7 +5,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {merge} from 'rxjs';
 import { MediaserviceService } from 'src/app/services/mediaservice.service';
 import { JMClient, JMDeviceManager } from '@jiomeet/core-sdk-web';
+// import { LoaderComponent } from '../loader/loader/loader.component';
 import { addressValidator, firstCharNotSpaceValidator, noSpacesValidator, maxLengthValidator, maxLengthValidatorForPin } from './whitespace-validator';
+import { LoaderService } from '../loader/loader.service';
 
 
 @Component({
@@ -16,6 +18,7 @@ import { addressValidator, firstCharNotSpaceValidator, noSpacesValidator, maxLen
 export class PreviewscreenComponent {
 
   errorMessage = '';
+  // showloader: boolean = false;
   meetingcreds!: FormGroup;
   form: any;
   localpeer: any;
@@ -28,10 +31,13 @@ export class PreviewscreenComponent {
 
   constructor(
     private formbuilder: FormBuilder,
-    private mediaservice: MediaserviceService
+    private mediaservice: MediaserviceService,
+    // private loaderService: LoaderService,
   ){}
 
   ngOnInit(){
+  //  this.testFunction();
+    
     
     this.meetingcreds = this.formbuilder.group({
     
@@ -69,6 +75,16 @@ async registerDevices() {
   JMDeviceManager.getDevices();
 }
 
+// testFunction() {
+//   this.showloader=true;
+//     this.loaderService.showLoader();
+//     setTimeout(()=>{
+//       console.log("Hello, working");
+//       this.showloader=false;
+//       this.loaderService.hideLoader();
+//     }, 2000);
+// }
+
 
 async toggleVideo() {
   await this.mediaservice
@@ -102,7 +118,7 @@ async toggleBlur(){
 
 
 join() {
-  
+
   console.log('hello');
   console.log(this.meetingcreds.value);
 

@@ -15,6 +15,8 @@ import { CallControlsComponent } from './components/main-video-call/call-control
 import { PreviewscreenComponent } from './components/previewscreen/previewscreen.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoaderComponent } from './components/loader/loader/loader.component';
+import { LoaderModule } from './components/loader/loader/loader.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     MatInputModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    LoaderModule
     
   ],
   providers: [],

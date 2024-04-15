@@ -404,7 +404,7 @@ export class MediaserviceService {
 
   async backgroundBlur() {
     try {
-      await this.jmClient
+      await this.preview
         .setBackgroundBlurring('5')
         .then(() => {
           this.localParticipant$.next({

@@ -109,25 +109,25 @@ export class CallControlsComponent {
     await this.mediaservice.toggleVideoStatus();
   }
 
-  async toggleVideoCam() {
-    await this.mediaservice
-      .toggleLocalVideoStatus()
-      .then(() => {
-        this.isLocalVideoOn = !this.isLocalVideoOn;
-        console.log('video toggled')
-      })
-      .catch(() => {});
-  }
+  // async toggleVideoCam() {
+  //   await this.mediaservice
+  //     .toggleVideoStatus()
+  //     .then(() => {
+  //       this.isLocalVideoOn = !this.isLocalVideoOn;
+  //       console.log('video toggled')
+  //     })
+  //     .catch(() => {});
+  // }
   
-  async toggleAudio() {
-    await this.mediaservice
-      .toggleLocalMicStatus()
-      .then(() => {
-        this.isLocalMicOn = !this.isLocalMicOn;
-        console.log('Mic toggled')
-      })
-      .catch(() => {});
-  }
+  // async toggleAudio() {
+  //   await this.mediaservice
+  //     .toggleMicStatus()
+  //     // .then(() => {
+  //       this.isLocalMicOn = !this.isLocalMicOn;
+  //       console.log('Mic toggled')
+  //     //})
+  //     // .catch(() => {});
+  // }
 
   async leave() {
     await this.mediaservice.leaveMeeting();

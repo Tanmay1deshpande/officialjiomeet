@@ -387,6 +387,20 @@ export class MediaserviceService {
                 action: this.audioIsMute ? 'audioOff' : 'audioOn',
               });
             }
+
+            // if (this.preview.previewInstance.localUserSettings?.videoMuted) {
+            //   this.localParticipant$.next({
+            //     localpeer: this.getLocalUser(),
+            //     action: this.videoIsMute ? 'videoOn' : 'videoOff',
+            //   });
+            // }
+
+            // if (this.preview.previewInstance.localUserSettings.audioMuted) {
+            //   this.localParticipant$.next({
+            //     localpeer: this.getLocalUser(),
+            //     action: this.audioIsMute ? 'audioOn' : 'audioOff',
+            //   });
+            // }
           });
 
         }, 500);

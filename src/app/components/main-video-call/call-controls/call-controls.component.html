@@ -4,14 +4,14 @@
         <button 
             mat-icon-button 
             matTooltip="toggle mic"
-            (click)="toggleAudio()" >
+            (click)="toggleMic()" >
             <mat-icon  *ngIf="isLocalMicOn" >mic</mat-icon>
             <mat-icon *ngIf="!isLocalMicOn" >mic_off</mat-icon>
         </button>
         <button 
             mat-icon-button  
             matTooltip="toggle camera"
-            (click)="toggleVideoCam()" >
+            (click)="toggleVideo()" >
             <mat-icon *ngIf="isLocalVideoOn" >videocam</mat-icon>
             <mat-icon *ngIf="!isLocalVideoOn" >videocam_off</mat-icon>
         </button>

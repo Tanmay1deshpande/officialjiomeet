@@ -44,17 +44,17 @@ export class MainVideoCallComponent {
     // this.showloader = true;
     // this.loaderService.hideLoader();
 
-    this.registerDevices();
+    // this.registerDevices();
 
-    this.mediaservice.createPreview();
-    this.subs.push(
-      this.mediaservice.getLocalParticipant().subscribe(async (data) => {
-        if (data.action == 'videoOn') {
-          const videoTrack = data.localpeer;
-          videoTrack.play('localpeer');
-        }
-      })
-    );
+    // this.mediaservice.createPreview();
+    // this.subs.push(
+    //   this.mediaservice.getLocalParticipant().subscribe(async (data) => {
+    //     if (data.action == 'videoOn') {
+    //       const videoTrack = data.localpeer;
+    //       videoTrack.play('localpeer');
+    //     }
+    //   })
+    // );
 	}
 
   async registerDevices() {
@@ -76,6 +76,7 @@ export class MainVideoCallComponent {
   changeController(){
     this.optionsController.more=!this.optionsController.more;
   }
+  
   async subscribeToVideo(peer:any){
     const videoTrack = await this.mediaservice.jmClient.subscribeMedia(peer,"video");
     videoTrack.play(peer.peerId);

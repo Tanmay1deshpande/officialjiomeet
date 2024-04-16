@@ -24,10 +24,10 @@ export class GalleryComponent  implements OnInit {
   ngOnInit(): void {
     this.participantsInCall = this.mediaservice.jmClient.remotePeers;
     // this.mediaservice.jmClient.localPeer['isLocal'] = true;
-    this.participantsInCall.push(this.mediaservice.jmClient.localPeer);
+    // this.participantsInCall.push(this.mediaservice.jmClient.localPeer);
     this.subs.push(
       this.mediaservice.getLocalParticipant().subscribe(async (data) => {
-        if (data.action == 'joined') {
+        if (data.action == 'joined' && !this.mediaservice.getLocalParticipant()) {
           this.participantsInCall.push(data.localpeer);
         }
         this.localpeer = data.localpeer;

@@ -162,6 +162,10 @@ export class MediaserviceService {
     });
 
   }
+  
+  getLocalUser() {
+    return this.jmClient.room.localPeer;
+  }
 
   async createPreview() {
     await this.jmClient.createPreview('1');
@@ -214,7 +218,24 @@ export class MediaserviceService {
     return this.participantsUpdated$;
   }
 
+  mapQualityLevel(uplink: number, downlink: number) {
+    const maxQuality = Math.max(uplink, downlink);
+    switch (maxQuality) {
+      case 0:
+        return 'NONE';
+      case 1:
+      case 2:
+        return 'GOOD';
+      case 3:
+      case 4:
+        return 'BAD';
+      case 5:
+        return 'VERYBAD';
+      default:
+        return 'NONE';
 
+    }
+  }
 
   async toggleVideoStatus() {
     try {
@@ -242,27 +263,6 @@ export class MediaserviceService {
 
     } catch {
       console.log('error while video switching');
-    }
-  }
-
-
-
-  mapQualityLevel(uplink: number, downlink: number) {
-    const maxQuality = Math.max(uplink, downlink);
-    switch (maxQuality) {
-      case 0:
-        return 'NONE';
-      case 1:
-      case 2:
-        return 'GOOD';
-      case 3:
-      case 4:
-        return 'BAD';
-      case 5:
-        return 'VERYBAD';
-      default:
-        return 'NONE';
-
     }
   }
 
@@ -303,10 +303,6 @@ export class MediaserviceService {
       console.log('error while mic switching',error);
       this.audioIsMute = !this.audioIsMute;
     }
-  }
-
-  getLocalUser() {
-    return this.jmClient.room.localPeer;
   }
 
   toggleMicStatus() {

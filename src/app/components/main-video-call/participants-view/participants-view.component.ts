@@ -12,7 +12,7 @@ export class ParticipantsViewComponent implements OnChanges, OnInit,AfterViewIni
 
 
   @Input()
-  remotePeer!: IJMRemotePeer;
+  remotePeer!: any;
   @Input() isSpeaking: any;
   @Input() hasVideo: any;
   initialColor=''
@@ -58,10 +58,11 @@ export class ParticipantsViewComponent implements OnChanges, OnInit,AfterViewIni
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // if(changes['hasVideo']?.currentValue && !this.remotePeer?.isLocal){
-    //   this.subscribeToVideo();
-    // }
+    if(changes['hasVideo']?.currentValue && !this.remotePeer?.isLocal){
+      this.subscribeToVideo();
+    }
   }
+
   // setInitialColor(){
   //   let first_letter=this.remotePeer?.name?.toLowerCase().substring(0, 1);
   //   this.initialColor=this.colors[first_letter];

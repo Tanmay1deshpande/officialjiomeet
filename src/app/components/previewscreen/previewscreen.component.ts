@@ -117,8 +117,8 @@ join() {
     this.meetingcreds.value.meetingPin.toString(),
     this.meetingcreds.value.displayName.toString(),
     {
-        isMicMuted: this.isLocalMicOn,
-        VideoMuted: this.isLocalVideoOn,
+        isMicMuted: !this.isLocalMicOn,
+        VideoMuted: !this.isLocalVideoOn,
         audioInputDeviceId: '',
         audioOutputDeviceId: '',
         videoDeviceId: '',

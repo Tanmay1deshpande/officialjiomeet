@@ -18,24 +18,24 @@ export class GalleryComponent  implements OnInit {
   isScreenSharing = false;
   screenSharingUser: any;
   dominantSpeaker: any;
-  subs = [];
+  subs : any[] = [];
   constructor(private mediaservice: MediaserviceService, private router: Router) {}
 
   ngOnInit(): void {
     this.participantsInCall = this.mediaservice.jmClient.remotePeers;
     // this.mediaservice.jmClient.localPeer['isLocal'] = true;
-    // this.participantsInCall.push(this.mediaservice.jmClient.localPeer);
-    // this.subs.push(
-    //   this.mediaservice.getLocalParticipant().subscribe(async (data) => {
-    //     if (data.action == 'joined') {
-    //       this.participantsInCall.push(data.localpeer);
-    //     }
-    //     this.localpeer = data.localpeer;
-    //     if (data.action == 'videoOn') {
-    //       const videoTrack = this.localpeer.videoTrack;
-    //       videoTrack.play(data.localpeer.peerId);
-    //     }
-    //   }),
+    this.participantsInCall.push(this.mediaservice.jmClient.localPeer);
+    this.subs.push(
+      this.mediaservice.getLocalParticipant().subscribe(async (data) => {
+        if (data.action == 'joined') {
+          this.participantsInCall.push(data.localpeer);
+        }
+        this.localpeer = data.localpeer;
+        if (data.action == 'videoOn') {
+          const videoTrack = this.localpeer.videoTrack;
+          videoTrack.play(data.localpeer.peerId);
+        }
+      }),
       this.mediaservice.getParticipantsUpdated().subscribe(async (user) => {
         switch (user?.state) {
           case 'localLeft':
@@ -81,7 +81,9 @@ export class GalleryComponent  implements OnInit {
           default:
             break;
         }
-      });
+      })
+    );
+    
   }
   async subscribeToVideo(peer: any) {
     const videoTrack = await this.mediaservice.jmClient.subscribeMedia(

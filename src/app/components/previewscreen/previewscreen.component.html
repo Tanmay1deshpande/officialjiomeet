@@ -1,24 +1,26 @@
 <div class="main-preview-screen">
     <div class="preview-left-video" style="flex-direction: column;" >
-        <div id="localpeer" class="video-container"></div>
-        <div class="video-controls">
-            <div class="icons">
-            
-                <button class="controls" mat-icon-button  (click)="toggleAudio()" >
-                    <mat-icon *ngIf="isLocalMicOn" >mic</mat-icon>
-                    <mat-icon *ngIf="!isLocalMicOn" >mic_off</mat-icon>
-                </button>
-                <button  class="controls" mat-icon-button  (click)="toggleVideo()" >
-                    <mat-icon *ngIf="isLocalVideoOn" >videocam</mat-icon>
-                    <mat-icon *ngIf="!isLocalVideoOn" >videocam_off</mat-icon>
-                </button>
-                <button  class="controls" mat-icon-button  (click)="toggleBlur()" >
-                    <mat-icon *ngIf="isBackgroundBlur" >blur_on</mat-icon>
-                    <mat-icon *ngIf="!isBackgroundBlur" >blur_off</mat-icon>
-                </button>
-
+        <div id="localpeer" class="video-container">
+            <div class="video-controls">
+                <div class="icons">
+                
+                    <button class="controls" mat-icon-button  (click)="toggleAudio()" >
+                        <mat-icon *ngIf="isLocalMicOn" >mic</mat-icon>
+                        <mat-icon *ngIf="!isLocalMicOn" >mic_off</mat-icon>
+                    </button>
+                    <button  class="controls" mat-icon-button  (click)="toggleVideo()" >
+                        <mat-icon *ngIf="isLocalVideoOn" >videocam</mat-icon>
+                        <mat-icon *ngIf="!isLocalVideoOn" >videocam_off</mat-icon>
+                    </button>
+                    <button  class="controls" mat-icon-button  (click)="toggleBlur()" >
+                        <mat-icon *ngIf="isBackgroundBlur" >blur_on</mat-icon>
+                        <mat-icon *ngIf="!isBackgroundBlur" >blur_off</mat-icon>
+                    </button>
+    
+                </div>
             </div>
         </div>
+        
     </div>
     <div class="preview-right-form">
         <form class="preview-form" [formGroup]="meetingcreds" (submit)="join()">

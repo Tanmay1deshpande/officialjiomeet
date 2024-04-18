@@ -25,7 +25,7 @@
 .tile {
   position: relative;
   background-color: #2b2b2b;
-  border-radius: 16prgb(28, 28, 28)
+  border-radius: 16px
 }
 .dominant-speaker {
   border: 2px solid green;

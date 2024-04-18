@@ -289,6 +289,7 @@ export class MediaserviceService {
     }
   }
 
+  //New method created.
   async toggleMediaVideo() {
     try {
       this.videoIsMute = !this.videoIsMute;

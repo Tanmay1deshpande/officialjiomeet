@@ -33,18 +33,20 @@ export class PreviewscreenComponent {
     private formbuilder: FormBuilder,
     private mediaservice: MediaserviceService,
     // private loaderService: LoaderService,
-  ){}
-
-  ngOnInit(){
-  //  this.testFunction();
-    
-    
+  ){
     this.meetingcreds = this.formbuilder.group({
     
       meetingId: new FormControl('',[firstCharNotSpaceValidator(), noSpacesValidator(), maxLengthValidator()]),
       meetingPin: new FormControl('',[maxLengthValidatorForPin()]),
       displayName: new FormControl('')
   });
+  }
+
+  ngOnInit(){
+  //  this.testFunction();
+    
+    
+    
   
     this.registerDevices();
 
@@ -111,7 +113,6 @@ join() {
   console.log('Thank you for joining');
   console.log(this.meetingcreds.value);
 
-
   this.mediaservice.joinCall(
     this.meetingcreds.value.meetingId.toString(),
     this.meetingcreds.value.meetingPin.toString(),
@@ -119,9 +120,9 @@ join() {
     {
         isMicMuted: !this.isLocalMicOn,
         VideoMuted: !this.isLocalVideoOn,
-        audioInputDeviceId: '',
-        audioOutputDeviceId: '',
-        videoDeviceId: '',
+        // audioInputDeviceId: '',
+        // audioOutputDeviceId: '',
+        // videoDeviceId: '',
     }
   );
 }

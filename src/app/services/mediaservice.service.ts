@@ -289,6 +289,38 @@ export class MediaserviceService {
     }
   }
 
+  async toggleMediaVideo() {
+    try {
+      this.videoIsMute = !this.videoIsMute;
+      await this.preview.muteLocalVideo(this.videoIsMute)
+      await this.jmClient.muteLocalVideo(this.videoIsMute)
+        .then(async () => {
+          if (
+            !this.videoIsMute &&
+            this.preview.previewInstance.localUser.videoTrack
+          ) {
+            this.preview.previewInstance.localUser.videoTrack.play('localpeer');
+            console.log('local video toggled')
+          }
+        })
+
+        // .catch((e) => {
+        //   console.log('Error toggle Video', e);
+        //   this.videoIsMute = !this.videoIsMute;
+        // });
+
+      if (!this.videoIsMute) {
+        this.localParticipant$.next({
+          localpeer: this.getLocalUser(),
+          action: 'videoOn',
+        });
+      }
+
+    } catch {
+      console.log('error while video switching');
+    }
+  }
+
   async toggleLocalMicStatus() {
     try {
       this.audioIsMute = !this.audioIsMute;

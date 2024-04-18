@@ -110,10 +110,9 @@ export class CallControlsComponent {
   }
 
   async toggleVideo() {
-    await this.mediaservice
-      .toggleVideoStatus()
-    // this.mediaservice
-    //   .toggleVideoStatus()
+    // await this.mediaservice.toggleVideoStatus()
+    await this.mediaservice.toggleMediaVideo()
+    // await this.mediaservice.toggleLocalVideoStatus()
       // .then(() => {
         this.isLocalVideoOn = !this.isLocalVideoOn;
         console.log('video toggled')
@@ -122,8 +121,7 @@ export class CallControlsComponent {
   }
   
   async toggleAudio() {
-    await this.mediaservice
-      .toggleMicStatus()
+    await this.mediaservice.toggleMicStatus()
       // .then(() => {
         this.isLocalMicOn = !this.isLocalMicOn;
         console.log('Mic toggled')
@@ -168,3 +166,4 @@ export class CallControlsComponent {
   //   }
   // }
 }
+

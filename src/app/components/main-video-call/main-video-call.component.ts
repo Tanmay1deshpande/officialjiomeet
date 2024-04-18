@@ -44,17 +44,19 @@ export class MainVideoCallComponent {
     // this.showloader = true;
     // this.loaderService.hideLoader();
 
-    // this.registerDevices();
+    this.registerDevices();
 
-    // this.mediaservice.createPreview();
+    this.mediaservice.createPreview();
     // this.subs.push(
     //   this.mediaservice.getLocalParticipant().subscribe(async (data) => {
-    //     if (data.action == 'videoOn') {
+    //     if (data.action == 'videoOff') {
     //       const videoTrack = data.localpeer;
     //       videoTrack.play('localpeer');
     //     }
     //   })
     // );
+
+    
 	}
 
   async registerDevices() {

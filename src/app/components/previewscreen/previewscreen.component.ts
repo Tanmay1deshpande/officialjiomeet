@@ -49,14 +49,14 @@ export class PreviewscreenComponent {
     this.registerDevices();
 
     this.mediaservice.createPreview();
-    this.subs.push(
-      this.mediaservice.getLocalParticipant().subscribe(async (data) => {
-        if (data.action == 'videoOn') {
-          const videoTrack = data.localpeer;
-          videoTrack.play('localpeer');
-        }
-      })
-    );
+    // this.subs.push(
+    //   this.mediaservice.getLocalParticipant().subscribe(async (data) => {
+    //     if (data.action == 'videoOn') {
+    //       const videoTrack = data.localpeer;
+    //       videoTrack.play('localpeer');
+    //     }
+    //   })
+    // );
 }
 async registerDevices() {
   await JMDeviceManager.getMediaPermissions(true, true);

@@ -16,7 +16,7 @@ export class ParticipantsViewComponent implements OnChanges, OnInit,AfterViewIni
   @Input() isSpeaking: any;
   @Input() hasVideo: any;
   initialColor=''
-  subs = [];
+  subs: any = [];
   colors = {
     a: '#F38282',
     b: '#DEB018',
@@ -58,9 +58,9 @@ export class ParticipantsViewComponent implements OnChanges, OnInit,AfterViewIni
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['hasVideo']?.currentValue && !this.remotePeer?.isLocal){
-      this.subscribeToVideo();
-    }
+    // if(changes['hasVideo']?.currentValue && !this.remotePeer?.isLocal){
+    //   this.subscribeToVideo();
+    // }
   }
 
   // setInitialColor(){
@@ -74,7 +74,7 @@ export class ParticipantsViewComponent implements OnChanges, OnInit,AfterViewIni
     videoTrack.play(this.remotePeer.peerId);
   }
 
-  // ngOnDestroy(): void {
-  //   this.subs.forEach((s)=> s.unsubscribe())
-  // }
+  ngOnDestroy(): void {
+    this.subs.forEach((s: any)=> s.unsubscribe())
+  }
 }

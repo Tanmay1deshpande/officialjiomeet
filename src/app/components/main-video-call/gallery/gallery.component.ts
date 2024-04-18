@@ -22,69 +22,90 @@ export class GalleryComponent  implements OnInit {
   constructor(private mediaservice: MediaserviceService, private router: Router) {}
 
   ngOnInit(): void {
-    this.participantsInCall = this.mediaservice.jmClient.remotePeers;
+    // this.participantsInCall = this.mediaservice.jmClient.remotePeers;
+    // this.participantsInCall = this.mediaservice.jmClient.remotePeers;
     // this.mediaservice.jmClient.localPeer['isLocal'] = true;
-    // this.participantsInCall.push(this.mediaservice.jmClient.localPeer);
+    // this.subs.push(
+    //   this.mediaservice.getLocalParticipant().subscribe(async (data) => {
+    //     if (data.action == 'joined' && !this.mediaservice.getLocalParticipant()) {
+    //       this.participantsInCall.push(data.localpeer);
+    //     }
+    //     this.localpeer = data.localpeer;
+    //     if (data.action == 'videoOn') {
+    //       const videoTrack = this.localpeer.videoTrack;
+    //       videoTrack.play(data.localpeer.peerId);
+    //     }
+    //   }),
+    //   this.mediaservice.getParticipantsUpdated().subscribe(async (user) => {
+    //     switch (user?.state) {
+    //       case 'localLeft':
+    //         this.participantsInCall = [];
+    //         this.localpeer = {};
+    //         this.router.navigate(['/preview']);
+    //         break;
+
+    //       case 'screenshareStart':
+    //         this.screenSharingUser = user.user;
+    //         const screenShareTrack =
+    //           await this.mediaservice.jmClient.subscribeMedia(
+    //             this.screenSharingUser,
+    //             'screenShare'
+    //           );
+    //         screenShareTrack.play('screenShare', { mirror: false });
+    //         this.isScreenSharing = true;
+    //         break;
+
+    //       case 'screenshareStop':
+    //         this.screenSharingUser = {};
+    //         this.isScreenSharing = false;
+    //         break;
+
+    //       case 'joined':
+    //         if (!this.participantsInCall.includes(user.user)) {
+    //           this.participantsInCall.push(user.user);
+    //         }
+    //         break;
+
+    //       case 'left':
+    //         this.participantsInCall = this.participantsInCall.filter(
+    //           (u: any) => {
+    //             return u.peerId != user.user.peerId;
+    //           }
+    //         );
+    //         break;
+
+    //       case 'dominantSpeaker':
+    //         this.dominantSpeaker = user?.user;
+    //         break;
+
+    //       default:
+    //         break;
+    //     }
+    //   })
+    // );
+    this.participantsInCall = this.mediaservice.jmClient.remotePeers;
+    this.mediaservice.jmClient.localPeer['isLocal'] = true;
+    this.participantsInCall.push(this.mediaservice.jmClient.localPeer);
     this.subs.push(
       this.mediaservice.getLocalParticipant().subscribe(async (data) => {
-        if (data.action == 'joined' && !this.mediaservice.getLocalParticipant()) {
+        console.log("Data from gallery", data)
+        if (data.action == 'joined') {
           this.participantsInCall.push(data.localpeer);
         }
         this.localpeer = data.localpeer;
+        console.log("b");
         if (data.action == 'videoOn') {
+          console.log("Video action received in gallery");
           const videoTrack = this.localpeer.videoTrack;
+          console.log("Video track received", videoTrack);
           videoTrack.play(data.localpeer.peerId);
+          console.log("Video track played in gallery");
         }
       }),
-      this.mediaservice.getParticipantsUpdated().subscribe(async (user) => {
-        switch (user?.state) {
-          case 'localLeft':
-            this.participantsInCall = [];
-            this.localpeer = {};
-            this.router.navigate(['/preview']);
-            break;
-
-          case 'screenshareStart':
-            this.screenSharingUser = user.user;
-            const screenShareTrack =
-              await this.mediaservice.jmClient.subscribeMedia(
-                this.screenSharingUser,
-                'screenShare'
-              );
-            screenShareTrack.play('screenShare', { mirror: false });
-            this.isScreenSharing = true;
-            break;
-
-          case 'screenshareStop':
-            this.screenSharingUser = {};
-            this.isScreenSharing = false;
-            break;
-
-          case 'joined':
-            if (!this.participantsInCall.includes(user.user)) {
-              this.participantsInCall.push(user.user);
-            }
-            break;
-
-          case 'left':
-            this.participantsInCall = this.participantsInCall.filter(
-              (u: any) => {
-                return u.peerId != user.user.peerId;
-              }
-            );
-            break;
-
-          case 'dominantSpeaker':
-            this.dominantSpeaker = user?.user;
-            break;
-
-          default:
-            break;
-        }
-      })
     );
     
   }
+  
   async subscribeToVideo(peer: any) {
     const videoTrack = await this.mediaservice.jmClient.subscribeMedia(
       peer,
@@ -100,7 +121,7 @@ export class GalleryComponent  implements OnInit {
     return this.participantsInCall.length;
   }
 
-  // ngOnDestroy(): void {
-  //   this.subs.forEach((sub) => sub.unsubscribe());
-  // }
+  ngOnDestroy(): void {
+    this.subs.forEach((sub) => sub.unsubscribe());
+  }
 }

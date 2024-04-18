@@ -23,7 +23,7 @@ export class CallControlsComponent {
   signalQuality='NONE'
   @ViewChild('network')
   networkIndicator!: ElementRef;
-  jmClient = new JMClient();
+  //jmClient = new JMClient();
 
   constructor(
     private mediaservice: MediaserviceService,
@@ -106,29 +106,18 @@ export class CallControlsComponent {
   }
 
   async toggleVideoCam() {
+    // console.log("working");
     await this.mediaservice.toggleVideoStatus();
   }
 
   async toggleVideo() {
-    await this.mediaservice
-      .toggleVideoStatus()
-    // this.mediaservice
-    //   .toggleVideoStatus()
-      // .then(() => {
-        this.isLocalVideoOn = !this.isLocalVideoOn;
-        console.log('video toggled')
-      // })
-      // .catch(() => {});
+    await this.mediaservice.toggleVideoStatus();
+    //this.mediaservice.toggleLocalVideoStatus();
+    console.log("Triggered video from call control")
   }
   
   async toggleAudio() {
-    await this.mediaservice
-      .toggleMicStatus()
-      // .then(() => {
-        this.isLocalMicOn = !this.isLocalMicOn;
-        console.log('Mic toggled')
-      //})
-      // .catch(() => {});
+    this.mediaservice.toggleMicStatus();
   }
 
   async leave() {

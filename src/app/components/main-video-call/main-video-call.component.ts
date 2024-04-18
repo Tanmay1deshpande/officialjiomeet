@@ -18,6 +18,7 @@ export class MainVideoCallComponent {
   localpeer: any;
   enablePanOverlay: boolean = false
   enableFaceOverlay: boolean = false
+  participantsInCall:any[]=[];
 	@ViewChild('videoElement') videoElement!:ElementRef;
   optionsController={
     more:false

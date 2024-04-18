@@ -3,8 +3,19 @@
     <div class="grid grid--{{
         getNumberOfTiles
     }} " [class.screenSharing]="isScreenSharing">
-        <div *ngFor="let user of participantsInCall; let i=index"
+        <!-- <div *ngFor="let user of participantsInCall; let i=index"
             id="remotepeer"
+            class="video-{{i+1}} tile videoContainer"
+            [class.dominant-speaker]="dominantSpeaker ? dominantSpeaker?.peerId==user?.peerId:false"
+        >
+            <app-participants-view 
+            [remotePeer]="user"
+            [isSpeaking]="!user?.audioMuted"
+            [hasVideo]="!user?.videoMuted"
+            ></app-participants-view>
+        </div> -->
+        <div *ngFor="let user of participantsInCall; let i=index"
+            id={{user?.peerId}}
             class="video-{{i+1}} tile videoContainer"
             [class.dominant-speaker]="dominantSpeaker ? dominantSpeaker?.peerId==user?.peerId:false"
         >

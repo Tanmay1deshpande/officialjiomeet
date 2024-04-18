@@ -34,6 +34,7 @@ export class MediaserviceService {
   addJMEventListeners() {
 
     EventManager.onEvent(async (eventInfo: any) => {
+      console.log("Event from jiomeet", eventInfo);
 
       const { data } = eventInfo;
 
@@ -71,7 +72,8 @@ export class MediaserviceService {
           } else if (action === 'VIDEO_MUTE') {
             if (value === false) {
               const videoTrack = await this.jmClient.subscribeMedia(remotePeer, 'video');
-              videoTrack.play('remotepeer');
+              videoTrack.play(remotePeer.peerId);
+              console.log("Remote player turned on video")
             }
           } else if (action === 'SCREEN_SHARE') {
             if (value) {

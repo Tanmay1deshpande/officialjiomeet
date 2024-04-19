@@ -1,0 +1,21 @@
+
+p{
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+h1{
+    color: rgb(60, 1, 1);
+}
+
+.mat-mdc-dialog-content{
+    padding: 20px 24px 10px 24px ;
+}
+
+.mat-mdc-dialog-actions{
+    margin-bottom: 10px;
+}
+
+::ng-deep .cdk-overlay-pane {
+    align-items: center;
+  }

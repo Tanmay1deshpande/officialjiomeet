@@ -20,6 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ParticipantsViewComponent } from './components/main-video-call/participants-view/participants-view.component';
 import { GalleryComponent } from './components/main-video-call/gallery/gallery.component';
 import { CallAudioSettingsComponent } from './components/call-settings/call-audio-settings/call-audio-settings.component';
+import { MatDialogComponent } from './components/mat-dialog/mat-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { CallAudioSettingsComponent } from './components/call-settings/call-audi
     PreviewscreenComponent,
     ParticipantsViewComponent,
     GalleryComponent,
-    CallAudioSettingsComponent
+    CallAudioSettingsComponent,
+    MatDialogComponent
   ],
   imports: [
     BrowserModule,

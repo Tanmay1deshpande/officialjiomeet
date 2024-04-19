@@ -1,11 +1,12 @@
-import { Component, ViewChild, OnInit, ElementRef, NgModule, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Output, Renderer2} from '@angular/core';
-import { EventManager, IJMRemotePeer, JMClient, IJMInfoEventTypes, IJMMediaSetting, IJMJoinMeetingParams, IJMLocalAudioTrack, IJMLocalPeer, IJMLocalScreenShareTrack, IJMLocalVideoTrack, IJMPreviewManager, IJMRemoteAudioTrack, IJMRemoteScreenShareTrack, IJMRemoteVideoTrack, IJMConnectionStateEvent, IJMRequestMediaType } from '@jiomeet/core-sdk-web';
-import { async } from 'rxjs';
+import { Component, ViewChild, ElementRef, HostListener} from '@angular/core';
+import { Location } from '@angular/common';
+import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { MediaserviceService } from '../../services/mediaservice.service';
-import {CommonModule} from '@angular/common';
 import { JMDeviceManager } from '@jiomeet/core-sdk-web';
-// import { html2canvas } from 'html2canvas'
 import * as html2canvas from 'html2canvas';
+import { Subject, fromEvent, takeUntil } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogComponent } from '../mat-dialog/mat-dialog.component';
 
 @Component({
   selector: 'app-main-video-call',
@@ -14,6 +15,7 @@ import * as html2canvas from 'html2canvas';
 })
 export class MainVideoCallComponent {
 
+  private unsubscriber: Subject<void> = new Subject<void>();
   showloader!: boolean;
   loaderService: any;
   subs: any[] = [];
@@ -26,22 +28,48 @@ export class MainVideoCallComponent {
   optionsController={
     more:false
   }
-
-  // @ViewChild('network')
-  // networkIndicator!: ElementRef;
-  // @Output() changeControl = new EventEmitter();
-  // isLocalVideoOn = false;
-  // isScreenShare = false;
-  // micMuted = true;
-  // videoMuted = true;
-  // signalQuality='NONE'
-
+  private confirmedNavigation = false;
   constructor(
     public mediaservice: MediaserviceService,
+    private router : Router, 
+    private matDialog: MatDialog,
+    private location: Location
   ){}
 
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHandler(event: Event) {
+    //event.preventDefault();
+    console.log('Refresh button pressed!');
+    this.mediaservice.leaveMeeting();
+    
+  }
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event: Event) {
+    //event.preventDefault();
+    console.log('Back button pressed!');
+    this.mediaservice.leaveMeeting();
+  }
 
 	ngOnInit(){
+
+    
+    
+    // this.router.events.subscribe(event => {
+    //   if (event instanceof NavigationStart) {
+    //     if (event instanceof NavigationStart && event.navigationTrigger === 'popstate') {
+    //       this.openDialog();
+    //     }
+    //   }
+    // });
+
+    // fromEvent(window, 'popstate')
+    //   .pipe(takeUntil(this.unsubscriber))
+    //   .subscribe((_) => {
+    //     history.pushState(null, '');
+    //     alert(`You can't make changes or go back at this time.`);
+    // });
+
+
     // this.showloader = true;
     // this.loaderService.showLoader();
 		// this.startCamera();
@@ -61,21 +89,17 @@ export class MainVideoCallComponent {
     // );
 	}
 
+  openDialog(){
+    this.matDialog.open(MatDialogComponent,{
+      width: '350px'
+    })
+  }
+
   async registerDevices() {
     await JMDeviceManager.getMediaPermissions(true, true);
   
     JMDeviceManager.getDevices();
   }
-
-	// async startCamera(){
-	// 	try{
-	// 		const stream=await navigator.mediaDevices.getUserMedia({video:true});
-	// 		this.videoElement.nativeElement.srcObject = stream;
-	// 	}catch(error){
-	// 		// console.error("Error", error);
-	// 	}	
-	// }
-
   
   changeController(){
     this.optionsController.more=!this.optionsController.more;
@@ -121,6 +145,11 @@ export class MainVideoCallComponent {
     document.body.removeChild(link);
   }
 
+
+  // ngOnDestroy() {
+  //   // Removing the event listener when the component is destroyed
+  //   window.removeEventListener('beforeunload', this.onPageRefresh);
+  // }
   
   
 }

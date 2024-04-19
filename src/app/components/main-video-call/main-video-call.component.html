@@ -1,5 +1,5 @@
 <div class="main-container">
-    <div class="main-video-container">
+    <div id="main-video-container">
 
         <div class="gallery-view">
             <app-gallery></app-gallery>
@@ -55,6 +55,13 @@
                                     (click)="togglePanOverlay()" 
                                     style="background-color: aliceblue;">
                                     <mat-icon>flip</mat-icon>
+                            </button>
+                            <button 
+                                    mat-icon-button 
+                                    matTooltip="Take Screenshot"
+                                    (click)="captureScreenshot()" 
+                                    style="background-color: aliceblue;">
+                                    <mat-icon>camera</mat-icon>
                             </button>
                     </div>
 

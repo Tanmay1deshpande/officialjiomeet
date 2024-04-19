@@ -4,6 +4,8 @@ import { async } from 'rxjs';
 import { MediaserviceService } from '../../services/mediaservice.service';
 import {CommonModule} from '@angular/common';
 import { JMDeviceManager } from '@jiomeet/core-sdk-web';
+// import { html2canvas } from 'html2canvas'
+import * as html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-main-video-call',
@@ -94,6 +96,29 @@ export class MainVideoCallComponent {
     this.enableFaceOverlay = !this.enableFaceOverlay;
     this.enablePanOverlay=false
     console.log('facetoggled')
+  }
+
+  captureScreenshot() {
+    const element = document.getElementById('main-video-container');
+    console.log(element);
+    if(element){
+    html2canvas.default(element).then((canvas: { toDataURL: (arg0: string) => any; }) => {
+      // Convert canvas to base64 image
+      const imageData = canvas.toDataURL('image/png');
+      this.downloadScreenshot(imageData);
+    });
+  }else {
+    console.log('element not found')
+  }
+  }
+  
+  downloadScreenshot(imageData: string) {
+    const link = document.createElement('a');
+    link.href = imageData;
+    link.download = 'screenshot.png'; 
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   

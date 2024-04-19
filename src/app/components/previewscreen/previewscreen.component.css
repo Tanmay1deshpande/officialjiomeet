@@ -84,3 +84,17 @@
     border: 1px solid blueviolet;
     border-radius: 50%;
 }
+
+@media (max-width:1000px){
+    .main-preview-screen{
+        flex-direction: column;
+        margin-top: 175px;
+    }
+}
+
+@media (max-width:400px){
+    .controls{
+        font-size: 16px;
+        padding: 2px;
+    }
+}

@@ -41,8 +41,8 @@ export class MainVideoCallComponent {
     //event.preventDefault();
     console.log('Refresh button pressed!');
     this.mediaservice.leaveMeeting();
-    
   }
+  
   @HostListener('window:popstate', ['$event'])
   onPopState(event: Event) {
     //event.preventDefault();

@@ -31,8 +31,9 @@
                 <input matInput
                 placeholder="Ex. abcd2"
                 formControlName="meetingId"
+                autocomplete="on"
                 type="text"
-                
+                name="meetingId"
                 (keydown.enter)="$event.preventDefault()"
                 required>
                 <mat-error *ngIf="meetingcreds.get('meetingId')?.hasError('firstCharSpace')">
@@ -51,6 +52,8 @@
                 <input 
                 matInput
                 type="text"
+                name="meetingPin"
+                autocomplete="on"
                 maxlength="5"
                 formControlName="meetingPin"
                 required>
@@ -64,6 +67,8 @@
                 <input 
                 matInput
                 type="text"
+                name="displayName"
+                autocomplete="on"
                 formControlName="displayName"
                 placeholder="Ex. John"
                 required>

@@ -42,7 +42,7 @@ import { CallAudioSettingsComponent } from './components/call-settings/call-audi
     MatIconModule,
     MatInputModule,
     ReactiveFormsModule,
-    FormsModule,
+    FormsModule
     // LoaderModule
     
   ],

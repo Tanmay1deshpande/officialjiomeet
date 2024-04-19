@@ -1,5 +1,5 @@
 .video-controls{
-    background-color: rgb(43,43,43);
+    background-color: rgb(33,33,33);
     /* width: 100%; */
     height: fit-content;
     padding: 5px 10px;
@@ -37,4 +37,16 @@ button:active{
 .tooltip {
     background-color: rgb(61, 61, 61) !important;
     color: yellow !important;
+}
+
+#leave-meeting-btn{
+    color: rgb(250, 23, 23);
+}
+
+#leave-meeting-btn:hover{
+    border: 1px solid red;
+}
+
+#leave-meeting-btn:active{
+    border: 1px solid red;
 }

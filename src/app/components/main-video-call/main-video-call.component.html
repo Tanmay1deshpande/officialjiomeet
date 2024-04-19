@@ -3,7 +3,9 @@
 
         <div class="gallery-view">
             <app-gallery></app-gallery>
-            <div id="localpeer" class="main-video-local">
+            <div id="localpeer" class="main-video-local" >
+            <!-- [class.dominant-speaker]="dominantSpeaker ? dominantSpeaker?.peerId==user?.peerId:false"  -->
+            
                 <p class="local-username" style="margin: 5px; z-index: 999; position: absolute;" > You </p>
             </div>
         </div>

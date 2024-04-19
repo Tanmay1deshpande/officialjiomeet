@@ -19,6 +19,7 @@ export class MainVideoCallComponent {
   enablePanOverlay: boolean = false
   enableFaceOverlay: boolean = false
   participantsInCall:any[]=[];
+  dominantSpeaker: any;
 	@ViewChild('videoElement') videoElement!:ElementRef;
   optionsController={
     more:false
@@ -94,5 +95,7 @@ export class MainVideoCallComponent {
     this.enablePanOverlay=false
     console.log('facetoggled')
   }
+
+  
   
 }

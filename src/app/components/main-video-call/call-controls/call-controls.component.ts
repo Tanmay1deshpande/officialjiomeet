@@ -103,21 +103,25 @@ export class CallControlsComponent {
   
   async toggleMic(){
     await this.mediaservice.toggleMicStatus()
+    this.isLocalMicOn = !this.isLocalMicOn;
   }
 
   async toggleVideoCam() {
     // console.log("working");
     await this.mediaservice.toggleVideoStatus();
+    this.isLocalVideoOn = !this.isLocalVideoOn;
   }
 
   async toggleVideo() {
-    await this.mediaservice.toggleVideoStatus();
+    await this.mediaservice.toggleVideoStatusBoth();
+    this.isLocalVideoOn = !this.isLocalVideoOn;
     //this.mediaservice.toggleLocalVideoStatus();
     console.log("Triggered video from call control")
   }
   
   async toggleAudio() {
     this.mediaservice.toggleMicStatus();
+    this.isLocalMicOn = !this.isLocalMicOn;
   }
 
   async leave() {

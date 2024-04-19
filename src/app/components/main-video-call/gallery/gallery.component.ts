@@ -89,11 +89,11 @@ export class GalleryComponent  implements OnInit {
     this.subs.push(
       this.mediaservice.getLocalParticipant().subscribe(async (data) => {
         console.log("Data from gallery", data)
-        if (data.action == 'joined') {
+        if (data.action == 'joined' && !this.mediaservice.getLocalUser) {
           this.participantsInCall.push(data.localpeer);
         }
         this.localpeer = data.localpeer;
-        console.log("b");
+        console.log(this.participantsInCall);
         if (data.action == 'videoOn') {
           console.log("Video action received in gallery");
           const videoTrack = this.localpeer.videoTrack;

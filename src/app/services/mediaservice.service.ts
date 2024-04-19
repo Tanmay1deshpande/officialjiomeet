@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EventManager, JMClient, IJMRemotePeer } from '@jiomeet/core-sdk-web';
 import { IJM_EVENTS } from '../constants';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, config } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -278,7 +278,7 @@ export class MediaserviceService {
             !this.videoIsMute &&
             this.preview.previewInstance.localUser.videoTrack
           ) {
-            this.preview.previewInstance.localUser.videoTrack.play('localpeer');
+            this.preview.previewInstance.localUser.videoTrack.play('localpeer', {mirror:false});
           }
         })
 
@@ -301,7 +301,7 @@ export class MediaserviceService {
             !this.videoIsMute &&
             this.preview.previewInstance.localUser.videoTrack
           ) {
-            this.preview.previewInstance.localUser.videoTrack.play('localpeer');
+            this.preview.previewInstance.localUser.videoTrack.play('localpeer', {mirror:false});
             console.log('local video toggled')
           }
         })

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EventManager, JMClient, IJMRemotePeer } from '@jiomeet/core-sdk-web';
+import { EventManager, JMClient, IJMRemotePeer, IFacingMode, IJMVideoSettings } from '@jiomeet/core-sdk-web';
 import { IJM_EVENTS } from '../constants';
 import { BehaviorSubject, Subject, config } from 'rxjs';
 import { Router } from '@angular/router';
@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class MediaserviceService {
 
   audioIsMute = true;
+  cameraFlipped = true;
   type: 'image' | 'none' | 'blur';
   videoIsMute = true;
   jmClient = new JMClient();
@@ -360,6 +361,27 @@ export class MediaserviceService {
       console.log('error Muting Mic');
     }
 
+  }
+
+  async toggleFlipCamera() {
+    try {
+      this.cameraFlipped = !this.cameraFlipped;
+      let facing : IJMVideoSettings = {
+        facingMode: IFacingMode.USER
+      }
+        
+
+      await this.jmClient
+        .setVideoDevice(facing)
+        .catch((error: any) => {
+          console.log('Error while toggling flip camera:', error);
+          this.cameraFlipped = !this.cameraFlipped;
+        });
+
+    } catch(error) {
+      console.log('error while switching camera',error);
+      this.cameraFlipped = !this.cameraFlipped;
+    }
   }
 
 

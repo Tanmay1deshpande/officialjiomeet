@@ -46,24 +46,6 @@ export class MediaserviceService {
 
       switch (eventInfo.type) {
 
-        // case IJM_EVENTS.LOCAL_JOINED:
-        //         this.localParticipant$.next({
-        //           user: this.getLocalUser(),
-        //           state: 'joined',
-        //         });
-        //         console.log('Local participant joined');
-        //         break;
-
-        // case IJM_EVENTS.LOCAL_LEFT:
-          
-        //   this.localParticipant$.next({
-        //     user: this.getLocalUser(), 
-        //     state: 'left',
-        //   });
-        //   console.log('Local participant left');
-        //   break;
-
-
 
         
 
@@ -127,17 +109,34 @@ export class MediaserviceService {
           break;
 
         case IJM_EVENTS.PEER_LEFT:
+          console.log(data.remotePeer);
           this.participantsUpdated$.next({
             user: data.remotePeer,
             state: 'left',
           });
           console.log(" left!");
+
+          if(this.getLocalUser()){
+            alert("Looks like customer left!");
+            setTimeout(() => {
+              this.router.navigate(['']);
+            }, 5000);
+          }else{
+            alert("Looks like agent left!");
+            setTimeout(() => {
+              this.router.navigate(['']);
+            }, 10000);
+          }
+
+
+
           break;
 
         case IJM_EVENTS.DEVICE_UPDATED:
           if (data.state == 'ACTIVE' && data.deviceType == 'audioOutput') {
             this.selectedSpeaker = data.device.deviceId;
             this.jmClient.setAudioOutputDevice(data.device.deviceId);
+            console.log()
           }
           if (
             data.state == 'ACTIVE' &&
@@ -428,6 +427,7 @@ export class MediaserviceService {
         .setVideoDevice(videoSettings)
         .then(()=>{
           console.log('Flipped');
+          console.log("User env mode after flip", navigator.mediaDevices.getUserMedia())
         })
         .catch((error: any) => {
           console.log('Error while toggling flip camera:', error);

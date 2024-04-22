@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { EventManager, JMClient, IJMRemotePeer, IFacingMode, IJMVideoSettings } from '@jiomeet/core-sdk-web';
+import { EventManager, JMClient, IJMRemotePeer, IJMLocalPeer, IFacingMode, IJMVideoSettings } from '@jiomeet/core-sdk-web';
 import { IJM_EVENTS } from '../constants';
 import { BehaviorSubject, Subject, config } from 'rxjs';
 import { Router } from '@angular/router';
+import { state } from '@angular/animations';
 
 @Injectable({
 
@@ -36,19 +37,52 @@ export class MediaserviceService {
 
     EventManager.onEvent(async (eventInfo: any) => {
       console.log("Event from jiomeet", eventInfo);
+      console.log(this.getLocalUser());
+
+      
 
       const { data } = eventInfo;
+      console.log(data);
 
       switch (eventInfo.type) {
 
-        case IJM_EVENTS.PEER_JOINED:
-          const { remotePeers } = data;
+        // case IJM_EVENTS.LOCAL_JOINED:
+        //         this.localParticipant$.next({
+        //           user: this.getLocalUser(),
+        //           state: 'joined',
+        //         });
+        //         console.log('Local participant joined');
+        //         break;
+
+        // case IJM_EVENTS.LOCAL_LEFT:
+          
+        //   this.localParticipant$.next({
+        //     user: this.getLocalUser(), 
+        //     state: 'left',
+        //   });
+        //   console.log('Local participant left');
+        //   break;
+
+
+
+        
+
+        case (IJM_EVENTS.PEER_JOINED):
+          const { remotePeers} = data;
           remotePeers.forEach((remotePeer: IJMRemotePeer) => {
             this.participantsUpdated$.next({
               user: remotePeer,
               state: 'joined',
             });
           });
+          console.log(eventInfo.data.remotePeers[0].name + " joined!");
+          // localPeers.forEach((localPeer: IJMLocalPeer)=>{
+          //   this.participantsUpdated$.next({
+          //     user: localPeer,
+          //     state: 'joined'
+          //   })
+          //   console.log("yayy");
+          // })
           break;
 
         case IJM_EVENTS.PEER_UPDATED:
@@ -97,7 +131,7 @@ export class MediaserviceService {
             user: data.remotePeer,
             state: 'left',
           });
-          console.log('left');
+          console.log(" left!");
           break;
 
         case IJM_EVENTS.DEVICE_UPDATED:
@@ -171,6 +205,7 @@ export class MediaserviceService {
   }
 
   async createPreview() {
+    
     await this.jmClient.createPreview('1');
     this.preview = await this.jmClient.getPreview('1');
   }
@@ -386,11 +421,14 @@ export class MediaserviceService {
   async flipcam(){
     if(this.cameraFlipped){
       let videoSettings : IJMVideoSettings = {
-        facingMode: IFacingMode.USER
+        facingMode: IFacingMode.ENVIRONMENT
       }
         
       await this.jmClient
         .setVideoDevice(videoSettings)
+        .then(()=>{
+          console.log('Flipped');
+        })
         .catch((error: any) => {
           console.log('Error while toggling flip camera:', error);
           this.cameraFlipped = !this.cameraFlipped;
@@ -406,7 +444,7 @@ export class MediaserviceService {
     userName: string,
     mediaconf: any
   ) {
-
+    
     await this.jmClient
       .joinMeeting({
         meetingId: meetingId,
@@ -421,6 +459,8 @@ export class MediaserviceService {
         this.router.navigate(['/main-video']);
         setTimeout(async () => {
           this.addJMEventListeners();
+
+          
           let sourceType: 'image' | 'none' | 'blur' = 'none';
           let localUserConfig = {
             trackSettings: {
@@ -440,7 +480,16 @@ export class MediaserviceService {
           };
 
           await this.jmClient.publish(localUserConfig).then(() => {
+
+            // console.log(this.getLocalUser());
+              // this.participantsUpdated$.next({
+              //   user: this.getLocalUser(), // Assuming this returns the local user information
+              //   state: 'joined',
+              // });
+              // console.log("user joined", this.getLocalUser);
+
             if (!this.preview.previewInstance.localUserSettings?.videoMuted) {
+
               this.localParticipant$.next({
                 localpeer: this.getLocalUser(),
                 action: this.videoIsMute ? 'videoOff' : 'videoOn',
@@ -470,7 +519,7 @@ export class MediaserviceService {
           });
 
         }, 500);
-        console.log('joinedSuccessfully');
+        // console.log("You, "+ userName + " joined!");
       })
 
       .catch(() => {
@@ -525,4 +574,3 @@ export class MediaserviceService {
     }
   }
 }
-

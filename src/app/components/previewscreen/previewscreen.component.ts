@@ -47,14 +47,13 @@ export class PreviewscreenComponent {
   });
   
     this.registerDevices();
-
     this.mediaservice.createPreview();
+    
+    // console.log(data);
     // this.subs.push(
     //   this.mediaservice.getLocalParticipant().subscribe(async (data) => {
-    //     if (data.action == 'videoOn') {
-    //       const videoTrack = data.localpeer;
-    //       videoTrack.play('localpeer');
-    //     }
+    //     console.log(this.localpeer);
+    //     console.log(data);
     //   })
     // );
 }
@@ -110,6 +109,8 @@ join() {
 
   console.log('Thank you for joining');
   console.log(this.meetingcreds.value);
+
+  // console.log(this.mediaservice.getLocalUser());
 
 
   this.mediaservice.joinCall(

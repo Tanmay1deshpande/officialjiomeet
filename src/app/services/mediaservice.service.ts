@@ -4,6 +4,7 @@ import { IJM_EVENTS } from '../constants';
 import { BehaviorSubject, Subject, config } from 'rxjs';
 import { Router } from '@angular/router';
 import { state } from '@angular/animations';
+import { RemotePeer } from '@jiomeet/core-sdk-web/src/room-store/peer/remote-peer';
 
 @Injectable({
 
@@ -60,6 +61,7 @@ export class MediaserviceService {
 
             console.log(remotePeer.name + " joined!");
           });
+        
           
           // localPeers.forEach((localPeer: IJMLocalPeer)=>{
           //   this.participantsUpdated$.next({
@@ -116,20 +118,24 @@ export class MediaserviceService {
             user: data.remotePeer,
             state: 'left',
           });
-          console.log(remotePeer.name +" left!");
+          // console.log(remotePeer.name +" left!");
 
           const port = window.location.port;
           // console.log(port);
 
           if(port == '4200'){
             setTimeout(() => {
-              alert("Looks like customer left!");
+              console.log("Looks like customer left!");
+              this.jmClient.leaveMeeting();
+              // this.participantsUpdated$.next({ user: [], state: 'localLeft' });
               this.router.navigate(['']);
             }, 5000);
           }else{
             
             setTimeout(() => {
-              alert("Looks like agent left!");
+              console.log("Looks like agent left!");
+              this.jmClient.leaveMeeting();
+              // this.participantsUpdated$.next({ user: [], state: 'localLeft' });
               this.router.navigate(['']);
             }, 10000);
           }
@@ -452,7 +458,10 @@ export class MediaserviceService {
     userName: string,
     mediaconf: any
   ) {
-    
+    if(this.jmClient.remotePeers.length>=2){
+      this.jmClient.toggleMeetingLock();
+      console.log('Maximu Occupancy reached! Cannot Join.')
+    }else{
     await this.jmClient
       .joinMeeting({
         meetingId: meetingId,
@@ -510,20 +519,6 @@ export class MediaserviceService {
                 action: this.audioIsMute ? 'audioOff' : 'audioOn',
               });
             }
-
-            // if (this.preview.previewInstance.localUserSettings?.videoMuted) {
-            //   this.localParticipant$.next({
-            //     localpeer: this.getLocalUser(),
-            //     action: this.videoIsMute ? 'videoOn' : 'videoOff',
-            //   });
-            // }
-
-            // if (this.preview.previewInstance.localUserSettings.audioMuted) {
-            //   this.localParticipant$.next({
-            //     localpeer: this.getLocalUser(),
-            //     action: this.audioIsMute ? 'audioOn' : 'audioOff',
-            //   });
-            // }
           });
 
         }, 500);
@@ -534,6 +529,7 @@ export class MediaserviceService {
         console.log('errpr While Joining',meetingId,pin,userName);
         alert('Error while joining meeting')
       });
+    }
   }
 
   async toggleRemotepeerAudio(){

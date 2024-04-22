@@ -58,11 +58,9 @@ export class MediaserviceService {
               user: remotePeer,
               state: 'joined',
             });
-
             console.log(remotePeer.name + " joined!");
           });
-        
-          
+          console.log(eventInfo.data.remotePeers[0].name + " joined!");
           // localPeers.forEach((localPeer: IJMLocalPeer)=>{
           //   this.participantsUpdated$.next({
           //     user: localPeer,
@@ -118,24 +116,16 @@ export class MediaserviceService {
             user: data.remotePeer,
             state: 'left',
           });
-          // console.log(remotePeer.name +" left!");
+          console.log(" left!");
 
-          const port = window.location.port;
-          // console.log(port);
-
-          if(port == '4200'){
+          if(this.getLocalUser()){
+            alert("Looks like customer left!");
             setTimeout(() => {
-              console.log("Looks like customer left!");
-              this.jmClient.leaveMeeting();
-              // this.participantsUpdated$.next({ user: [], state: 'localLeft' });
               this.router.navigate(['']);
             }, 5000);
           }else{
-            
+            alert("Looks like agent left!");
             setTimeout(() => {
-              console.log("Looks like agent left!");
-              this.jmClient.leaveMeeting();
-              // this.participantsUpdated$.next({ user: [], state: 'localLeft' });
               this.router.navigate(['']);
             }, 10000);
           }

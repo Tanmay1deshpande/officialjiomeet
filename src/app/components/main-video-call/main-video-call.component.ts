@@ -135,6 +135,11 @@ export class MainVideoCallComponent {
     console.log('element not found')
   }
   }
+
+  async toggleFlipCam(){
+    // await this.mediaservice.toggleFlipCamera();
+    await this.mediaservice.flipcam();
+  }
   
   downloadScreenshot(imageData: string) {
     const link = document.createElement('a');

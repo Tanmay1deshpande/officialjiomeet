@@ -363,24 +363,38 @@ export class MediaserviceService {
 
   }
 
-  async toggleFlipCamera() {
-    try {
-      this.cameraFlipped = !this.cameraFlipped;
-      let facing : IJMVideoSettings = {
+  // async toggleFlipCamera() {
+  //   try {
+  //     this.cameraFlipped = !this.cameraFlipped;
+  //     let videoSettings : IJMVideoSettings = {
+  //       facingMode: IFacingMode.USER
+  //     }
+        
+  //     await this.jmClient
+  //       .setVideoDevice(videoSettings)
+  //       .catch((error: any) => {
+  //         console.log('Error while toggling flip camera:', error);
+  //         this.cameraFlipped = !this.cameraFlipped;
+  //       });
+
+  //   } catch(error) {
+  //     console.log('error while switching camera',error);
+  //     this.cameraFlipped = !this.cameraFlipped;
+  //   }
+  // }
+
+  async flipcam(){
+    if(this.cameraFlipped){
+      let videoSettings : IJMVideoSettings = {
         facingMode: IFacingMode.USER
       }
         
-
       await this.jmClient
-        .setVideoDevice(facing)
+        .setVideoDevice(videoSettings)
         .catch((error: any) => {
           console.log('Error while toggling flip camera:', error);
           this.cameraFlipped = !this.cameraFlipped;
         });
-
-    } catch(error) {
-      console.log('error while switching camera',error);
-      this.cameraFlipped = !this.cameraFlipped;
     }
   }
 

@@ -458,7 +458,9 @@ export class MediaserviceService {
         meetingPin: pin,
         userDisplayName: userName,
         config: {
+          //for userrole speaker remove token. Token only necessary for userrole host.
           userRole: 'speaker',
+          //token:'1'
         },
       })
 

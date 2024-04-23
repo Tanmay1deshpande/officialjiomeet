@@ -54,8 +54,8 @@
 .main-video-local{
     background-color: rgb(50, 50, 50);
     border-radius: 10px;
-    width: 18vw;
-    height: 23vh;
+    width: 21vw;
+    height: 25vh;
     position: absolute;
     z-index: 4;
     bottom: 0;
@@ -136,4 +136,32 @@
     background-color: gray;
     filter: none;
     /* backdrop-filter: none; */
+}
+
+@media (max-width:850px){
+    .main-video-bottom{
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+@media (max-width:400px){
+    .main-video-bottom{
+        font-size: 10px;
+    }
+
+    .overlay-btns{
+        gap: 10px;
+    }
+}
+
+@media (max-width:350px){
+    /* .main-video-bottom{
+        font-size: 10px;
+    } */
+
+    .overlay-btns{
+        gap: 5px;
+    }
+
 }

@@ -1,59 +1,55 @@
 <div class="video-controls">
     <div class="icons">
 
-        <button 
-            mat-icon-button 
-            matTooltip="toggle mic"
-            (click)="toggleAudio()" >
-            <mat-icon  *ngIf="isLocalMicOn" >mic</mat-icon>
-            <mat-icon *ngIf="!isLocalMicOn" >mic_off</mat-icon>
-        </button>
-        <button 
-            mat-icon-button  
-            matTooltip="toggle camera"
-            (click)="toggleVideo()" >
-            <mat-icon *ngIf="isLocalVideoOn" >videocam</mat-icon>
-            <mat-icon *ngIf="!isLocalVideoOn" >videocam_off</mat-icon>
-        </button>
-        <button 
-            mat-icon-button
-            matTooltip="toggle chat window"  >
-            <mat-icon *ngIf="isLocalMicOn" >chat</mat-icon>
-            <mat-icon *ngIf="!isLocalMicOn" >arrow_back</mat-icon>
-        </button>
-        <!-- <button mat-icon-button  >
-            <mat-icon>arrow_back</mat-icon>
-        </button> -->
-        <button 
-            mat-icon-button 
-            matTooltip="toggle screen share"
-            matTooltipClass="tooltip"
-            (click)="toggleScreenShare()" >
-            <mat-icon *ngIf="isScreenShare" >screen_share</mat-icon>
-            <mat-icon *ngIf="!isScreenShare" >screen_share_off</mat-icon>
-        </button>
-        <button 
-            mat-icon-button 
-            matTooltip="Leave meeting"
-            matTooltipClass="tooltip"
-            (click)="leave()" >
-            <mat-icon 
-            id="leave-meeting-btn"
-            >backspace</mat-icon>
-        </button>
-        <button 
-            mat-icon-button 
-            matTooltip="mute remotepeer"
-            (click)="toggleRemotepeerMic()" >
-            <mat-icon>volume_off</mat-icon>
-        </button>
-        <button  
-            class="controls" 
-            mat-icon-button  
-            (click)="setBgBlur()" >
-            <mat-icon *ngIf="isBackgroundBlur" >blur_on</mat-icon>
-            <mat-icon *ngIf="!isBackgroundBlur" >blur_off</mat-icon>
-        </button>
+        <div class="control-left">
+            <button
+                mat-icon-button
+                matTooltip="toggle mic"
+                (click)="toggleAudio()" >
+                <mat-icon  *ngIf="isLocalMicOn" >mic</mat-icon>
+                <mat-icon *ngIf="!isLocalMicOn" >mic_off</mat-icon>
+            </button>
+            <button
+                mat-icon-button
+                matTooltip="toggle camera"
+                (click)="toggleVideo()" >
+                <mat-icon *ngIf="isLocalVideoOn" >videocam</mat-icon>
+                <mat-icon *ngIf="!isLocalVideoOn" >videocam_off</mat-icon>
+            </button>
+            <!-- <button mat-icon-button  >
+                <mat-icon>arrow_back</mat-icon>
+            </button> -->
+            <button
+                mat-icon-button
+                matTooltip="Leave meeting"
+                matTooltipClass="tooltip"
+                (click)="leave()" >
+                <mat-icon
+                id="leave-meeting-btn"
+                >backspace</mat-icon>
+            </button>
+        </div>
+        <div class="control-right">
+            <button
+                mat-icon-button
+                matTooltip="toggle chat window"  >
+                <mat-icon *ngIf="isLocalMicOn" >chat</mat-icon>
+                <mat-icon *ngIf="!isLocalMicOn" >arrow_back</mat-icon>
+            </button>
+            <button
+                mat-icon-button
+                matTooltip="mute remotepeer"
+                (click)="toggleRemotepeerMic()" >
+                <mat-icon>volume_off</mat-icon>
+            </button>
+            <button
+                mat-icon-button
+                matTooltip="Toggle Background blur"
+                (click)="setBgBlur()" >
+                <mat-icon *ngIf="isBackgroundBlur" >blur_on</mat-icon>
+                <mat-icon *ngIf="!isBackgroundBlur" >blur_off</mat-icon>
+            </button>
+        </div>
         
 
     </div>

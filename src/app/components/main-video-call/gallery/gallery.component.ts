@@ -88,7 +88,7 @@ export class GalleryComponent  implements OnInit {
     this.subs.push(
       this.mediaservice.getLocalParticipant().subscribe(async (data) => {
         // console.log("Data from gallery", data)
-        if (data.action == 'joined' && !this.mediaservice.getLocalUser && this.mediaservice.jmClient.remotePeers) {
+        if (data.action == 'joined' && this.mediaservice.jmClient.remotePeers.length<2) {
           this.participantsInCall.push(data.localpeer);
         }
         this.localpeer = data.localpeer;

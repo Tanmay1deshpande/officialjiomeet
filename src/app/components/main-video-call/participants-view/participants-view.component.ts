@@ -17,7 +17,8 @@ export class ParticipantsViewComponent implements OnChanges, OnInit,AfterViewIni
   @Input() hasVideo: any;
   initialColor=''
   subs: any = [];
-  colors = {
+
+  colors= {
     a: '#F38282',
     b: '#DEB018',
     c: '#79CB09',
@@ -64,7 +65,7 @@ export class ParticipantsViewComponent implements OnChanges, OnInit,AfterViewIni
   }
 
   // setInitialColor(){
-  //   let first_letter=this.remotePeer?.name?.toLowerCase().substring(0, 1);
+  //   let first_letter =this.remotePeer?.name?.toLowerCase().substring(0, 1);
   //   this.initialColor=this.colors[first_letter];
   // }
 

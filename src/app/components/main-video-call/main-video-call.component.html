@@ -63,6 +63,14 @@
                                     style="background-color: aliceblue;">
                                     <mat-icon>camera</mat-icon>
                             </button>
+                            <button 
+                                    mat-icon-button 
+                                    matTooltip="Lock Meeting"
+                                    (click)="lockMeeting()" 
+                                    style="background-color: aliceblue;">
+                                    <mat-icon *ngIf="isMeetingLocked" >lock</mat-icon>
+                                    <mat-icon *ngIf="!isMeetingLocked" >lock_open</mat-icon>
+                            </button>
                     </div>
 
             </div>

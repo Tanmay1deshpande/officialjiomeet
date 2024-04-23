@@ -84,7 +84,7 @@ export class GalleryComponent  implements OnInit {
     // );
     this.participantsInCall = this.mediaservice.jmClient.remotePeers;
     this.mediaservice.jmClient.localPeer['isLocal'] = true;
-    this.participantsInCall.push(this.mediaservice.jmClient.localPeer);
+    // this.participantsInCall.push(this.mediaservice.jmClient.localPeer);
     this.subs.push(
       this.mediaservice.getLocalParticipant().subscribe(async (data) => {
         // console.log("Data from gallery", data)
@@ -117,7 +117,7 @@ export class GalleryComponent  implements OnInit {
     if (this.isScreenSharing && this.participantsInCall.length > 4) {
       return 4;
     }
-    return this.participantsInCall.length-1;
+    return this.participantsInCall.length;
   }
 
   ngOnDestroy(): void {

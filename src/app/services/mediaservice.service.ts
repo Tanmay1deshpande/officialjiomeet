@@ -450,7 +450,7 @@ export class MediaserviceService {
   ) {
     if(this.jmClient.remotePeers.length>=2){
       this.jmClient.toggleMeetingLock();
-      console.log('Maximu Occupancy reached! Cannot Join.')
+      console.log('Maximum Occupancy reached! Cannot Join.')
     }else{
     await this.jmClient
       .joinMeeting({

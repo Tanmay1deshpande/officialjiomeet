@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, HostListener} from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { MediaserviceService } from '../../services/mediaservice.service';
-import { JMDeviceManager } from '@jiomeet/core-sdk-web';
+import { JMClient, JMDeviceManager } from '@jiomeet/core-sdk-web';
 import * as html2canvas from 'html2canvas';
 import { Subject, fromEvent, takeUntil } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -22,8 +22,10 @@ export class MainVideoCallComponent {
   localpeer: any;
   enablePanOverlay: boolean = false
   enableFaceOverlay: boolean = false
+  isMeetingLocked:boolean = false
   participantsInCall:any[]=[];
   dominantSpeaker: any;
+  jmClient = new JMClient();
 	@ViewChild('videoElement') videoElement!:ElementRef;
   optionsController={
     more:false
@@ -134,6 +136,12 @@ export class MainVideoCallComponent {
   }else {
     console.log('element not found')
   }
+  }
+
+  lockMeeting(){
+    this.isMeetingLocked = !this.isMeetingLocked;
+    this.jmClient.toggleMeetingLock();
+    console.log('Meeting lock toggled')
   }
 
   async toggleFlipCam(){

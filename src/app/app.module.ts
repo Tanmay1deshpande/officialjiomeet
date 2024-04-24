@@ -21,6 +21,7 @@ import { ParticipantsViewComponent } from './components/main-video-call/particip
 import { GalleryComponent } from './components/main-video-call/gallery/gallery.component';
 import { CallAudioSettingsComponent } from './components/call-settings/call-audio-settings/call-audio-settings.component';
 import { MatDialogComponent } from './components/mat-dialog/mat-dialog.component';
+import { ChatPanelComponent } from './components/main-video-call/chat-panel/chat-panel.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MatDialogComponent } from './components/mat-dialog/mat-dialog.component
     ParticipantsViewComponent,
     GalleryComponent,
     CallAudioSettingsComponent,
-    MatDialogComponent
+    MatDialogComponent,
+    ChatPanelComponent
   ],
   imports: [
     BrowserModule,

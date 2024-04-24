@@ -23,6 +23,8 @@ export class MainVideoCallComponent {
   enablePanOverlay: boolean = false
   enableFaceOverlay: boolean = false
   isMeetingLocked:boolean = false
+  isRecording:boolean = false
+  openChatBox:boolean = false
   participantsInCall:any[]=[];
   dominantSpeaker: any;
   jmClient = new JMClient();
@@ -147,6 +149,12 @@ export class MainVideoCallComponent {
   async toggleFlipCam(){
     // await this.mediaservice.toggleFlipCamera();
     await this.mediaservice.flipcam();
+  }
+
+  toggleRecording(){
+    this.mediaservice.toggleRecording()
+    this.isRecording=!this.isRecording
+    console.log('Recording toggled')
   }
   
   downloadScreenshot(imageData: string) {

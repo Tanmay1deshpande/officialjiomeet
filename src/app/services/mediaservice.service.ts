@@ -5,7 +5,7 @@ import { BehaviorSubject, Subject, config } from 'rxjs';
 import { Router } from '@angular/router';
 import { state } from '@angular/animations';
 import { RemotePeer } from '@jiomeet/core-sdk-web/src/room-store/peer/remote-peer';
-
+import { IJMMessageInput, IJMChatMessages, IJMGetChatMessages,IJMMessageComp, IJMMessage, IJMGetPrivateChatThread } from '@jiomeet/core-sdk-web/src/network/network-request.interface';
 @Injectable({
 
   providedIn: 'root',
@@ -16,6 +16,7 @@ export class MediaserviceService {
 
   audioIsMute = true;
   cameraFlipped = true;
+  isRecordingOn: boolean = false
   type: 'image' | 'none' | 'blur';
   videoIsMute = true;
   jmClient = new JMClient();
@@ -568,5 +569,39 @@ export class MediaserviceService {
         console.log('Failed to remove blur background', error);
       } 
     }
+  }
+
+  toggleRecording() {
+    try {
+      if(this.isRecordingOn){ 
+      this.jmClient.startRecording().then(()=>{
+        console.log('Recording started')
+        this.isRecordingOn=!this.isRecordingOn
+      })
+
+      .catch(()=>{
+        console.log("Error starting recording")
+        this.isRecordingOn=!this.isRecordingOn
+      })
+      }else{
+        this.jmClient.stopRecording().then(()=>{
+          console.log('Recording Stopped')
+          this.isRecordingOn=!this.isRecordingOn
+        })
+        .catch(()=>{
+          console.log("Error stopping recording")
+          this.isRecordingOn=!this.isRecordingOn
+        })
+      }
+
+
+    } catch {
+      console.log('error toggling recording');
+    }
+
+  }
+
+  messageSend(){
+    //message: IJMMessageInput
   }
 }

@@ -1,0 +1,36 @@
+<div class="chat-panel-main">
+    <div class="chat-top">
+        <button 
+                mat-icon-button 
+                matTooltip="Close Chat"
+                (click)="closeChat()" >
+                <mat-icon>close</mat-icon>
+        </button>
+        <div class="customer-name">dummy text
+            <!-- <p class="name"> {{remotePeer?.name}} </p> -->
+        </div>
+    </div>
+
+    <div class="chat-message-panel">
+        <div class="conversation-start">
+            <span  style="    color: #bfbfbf;font-size: 12px;">Monday, 1:27 PM</span>
+        </div>
+        
+        <div class="bubble you">
+            So, how's your new phone?
+        </div>
+
+        <div class="bubble me">
+            Bad
+        </div>
+    </div>
+
+    <div class="chat-keyboard">
+        <div class="keyboard-panel">
+            <input 
+                class="chat-input"
+                type="text" 
+                placeholder="Type your message...">
+        </div>
+    </div>
+</div>

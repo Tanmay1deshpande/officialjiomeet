@@ -39,21 +39,8 @@ button:active{
     border-radius: 50%;
 }
 
-.tooltip {
-    background-color: rgb(61, 61, 61) !important;
-    color: yellow !important;
-}
-
 #leave-meeting-btn{
     color: rgb(250, 23, 23);
-}
-
-#leave-meeting-btn:hover{
-    border: 1px solid red;
-}
-
-#leave-meeting-btn:active{
-    border: 1px solid red;
 }
 
 @media(max-width:500px){

@@ -1,34 +1,35 @@
 <div class="main-container">
     <div id="main-video-container">
 
-        <div class="gallery-view">
-            <app-gallery></app-gallery>
-            <div id="localpeer" class="main-video-local" >
-            <!-- [class.dominant-speaker]="dominantSpeaker ? dominantSpeaker?.peerId==user?.peerId:false"  -->
+        <div class="boxes">
+            <div class="videobox-compressed">
+                <div class="gallery-view-compressed">
+                    <app-gallery></app-gallery>
+                    <div id="localpeer" class="main-video-local" >
+                    <!-- [class.dominant-speaker]="dominantSpeaker ? dominantSpeaker?.peerId==user?.peerId:false"  -->
             
-                <p class="local-username" style="margin: 5px; z-index: 999; position: absolute;" > You </p>
-            </div>
-        </div>
-        <div class="video-container" *ngIf="false">
-            <div class="localvideotrack" *ngIf="localpeer?.name" class="v-container">
-                <div id="localpeer" class="videos">
-                    <div class="user-name">{{localpeer.name}}</div>
+                        <p class="local-username" style="margin: 5px; z-index: 999; position: absolute;" > You </p>
+                    </div>
                 </div>
-    
-            </div>
-            <div *ngFor="let user of participantsInCall; let i=index" class="v-container">
-                <div id={{user.peerId}} class="videos">
-                    <div class="user-name">{{user.name}}</div>
+                <div class="video-container" *ngIf="false">
+                    <div class="localvideotrack" *ngIf="localpeer?.name" class="v-container">
+                        <div id="localpeer" class="videos">
+                            <div class="user-name">{{localpeer.name}}</div>
+                        </div>
+                    </div>
+                    <div *ngFor="let user of participantsInCall; let i=index" class="v-container">
+                        <div id={{user.peerId}} class="videos">
+                            <div class="user-name">{{user.name}}</div>
+                        </div>
+                    </div>
                 </div>
-    
+            </div>
+            <div class="chatbox" >
+                <app-chat-panel></app-chat-panel>
             </div>
         </div>
 
         <div class="main-video">
-            
-                <!-- <div class="main-video-top">
-                    <p class="remote-username">Customer</p>
-                </div> -->
 
                 <div class="main-video-bottom">
 
@@ -71,11 +72,18 @@
                                     <mat-icon *ngIf="isMeetingLocked" >lock</mat-icon>
                                     <mat-icon *ngIf="!isMeetingLocked" >lock_open</mat-icon>
                             </button>
+                            <button 
+                                    mat-icon-button 
+                                    matTooltip="Toggle Recording"
+                                    (click)="toggleRecording()" 
+                                    style="background-color: aliceblue;">
+                                    <mat-icon *ngIf="isRecording" >lock</mat-icon>
+                                    <mat-icon *ngIf="!isRecording" >lock_open</mat-icon>
+                            </button>
                     </div>
 
             </div>
         </div>
-        <!-- <app-call-controls></app-call-controls> -->
            
        <!--  PAN & Face overlay divs to be rolled out conditionally -->
         <div class="pan-overlay-out" *ngIf="enablePanOverlay">
@@ -87,6 +95,8 @@
         </div>
         
     </div>
+
+    
 </div>
 
  

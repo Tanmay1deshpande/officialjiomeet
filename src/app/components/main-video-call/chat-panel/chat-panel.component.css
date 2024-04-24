@@ -1,0 +1,187 @@
+.chat-panel-main{
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    border-left: 1px solid rgb(75, 75, 75);
+    height: 87vh;
+    position: relative;
+}
+
+.chat-top{
+    top: 0;
+    height: 47px;
+    padding: 15px 29px;
+    background-color: black;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px 10px 0px 0px;
+}
+
+button{
+    background-color: #1a1a1a;
+    /* color: whitesmoke; */
+}
+
+mat-icon{
+    color: wheat;
+}
+
+.customer-name{
+    font-size: 16px;
+    font-weight: 500px;
+    color: wheat;
+}
+
+.chat-message-panel{
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+    /* border: 1px solid rgb(202, 202, 202); */
+}
+
+.chat-keyboard{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.keyboard-panel {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    background-color: black;
+    padding: 10px;
+    box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 0px 0px 10px 10px;
+}
+
+.chat-input{
+    padding: 8px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    background-color: black;
+    width: 90%;
+}
+
+.chat-input:hover{
+    background-color: rgb(82, 82, 82);
+    transition: 0.2s ease;
+}
+
+.chat-input:active{
+    border: 1px solid blueviolet;
+}
+
+.bubble {
+    font-size: 16px;
+    position: relative;
+    display: inline-block;
+    clear: both;
+    margin-bottom: 8px;
+    padding: 13px 14px;
+    vertical-align: top;
+    border-radius: 5px;
+    &:before {
+        position: absolute;
+        top: 19px;
+        display: block;
+        width: 8px;
+        height: 6px;
+        content: '\00a0';
+        transform: rotate(29deg) skew(-35deg);
+    }
+    &.you {
+        float: left;
+        color: white;
+        background-color: #00b0ff;
+        align-self: flex-start;
+        animation-name: slideFromLeft;
+        &:before {
+            left: -3px;
+            background-color: #00b0ff;
+        }
+    }
+    &.me {
+        float: right;
+        color: #1a1a1a;
+        background-color: #eceff1;
+        align-self: flex-end;
+        animation-name: slideFromRight;
+        &:before {
+            right: -3px;
+            background-color: #eceff1;
+        }
+    }
+}
+.conversation-start {
+    position: relative;
+    width: 100%;
+    margin-bottom: 27px;
+    text-align: center;
+    span {
+        font-size: 14px;
+        display: inline-block;
+        color:#e3e3e3;
+        &:before,&:after {
+            position: absolute;
+            top: 10px;
+            display: inline-block;
+            width: 30%;
+            height: 1px;
+            content: '';
+            /* background-color: #e6e6e6; */
+        }
+        &:before {
+            left: 0;
+        }
+        &:after {
+            right: 0;
+        }
+    }
+}
+
+@keyframes slideFromLeft {
+    0% {
+        margin-left: -200px;
+        opacity: 0;
+    }
+    100% {
+        margin-left: 0;
+        opacity: 1;
+    }
+}
+@-webkit-keyframes slideFromLeft {
+    0% {
+        margin-left: -200px;
+        opacity: 0;
+    }
+    100% {
+        margin-left: 0;
+        opacity: 1;
+    }
+}
+@keyframes slideFromRight {
+    0% {
+        margin-right: -200px;
+        opacity: 0;
+    }
+    100% {
+        margin-right: 0;
+        opacity: 1;
+    }
+}
+@-webkit-keyframes slideFromRight {
+    0% {
+        margin-right: -200px;
+        opacity: 0;
+    }
+    100% {
+        margin-right: 0;
+        opacity: 1;
+    }
+}

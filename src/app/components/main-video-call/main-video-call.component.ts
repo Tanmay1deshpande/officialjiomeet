@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, HostListener} from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { MediaserviceService } from '../../services/mediaservice.service';
-import { JMClient, JMDeviceManager } from '@jiomeet/core-sdk-web';
+import { IJMChatPayloadConfig, JMClient, JMDeviceManager } from '@jiomeet/core-sdk-web';
 import * as html2canvas from 'html2canvas';
 import { Subject, fromEvent, takeUntil } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,6 +25,7 @@ export class MainVideoCallComponent {
   isMeetingLocked:boolean = false
   isRecording:boolean = false
   openChatBox:boolean = false
+  isChatActive:boolean = false
   participantsInCall:any[]=[];
   dominantSpeaker: any;
   jmClient = new JMClient();
@@ -164,6 +165,11 @@ export class MainVideoCallComponent {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  }
+
+  toggleChat(){
+    this.mediaservice.loadChatBox();
+    this.isChatActive = !this.isChatActive
   }
 
 

@@ -1,14 +1,15 @@
 <div class="chat-panel-main">
-    <div class="chat-top">
-        <button 
-                mat-icon-button 
-                matTooltip="Close Chat"
-                (click)="closeChat()" >
-                <mat-icon>close</mat-icon>
-        </button>
-        <div class="customer-name">dummy text
+    <div class="chat-top" *ngFor="let user of participantsInCall; let i=index" >
+        <div class="customer-name" > {{user?.name}}
             <!-- <p class="name"> {{remotePeer?.name}} </p> -->
         </div>
+
+        <!-- <button 
+                mat-icon-button 
+                (click)="closeChat()" >
+                <mat-icon>close</mat-icon>
+        </button> -->
+        
     </div>
 
     <div class="chat-message-panel">
@@ -16,21 +17,26 @@
             <span  style="    color: #bfbfbf;font-size: 12px;">Monday, 1:27 PM</span>
         </div>
         
-        <div class="bubble you">
-            So, how's your new phone?
+        <div class="bubble you" *ngFor="let textSentByCustomer of textCustomerSends" >
+            {{ textSentByCustomer }}
         </div>
 
-        <div class="bubble me">
-            Bad
+        <div class="bubble me" *ngFor="let textSentByMe of textiSend" >
+            {{ textSentByMe }}
         </div>
     </div>
 
     <div class="chat-keyboard">
         <div class="keyboard-panel">
             <input 
+                #myInput
                 class="chat-input"
                 type="text" 
+                name="texttosend"
                 placeholder="Type your message...">
+            <button 
+                class="send-msg"
+                (click)="sendChatMsg()" >Send</button>
         </div>
     </div>
 </div>

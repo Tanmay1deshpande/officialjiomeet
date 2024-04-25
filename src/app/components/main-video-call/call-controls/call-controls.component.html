@@ -32,12 +32,6 @@
         <div class="control-right">
             <button
                 mat-icon-button
-                matTooltip="toggle chat window"  >
-                <mat-icon *ngIf="isLocalMicOn" >chat</mat-icon>
-                <mat-icon *ngIf="!isLocalMicOn" >arrow_back</mat-icon>
-            </button>
-            <button
-                mat-icon-button
                 matTooltip="mute remotepeer"
                 (click)="toggleRemotepeerMic()" >
                 <mat-icon>volume_off</mat-icon>

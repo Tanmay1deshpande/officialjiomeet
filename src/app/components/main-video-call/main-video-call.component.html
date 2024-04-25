@@ -2,10 +2,10 @@
     <div id="main-video-container">
 
         <div class="boxes">
-            <div class="videobox-compressed">
-                <div class="gallery-view-compressed">
+            <div [ngClass]="isChatActive ? ['videobox-compressed','transition-for-chat'] : ['videobox','transition-for-chat']">
+                <div [ngClass]="isChatActive ? ['gallery-view-compressed','transition-for-chat'] : ['gallery-view','transition-for-chat']">
                     <app-gallery></app-gallery>
-                    <div id="localpeer" class="main-video-local" >
+                    <div id="localpeer" [ngClass]="isChatActive ? ['main-video-local-compressed','transition-for-chat'] : ['main-video-local','transition-for-chat']" >
                     <!-- [class.dominant-speaker]="dominantSpeaker ? dominantSpeaker?.peerId==user?.peerId:false"  -->
             
                         <p class="local-username" style="margin: 5px; z-index: 999; position: absolute;" > You </p>
@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <div class="chatbox" >
+            <div class="chatbox" *ngIf="isChatActive" >
                 <app-chat-panel></app-chat-panel>
             </div>
         </div>
@@ -64,7 +64,7 @@
                                     style="background-color: aliceblue;">
                                     <mat-icon>camera</mat-icon>
                             </button>
-                            <button 
+                            <!-- <button 
                                     mat-icon-button 
                                     matTooltip="Lock Meeting"
                                     (click)="lockMeeting()" 
@@ -77,8 +77,16 @@
                                     matTooltip="Toggle Recording"
                                     (click)="toggleRecording()" 
                                     style="background-color: aliceblue;">
-                                    <mat-icon *ngIf="isRecording" >lock</mat-icon>
-                                    <mat-icon *ngIf="!isRecording" >lock_open</mat-icon>
+                                    <mat-icon *ngIf="isRecording" >play_circle_filled</mat-icon>
+                                    <mat-icon *ngIf="!isRecording" >remove_circle</mat-icon>
+                            </button> -->
+                            <button
+                                mat-icon-button
+                                matTooltip="toggle chat window" 
+                                (click)="toggleChat()" 
+                                style="background-color: aliceblue;">
+                                <mat-icon *ngIf="!isChatActive" >chat</mat-icon>
+                                <mat-icon *ngIf="isChatActive" >close</mat-icon>
                             </button>
                     </div>
 

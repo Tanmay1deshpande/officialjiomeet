@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { EventManager, JMClient, IJMRemotePeer, IJMLocalPeer, IFacingMode, IJMVideoSettings } from '@jiomeet/core-sdk-web';
+import { EventManager, JMClient, IJMRemotePeer, IJMLocalPeer, IFacingMode, IJMVideoSettings, IJMChatPayloadConfig, IJMSendChatMessageAttachment, IJMMessage } from '@jiomeet/core-sdk-web';
 import { IJM_EVENTS } from '../constants';
 import { BehaviorSubject, Subject, config } from 'rxjs';
 import { Router } from '@angular/router';
 import { state } from '@angular/animations';
 import { RemotePeer } from '@jiomeet/core-sdk-web/src/room-store/peer/remote-peer';
-import { IJMMessageInput, IJMChatMessages, IJMGetChatMessages,IJMMessageComp, IJMMessage, IJMGetPrivateChatThread } from '@jiomeet/core-sdk-web/src/network/network-request.interface';
+import { IJMMessageInput, IJMChatMessages, IJMGetChatMessages,IJMMessageComp, IJMGetPrivateChatThread } from '@jiomeet/core-sdk-web/src/network/network-request.interface';
 @Injectable({
 
   providedIn: 'root',
@@ -17,6 +17,7 @@ export class MediaserviceService {
   audioIsMute = true;
   cameraFlipped = true;
   isRecordingOn: boolean = false
+  isChatOn:boolean = false
   type: 'image' | 'none' | 'blur';
   videoIsMute = true;
   jmClient = new JMClient();
@@ -25,10 +26,28 @@ export class MediaserviceService {
   preview: any;
   currentDominantSpeaker: any;
   isBgBlur: boolean = true;
+  testing:any;
 
   private participantsStatus$: BehaviorSubject<any> = new BehaviorSubject(null);
   private participantsUpdated$: Subject<any> = new Subject();
   private localParticipant$: Subject<any> = new Subject();
+  
+  messagecomp: IJMMessageComp = {
+    text: '', // Initialize text field with an empty string
+    isGroupChat: true,
+    attachments: []
+  };
+
+  updateMessageText(newText: string): void {
+    this.messagecomp.text = newText;
+  }
+
+  getCurrentMessageText(): string {
+    return this.messagecomp.text; 
+  }
+  
+
+  public testsubject = new BehaviorSubject<any>(null)
 
   constructor(private router: Router) {
     this.type = 'none';
@@ -39,7 +58,8 @@ export class MediaserviceService {
 
     EventManager.onEvent(async (eventInfo: any) => {
       console.log("Event from jiomeet", eventInfo);
-      console.log(this.getLocalUser());
+      // console.log(this.getLocalUser());
+
 
       
 
@@ -47,9 +67,6 @@ export class MediaserviceService {
       console.log(data);
 
       switch (eventInfo.type) {
-
-
-        
 
         case (IJM_EVENTS.PEER_JOINED):
          
@@ -194,10 +211,53 @@ export class MediaserviceService {
 
           });
 
-          break;
-        default:
+
           break;
 
+          case (IJM_EVENTS.CHAT_MESSAGE):
+            const { messages } = data;
+            console.log(messages);
+
+            if(messages != undefined){
+              const { zero } = messages[0]
+              console.log(zero)
+            }
+
+            // const { zero } = messages[0]
+            // const { '0' : message } = messages
+            // console.log( 'bypassing 0' +message)
+
+
+            // const { message } = zero
+            // console.log(message)
+            // const { text } = message
+            // console.log(text)
+        
+            let messagecomp: IJMMessageComp = {
+              text: 'YY',
+              isGroupChat: true,
+              attachments: []
+            }
+  
+            let messageMain : IJMMessage={
+              id: '',
+              senderName: '',
+              time: new Date,
+              read: false,
+              isGroupChat: true,
+              type: 'TEXT',
+              message: messagecomp
+            } 
+
+            this.testsubject.next({
+              userMessage: messageMain
+            })
+            console.log( "Pleeeasseee  " + messageMain.message.text);
+  
+            break
+
+        default:
+          break;
       }
 
     });
@@ -449,10 +509,7 @@ export class MediaserviceService {
     userName: string,
     mediaconf: any
   ) {
-    if(this.jmClient.remotePeers.length>=2){
-      this.jmClient.toggleMeetingLock();
-      console.log('Maximum Occupancy reached! Cannot Join.')
-    }else{
+    
     await this.jmClient
       .joinMeeting({
         meetingId: meetingId,
@@ -522,7 +579,6 @@ export class MediaserviceService {
         console.log('errpr While Joining',meetingId,pin,userName);
         alert('Error while joining meeting')
       });
-    }
   }
 
   async toggleRemotepeerAudio(){
@@ -604,4 +660,65 @@ export class MediaserviceService {
   messageSend(){
     //message: IJMMessageInput
   }
+
+  loadChatBox(){
+    try{
+        let chatPayload : IJMChatPayloadConfig ={
+          isGroupChat: true,
+          members: [''],
+          context:'' ,
+          admins: ['']
+        }
+        this.jmClient.loadChat(chatPayload).then(()=>{
+          console.log('Chat box loaded. Payload:' + chatPayload)
+        })
+        .catch(()=>{
+          console.log('error with loadChat method')
+        })
+      
+    }
+    catch{
+      console.log('Error while loading Chat')
+    }
+    
+  }
+
+  getChatevent(){
+    let attachments: IJMSendChatMessageAttachment[]=[{
+      fileID: '',
+      fileSize: '',
+      fileName: '',
+      documentUrl: ''
+    }]
+
+    let messagecomp: IJMMessageComp = {
+      text: '',
+      isGroupChat: true,
+      attachments: attachments
+    }
+
+    let messageMain : IJMMessage={
+      id: '',
+      senderName: '',
+      time: new Date,
+      read: false,
+      isGroupChat: true,
+      type: 'TEXT',
+      message: messagecomp
+    }
+
+    let chatmessageinterface : IJMChatMessages={
+      messages: {
+        '0':  messageMain 
+      },
+      privateMessages: {
+        '1':  messageMain 
+      }
+    }
+
+    console.log('The messagecomp text is: ' + messagecomp.text + messageMain.time)
+  }
+
+
+
 }

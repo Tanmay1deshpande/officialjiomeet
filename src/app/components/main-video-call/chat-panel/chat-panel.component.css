@@ -10,7 +10,7 @@
 .chat-top{
     top: 0;
     height: 47px;
-    padding: 15px 29px;
+    padding: 2px 15px;
     background-color: black;
     display: flex;
     gap: 30px;
@@ -19,18 +19,19 @@
     border-radius: 10px 10px 0px 0px;
 }
 
-button{
+/* button{
     background-color: #1a1a1a;
-    /* color: whitesmoke; */
-}
+    color: rgb(63, 40, 40);
+} */
 
 mat-icon{
     color: wheat;
 }
 
 .customer-name{
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 500px;
+    text-transform:uppercase;
     color: wheat;
 }
 
@@ -65,16 +66,34 @@ mat-icon{
     border: 1px solid gray;
     border-radius: 5px;
     background-color: black;
-    width: 90%;
+    width: 65%;
+    color: white;
+}
+
+button.send-msg{
+    padding: 8px 14px;
+    background-color: rgb(255, 194, 80);
+    border: 1px solid rgb(164, 164, 164);
+    border-radius: 5px; 
+    margin-left: 2px;
+}
+
+button.send-msg:hover{
+    cursor: pointer;
+    background-color: rgb(217 151 27);
 }
 
 .chat-input:hover{
-    background-color: rgb(82, 82, 82);
+    background-color: rgb(22, 22, 22);
     transition: 0.2s ease;
 }
 
-.chat-input:active{
-    border: 1px solid blueviolet;
+input:focus{
+    border: 1px solid rgb(255, 216, 144);
+}
+
+input:focus-visible{
+    outline: none;
 }
 
 .bubble {
@@ -82,7 +101,7 @@ mat-icon{
     position: relative;
     display: inline-block;
     clear: both;
-    margin-bottom: 8px;
+    margin: 4px;
     padding: 13px 14px;
     vertical-align: top;
     border-radius: 5px;
@@ -97,24 +116,24 @@ mat-icon{
     }
     &.you {
         float: left;
-        color: white;
-        background-color: #00b0ff;
+        color: black;
+        background-color: aliceblue;
         align-self: flex-start;
         animation-name: slideFromLeft;
         &:before {
             left: -3px;
-            background-color: #00b0ff;
+            background-color: aliceblue;
         }
     }
     &.me {
         float: right;
         color: #1a1a1a;
-        background-color: #eceff1;
+        background-color: rgb(255, 194, 80);
         align-self: flex-end;
         animation-name: slideFromRight;
         &:before {
-            right: -3px;
-            background-color: #eceff1;
+            right: 0px;
+            background-color: rgb(255, 194, 80);
         }
     }
 }

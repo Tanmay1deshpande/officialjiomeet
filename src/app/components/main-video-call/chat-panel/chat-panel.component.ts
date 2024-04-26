@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IJMSendChatMessageAttachment, JMClient } from '@jiomeet/core-sdk-web';
-import { Subscription } from 'rxjs';
+import { Subscription, combineLatest } from 'rxjs';
 import { MediaserviceService } from 'src/app/services/mediaservice.service';
 
 @Component({
@@ -15,6 +15,10 @@ export class ChatPanelComponent {
   participantsInCall: any[] = [];
   textiSend :String[] =[]
   textCustomerSends :String[] =[]
+  textAnyoneSends :any[] =[]
+  rpeerid :any[] =[]
+
+  // rpname :any[] =[]
   // messages: string[] = [];
   private subscription!: Subscription;
 
@@ -32,37 +36,53 @@ export class ChatPanelComponent {
   // this.subscription = this.mediaservice.getChatMessages().subscribe((messages: string[]) => {
   //   this.textCustomerSends = messages;
   // });
-    
+
+  // this.mediaservice.getParticipantsUpdated().subscribe(async (rpname)=>{
+  //   this.rpeerid.push(rpname.user);
+  //   console.log( 'rpeerid: ' + rpname)
+  // })
+
+  this.mediaservice.remotePeerObservable.subscribe((peerid)=>{
+    console.log("Peerid in chat component", peerid.peerId);
+  
+
+  this.mediaservice.getChatReceieved().subscribe(async (text)=>{
+    console.log('text from chat panel: '+ text.text)
+    console.log('sent from peer id: '+ text.senderpeerid)
 
   
+ 
+
+
+      if(text.senderpeerid == peerid.peerId){
+        this.textAnyoneSends.push({key: 'peer', value :text.text });
+      }
+    })
+  })
+
   }
 
   async sendChatMsg(){
     const inputValue = (document.querySelector('input') as HTMLInputElement).value;
-    console.log(inputValue);
     let attachments = [{
       fileID: '',
       fileSize: '',
       fileName: '',
       documentUrl: ''
     }] as IJMSendChatMessageAttachment[]
-    // console.log(attachments);
+
+
     try{
       await this.jmClient.sendChatMessage(inputValue, true, attachments)
       .then(()=>{
         (document.querySelector('input') as HTMLInputElement).value = ''
         console.log('Message Sent')
-        this.textiSend.push(inputValue)
+        this.textAnyoneSends.push({key: 'me', value :inputValue})
       })
     }
     catch{
       console.log('Failed to send message')
     }
-  }
-  
-  getChatMessages(){
-    let msges = this.jmClient.chatMessages
-    console.log('deezz msges: ' + msges)
   }
 
 

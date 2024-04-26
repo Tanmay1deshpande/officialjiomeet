@@ -17,13 +17,10 @@
             <span  style="    color: #bfbfbf;font-size: 12px;">Monday, 1:27 PM</span>
         </div>
         
-        <div class="bubble you" *ngFor="let textSentByCustomer of textCustomerSends" >
-            {{ textSentByCustomer }}
+        <div class="bubble" *ngFor="let text of textAnyoneSends" [ngClass]="{'you': text.key === 'peer', 'me': text.key === 'me'} ">
+            {{ text.value }}
         </div>
 
-        <div class="bubble me" *ngFor="let textSentByMe of textiSend" >
-            {{ textSentByMe }}
-        </div>
     </div>
 
     <div class="chat-keyboard">

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EventManager, JMClient, IJMRemotePeer, IJMLocalPeer, IFacingMode, IJMVideoSettings, IJMChatPayloadConfig, IJMSendChatMessageAttachment, IJMMessage } from '@jiomeet/core-sdk-web';
 import { IJM_EVENTS } from '../constants';
-import { BehaviorSubject, Subject, config } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, config } from 'rxjs';
 import { Router } from '@angular/router';
 import { state } from '@angular/animations';
 import { RemotePeer } from '@jiomeet/core-sdk-web/src/room-store/peer/remote-peer';
@@ -27,27 +27,15 @@ export class MediaserviceService {
   currentDominantSpeaker: any;
   isBgBlur: boolean = true;
   testing:any;
+  rpname:any[] =[]
 
   private participantsStatus$: BehaviorSubject<any> = new BehaviorSubject(null);
   private participantsUpdated$: Subject<any> = new Subject();
   private localParticipant$: Subject<any> = new Subject();
-  
-  messagecomp: IJMMessageComp = {
-    text: '', // Initialize text field with an empty string
-    isGroupChat: true,
-    attachments: []
-  };
-
-  updateMessageText(newText: string): void {
-    this.messagecomp.text = newText;
-  }
-
-  getCurrentMessageText(): string {
-    return this.messagecomp.text; 
-  }
-  
-
-  public testsubject = new BehaviorSubject<any>(null)
+  private chatReceived$: Subject<any> = new Subject();
+  //private remotePeerName$: Subject<any> = new Subject();
+  private remotePeerName$ = new BehaviorSubject<any>('');
+  public remotePeerObservable = this.remotePeerName$.asObservable();
 
   constructor(private router: Router) {
     this.type = 'none';
@@ -61,10 +49,9 @@ export class MediaserviceService {
       // console.log(this.getLocalUser());
 
 
-      
 
       const { data } = eventInfo;
-      console.log(data);
+      // console.log(data);
 
       switch (eventInfo.type) {
 
@@ -76,9 +63,11 @@ export class MediaserviceService {
               user: remotePeer,
               state: 'joined',
             });
+            this.remotePeerName$.next(remotePeer)
             console.log(remotePeer.name + " joined!");
+            // this.remotePeerName$.next(remotePeer.name);
           });
-          console.log(eventInfo.data.remotePeers[0].name + " joined!");
+          // console.log(eventInfo.data.remotePeers[0].name + " joined!");
           // localPeers.forEach((localPeer: IJMLocalPeer)=>{
           //   this.participantsUpdated$.next({
           //     user: localPeer,
@@ -140,11 +129,13 @@ export class MediaserviceService {
             alert("Looks like customer left!");
             setTimeout(() => {
               this.router.navigate(['']);
+              this.leaveMeeting()
             }, 5000);
           }else{
             alert("Looks like agent left!");
             setTimeout(() => {
               this.router.navigate(['']);
+              this.leaveMeeting()
             }, 10000);
           }
 
@@ -216,23 +207,20 @@ export class MediaserviceService {
 
           case (IJM_EVENTS.CHAT_MESSAGE):
             const { messages } = data;
-            console.log(messages);
+            
+            if(messages.length != 0) {
+              const zero = messages[0];
+              console.log("Text from peer: ", zero.message.text);
 
-            if(messages != undefined){
-              const { zero } = messages[0]
-              console.log(zero)
+              this.chatReceived$.next({
+                  text: zero.message.text,
+                  senderpeerid: zero.senderPeerId
+              })
+              
+            } else {
+              console.log("No messages found");
             }
 
-            // const { zero } = messages[0]
-            // const { '0' : message } = messages
-            // console.log( 'bypassing 0' +message)
-
-
-            // const { message } = zero
-            // console.log(message)
-            // const { text } = message
-            // console.log(text)
-        
             let messagecomp: IJMMessageComp = {
               text: 'YY',
               isGroupChat: true,
@@ -248,20 +236,12 @@ export class MediaserviceService {
               type: 'TEXT',
               message: messagecomp
             } 
-
-            this.testsubject.next({
-              userMessage: messageMain
-            })
-            console.log( "Pleeeasseee  " + messageMain.message.text);
   
             break
-
         default:
           break;
       }
-
     });
-
   }
   
   getLocalUser() {
@@ -269,7 +249,6 @@ export class MediaserviceService {
   }
 
   async createPreview() {
-    
     await this.jmClient.createPreview('1');
     this.preview = await this.jmClient.getPreview('1');
   }
@@ -670,7 +649,7 @@ export class MediaserviceService {
           admins: ['']
         }
         this.jmClient.loadChat(chatPayload).then(()=>{
-          console.log('Chat box loaded. Payload:' + chatPayload)
+          console.log('Chat box loaded.')
         })
         .catch(()=>{
           console.log('error with loadChat method')
@@ -719,6 +698,13 @@ export class MediaserviceService {
     console.log('The messagecomp text is: ' + messagecomp.text + messageMain.time)
   }
 
+  getChatReceieved(){
+    return this.chatReceived$
+  }
+
+  getRemotePeerName(){
+    return this.remotePeerName$
+  }
 
 
 }

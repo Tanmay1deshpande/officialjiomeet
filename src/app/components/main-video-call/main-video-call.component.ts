@@ -57,7 +57,10 @@ export class MainVideoCallComponent {
 
 	ngOnInit(){
 
-    
+    this.mediaservice.getChatOpened().subscribe(async (boolvalue)=>{
+      this.isChatActive = boolvalue;
+    })
+
     
     // this.router.events.subscribe(event => {
     //   if (event instanceof NavigationStart) {

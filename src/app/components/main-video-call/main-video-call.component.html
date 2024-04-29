@@ -36,7 +36,7 @@
                     <app-call-controls></app-call-controls>
 
                     <div class="overlay-btns">
-                            <button 
+                            <!-- <button 
                                     mat-icon-button 
                                     matTooltip="face-overlay"
                                     (click)="toggleFaceOverlay()" 
@@ -64,7 +64,7 @@
                                     style="background-color: aliceblue;">
                                     <mat-icon>camera</mat-icon>
                             </button>
-                            <!-- <button 
+                            <button 
                                     mat-icon-button 
                                     matTooltip="Lock Meeting"
                                     (click)="lockMeeting()" 
@@ -79,15 +79,15 @@
                                     style="background-color: aliceblue;">
                                     <mat-icon *ngIf="isRecording" >play_circle_filled</mat-icon>
                                     <mat-icon *ngIf="!isRecording" >remove_circle</mat-icon>
-                            </button> -->
+                            </button> 
                             <button
                                 mat-icon-button
                                 matTooltip="toggle chat window" 
                                 (click)="toggleChat()" 
-                                style="background-color: aliceblue;">
+                                style="background-color: rgb(51, 51, 51);">
                                 <mat-icon *ngIf="!isChatActive" >chat</mat-icon>
                                 <mat-icon *ngIf="isChatActive" >close</mat-icon>
-                            </button>
+                            </button>-->
                     </div>
 
             </div>

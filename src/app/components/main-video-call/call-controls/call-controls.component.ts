@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Output, Renderer2, ViewChild } from '@angular/core';
 import { JMClient } from '@jiomeet/core-sdk-web';
+import { Subject } from 'rxjs';
 import { MediaserviceService } from 'src/app/services/mediaservice.service';
 
 @Component({
@@ -19,11 +20,14 @@ export class CallControlsComponent {
   preview: any;
   enablePanOverlay: boolean = true
   enableFaceOverlay: boolean = true
+  isChatActive:boolean = false
   @Output() changeControl = new EventEmitter();
   signalQuality='NONE'
   @ViewChild('network')
   networkIndicator!: ElementRef;
   //jmClient = new JMClient();
+
+  
 
   constructor(
     private mediaservice: MediaserviceService,
@@ -152,6 +156,12 @@ export class CallControlsComponent {
     .catch(()=>{});
   }
 
+  toggleChat(){
+    this.mediaservice.loadChatBox();
+    this.isChatActive = !this.isChatActive
+    this.mediaservice.getChatOpened().next(this.isChatActive);
+  }
+
   // async setBgBlur(){
   //   if(this.isBackgroundBlur){
   //   await this.preview.setBackgroundBlurring('5');
@@ -160,4 +170,5 @@ export class CallControlsComponent {
   //     await this.jmClient.setBackgroundBlurring('0');
   //   }
   // }
+
 }

@@ -56,7 +56,8 @@
 
 .main-video-bottom{
     display: flex;
-    justify-content: space-between;
+    /* gap: 20px; */
+    justify-content: center;
     align-items: center;
     height: 20%;
     z-index: 4;

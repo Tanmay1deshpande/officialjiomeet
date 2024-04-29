@@ -16,10 +16,17 @@
                 <mat-icon *ngIf="isLocalVideoOn" >videocam</mat-icon>
                 <mat-icon *ngIf="!isLocalVideoOn" >videocam_off</mat-icon>
             </button>
+            <button
+                mat-icon-button
+                matTooltip="toggle chat window" 
+                (click)="toggleChat()" >
+                <mat-icon *ngIf="!isChatActive" >chat</mat-icon>
+                <mat-icon *ngIf="isChatActive" >close</mat-icon>
+            </button>
             <!-- <button mat-icon-button  >
                 <mat-icon>arrow_back</mat-icon>
             </button> -->
-            <button
+            <!-- <button
                 mat-icon-button
                 matTooltip="Leave meeting"
                 matTooltipClass="tooltip"
@@ -27,9 +34,9 @@
                 <mat-icon
                 id="leave-meeting-btn"
                 >backspace</mat-icon>
-            </button>
+            </button> -->
         </div>
-        <div class="control-right">
+        <!-- <div class="control-right">
             <button
                 mat-icon-button
                 matTooltip="mute remotepeer"
@@ -43,7 +50,7 @@
                 <mat-icon *ngIf="isBackgroundBlur" >blur_on</mat-icon>
                 <mat-icon *ngIf="!isBackgroundBlur" >blur_off</mat-icon>
             </button>
-        </div>
+        </div> -->
         
 
     </div>

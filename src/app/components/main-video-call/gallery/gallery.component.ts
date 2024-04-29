@@ -97,7 +97,7 @@ export class GalleryComponent  implements OnInit {
           // console.log("Video action received in gallery");
           const videoTrack = this.localpeer.videoTrack;
           // console.log("Video track received", videoTrack);
-          videoTrack.play(data.localpeer.peerId);
+          videoTrack.play(data.localpeer.peerId, { mirror: false });
           // console.log("Video track played in gallery");
         }
       }),

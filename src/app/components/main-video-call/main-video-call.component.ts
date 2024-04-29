@@ -112,7 +112,7 @@ export class MainVideoCallComponent {
   
   async subscribeToVideo(peer:any){
     const videoTrack = await this.mediaservice.jmClient.subscribeMedia(peer,"video");
-    videoTrack.play(peer.peerId);
+    videoTrack.play(peer.peerId, { mirror: false });
   }
 
   togglePanOverlay(){

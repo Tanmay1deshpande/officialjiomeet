@@ -170,6 +170,18 @@
         flex-direction: column;
         gap: 20px;
     }
+
+    .videobox-compressed{
+        width: 60vw;
+    }
+
+    .gallery-view-compressed{
+        width: 60vw;
+    }
+
+    .chatbox{
+        width: 40vw;
+    }
 }
 
 @media (max-width:650px){
@@ -178,9 +190,35 @@
     }
 }
 
+@media (max-width:600px){
+    
+    .videobox-compressed{
+        width: 55vw;
+    }
+
+    .gallery-view-compressed{
+        width: 55vw;
+    }
+
+    .chatbox{
+        width: 45vw;
+    }
+}
+
 @media (max-width:500px){
     .main-video-local{
         width:28vw;
+    }
+    .videobox-compressed{
+        width: 50vw;
+    }
+
+    .gallery-view-compressed{
+        width: 50vw;
+    }
+
+    .chatbox{
+        width: 50vw;
     }
 }
 
@@ -196,6 +234,22 @@
     .overlay-btns{
         gap: 10px;
     }
+
+    .main-video-local-compressed{
+        display: none;
+    }
+
+    .videobox-compressed{
+        width: 30vw;
+    }
+
+    .gallery-view-compressed{
+        width: 30vw;
+    }
+
+    .chatbox{
+        width: 70vw;
+    }
 }
 
 @media (max-width:350px){
@@ -206,11 +260,43 @@
     .overlay-btns{
         gap: 5px;
     }
+    
+    .main-video-local-compressed{
+        display: none;
+    }
+    
+    .videobox-compressed{
+        width: 10vw;
+    }
+
+    .gallery-view-compressed{
+        width: 90vw;
+    }
+
+    .chatbox{
+        width: 90vw;
+    }
 
 }
 
 @media (max-width:300px){
     .main-video-local{
         width: 36vw;
+    }
+    
+    .main-video-local-compressed{
+        display: none;
+    }
+
+    .videobox-compressed{
+        width: 0vw;
+    }
+
+    .gallery-view-compressed{
+        width: 0vw;
+    }
+
+    .chatbox{
+        width: 100vw;
     }
 }

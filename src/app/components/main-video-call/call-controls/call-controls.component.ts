@@ -19,7 +19,8 @@ export class CallControlsComponent {
   preview: any;
   enablePanOverlay: boolean = true
   enableFaceOverlay: boolean = true
-  isChatActive:boolean=false
+  openChatBox:boolean = false
+  isChatActive:boolean = false
   @Output() changeControl = new EventEmitter();
   signalQuality='NONE'
   @ViewChild('network')

@@ -174,10 +174,10 @@ export class MainVideoCallComponent {
     document.body.removeChild(link);
   }
 
-  toggleChat(){
-    this.mediaservice.loadChatBox();
-    this.isChatActive = !this.isChatActive
-  }
+  // toggleChat(){
+  //   this.mediaservice.loadChatBox();
+  //   this.isChatActive = !this.isChatActive
+  // }
 
 
   // ngOnDestroy() {

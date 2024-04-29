@@ -28,6 +28,14 @@
                 id="leave-meeting-btn"
                 >backspace</mat-icon>
             </button>
+            <button
+            mat-icon-button
+            matTooltip="toggle chat window" 
+            (click)="toggleChat()" 
+            style="background-color: aliceblue;">
+            <mat-icon *ngIf="!isChatActive" >chat</mat-icon>
+            <mat-icon *ngIf="isChatActive" >close</mat-icon>
+        </button>
         </div>
         <div class="control-right">
             <button

@@ -19,6 +19,7 @@ export class CallControlsComponent {
   preview: any;
   enablePanOverlay: boolean = true
   enableFaceOverlay: boolean = true
+  isChatActive:boolean=false
   @Output() changeControl = new EventEmitter();
   signalQuality='NONE'
   @ViewChild('network')
@@ -160,4 +161,10 @@ export class CallControlsComponent {
   //     await this.jmClient.setBackgroundBlurring('0');
   //   }
   // }
+
+  toggleChat(){
+    this.mediaservice.loadChatBox();
+    this.isChatActive = !this.isChatActive
+    this.mediaservice.getChatOpened().next(this.isChatActive);
+  }
 }

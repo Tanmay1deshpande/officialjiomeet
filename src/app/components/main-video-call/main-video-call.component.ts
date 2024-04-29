@@ -58,6 +58,9 @@ export class MainVideoCallComponent {
   }
 
 	ngOnInit(){
+    this.mediaservice.getChatOpened().subscribe(async (boolvalue)=> {
+      this.isChatActive=boolvalue;
+    })
 
     this.mediaservice.getMyName().subscribe((myname)=>{
       this.myName.push(myname);
@@ -174,10 +177,10 @@ export class MainVideoCallComponent {
     document.body.removeChild(link);
   }
 
-  // toggleChat(){
-  //   this.mediaservice.loadChatBox();
-  //   this.isChatActive = !this.isChatActive
-  // }
+  toggleChat(){
+    this.mediaservice.loadChatBox();
+    this.isChatActive = !this.isChatActive
+  }
 
 
   // ngOnDestroy() {

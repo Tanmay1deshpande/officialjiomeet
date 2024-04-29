@@ -33,6 +33,7 @@ export class MediaserviceService {
   private participantsUpdated$: Subject<any> = new Subject();
   private localParticipant$: Subject<any> = new Subject();
   private chatReceived$: Subject<any> = new Subject();
+  private myName$: Subject<any> = new Subject();
   //private remotePeerName$: Subject<any> = new Subject();
   private remotePeerName$ = new BehaviorSubject<any>('');
   public remotePeerObservable = this.remotePeerName$.asObservable();
@@ -722,5 +723,8 @@ export class MediaserviceService {
     return this.remotePeerName$
   }
 
+  getMyName(){
+    return this.myName$
+  }
 
 }

@@ -74,7 +74,7 @@
     z-index: 4;
     bottom: 0;
     right: 0;
-    margin: 0px 5px 15px 0px;
+    margin: 0px 13px 15px 0px;
 }
 
 .main-video-local-compressed{
@@ -171,9 +171,25 @@
     }
 }
 
+@media (max-width:650px){
+    .main-video-local{
+        width: 24vw;
+    }
+}
+
+@media (max-width:500px){
+    .main-video-local{
+        width:28vw;
+    }
+}
+
 @media (max-width:400px){
     .main-video-bottom{
         font-size: 10px;
+    }
+
+    .main-video-local{
+        width: 32vw;
     }
 
     .overlay-btns{
@@ -190,4 +206,10 @@
         gap: 5px;
     }
 
+}
+
+@media (max-width:300px){
+    .main-video-local{
+        width: 36vw;
+    }
 }

@@ -20,6 +20,8 @@ export class MainVideoCallComponent {
   loaderService: any;
   subs: any[] = [];
   localpeer: any;
+  myName:any[]=[];
+  name:any;
   enablePanOverlay: boolean = false
   enableFaceOverlay: boolean = false
   isMeetingLocked:boolean = false
@@ -56,6 +58,11 @@ export class MainVideoCallComponent {
   }
 
 	ngOnInit(){
+
+    this.mediaservice.getMyName().subscribe((myname)=>{
+      this.myName.push(myname);
+      this.name = myname
+    })
 
     
     

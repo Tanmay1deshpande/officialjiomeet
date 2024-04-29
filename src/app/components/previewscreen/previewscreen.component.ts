@@ -110,7 +110,10 @@ join() {
   console.log('Thank you for joining');
   console.log(this.meetingcreds.value);
 
-  // console.log(this.mediaservice.getLocalUser());
+  const displayNameValue = (document.getElementById('displayName') as HTMLInputElement).value;
+
+  this.mediaservice.getMyName().next(displayNameValue)
+  // console.log( "From previewscreen: ", displayNameValue)
 
 
   this.mediaservice.joinCall(

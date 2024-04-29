@@ -466,12 +466,28 @@ export class MediaserviceService {
       let videoSettings : IJMVideoSettings = {
         facingMode: IFacingMode.ENVIRONMENT
       }
-        
       await this.jmClient
         .setVideoDevice(videoSettings)
         .then(()=>{
-          console.log('Flipped');
-          console.log("User env mode after flip", navigator.mediaDevices.getUserMedia())
+          console.log('Camera Flipped');
+          console.log("Facing Environment", navigator.mediaDevices.getUserMedia())
+          this.cameraFlipped = !this.cameraFlipped;
+        })
+        .catch((error: any) => {
+          console.log('Error while toggling flip camera:', error);
+          this.cameraFlipped = !this.cameraFlipped;
+        });
+        
+    }if(!this.cameraFlipped){
+      let videoSettings : IJMVideoSettings = {
+        facingMode: IFacingMode.USER
+      }
+      await this.jmClient
+        .setVideoDevice(videoSettings)
+        .then(()=>{
+          console.log('Camera Flipped');
+          console.log("Facing User", navigator.mediaDevices.getUserMedia())
+          this.cameraFlipped = !this.cameraFlipped;
         })
         .catch((error: any) => {
           console.log('Error while toggling flip camera:', error);

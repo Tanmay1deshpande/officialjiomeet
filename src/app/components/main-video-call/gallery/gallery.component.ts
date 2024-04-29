@@ -123,4 +123,6 @@ export class GalleryComponent  implements OnInit {
   ngOnDestroy(): void {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
+
+  
 }

@@ -70,6 +70,7 @@
   height: 96%;
   margin: 0% 0% 0 0%;
   margin-top: 10px;
+  container: grid-container/width;
 
   .grid {
     display: grid;
@@ -181,5 +182,14 @@
         "Z Z Z Z Z Z Z Z D";
       margin: 0;
     }
+  }
+}
+
+@container grid-container (width < 90vw){
+  .grid{
+    width: 79vw;
+  }
+  .grid-container{
+    height: 99%;
   }
 }

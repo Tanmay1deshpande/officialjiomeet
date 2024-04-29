@@ -28,6 +28,7 @@ export class PreviewscreenComponent {
   vb = 0;
   subs: any[] = [];
   jmClient = new JMClient();
+  displayNameValue: any 
 
   constructor(
     private formbuilder: FormBuilder,
@@ -109,6 +110,11 @@ join() {
 
   console.log('Thank you for joining');
   console.log(this.meetingcreds.value);
+
+  const displayNameValue = (document.getElementById('displayName') as HTMLInputElement).value;
+  
+  this.mediaservice.getMyName().next(displayNameValue)
+  console.log( "From previewscreen: ", displayNameValue)
 
   // console.log(this.mediaservice.getLocalUser());
 

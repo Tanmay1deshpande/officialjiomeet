@@ -17,9 +17,6 @@ export class ChatPanelComponent {
   textCustomerSends :String[] =[]
   textAnyoneSends :any[] =[]
   rpeerid :any[] =[]
-
-  // rpname :any[] =[]
-  // messages: string[] = [];
   private subscription!: Subscription;
 
   constructor(

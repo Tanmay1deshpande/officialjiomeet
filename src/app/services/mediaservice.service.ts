@@ -37,6 +37,7 @@ export class MediaserviceService {
   private remotePeerName$ = new BehaviorSubject<any>('');
   public remotePeerObservable = this.remotePeerName$.asObservable();
   private chatOpened$: Subject<boolean> = new Subject();
+  private myName$: Subject<any> = new Subject();
 
   constructor(private router: Router) {
     this.type = 'none';
@@ -723,10 +724,12 @@ export class MediaserviceService {
     return this.remotePeerName$
   }
 
-  
   getChatOpened(){
     return this.chatOpened$
   }
 
+  getMyName(){
+    return this.myName$
+  }
 
 }

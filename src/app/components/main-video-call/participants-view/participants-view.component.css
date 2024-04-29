@@ -2,19 +2,20 @@
     position: absolute;
     bottom: 10px;
     z-index: 1;
-    background-color:#2B2B2B;
-    padding: 0 7px;
-    border-radius: 20px;
     left: 3%;
     font-size: 19px;
-    color: white;
+    margin: 0;
+    padding: 9px;
+    color: rgb(171, 171, 171);
+    background-color: rgb(29,29,29);
+    border-radius: 5px;
    
 }
 .initials{
     position: absolute;
     left: 50%;
     top: 50%;
-    color: #7f7f7f;
+    color: #9d9c9c;
     height: min(15vh,15vw);
     width: min(15vh,15vw);
     -ms-transform: translate(-50%,-50%);

@@ -20,6 +20,8 @@ export class MainVideoCallComponent {
   loaderService: any;
   subs: any[] = [];
   localpeer: any;
+  myName:any[]=[];
+  name:any;
   enablePanOverlay: boolean = false
   enableFaceOverlay: boolean = false
   isMeetingLocked:boolean = false
@@ -61,6 +63,10 @@ export class MainVideoCallComponent {
       this.isChatActive = boolvalue;
     })
 
+    this.mediaservice.getMyName().subscribe((myname)=>{
+      this.myName.push(myname);
+      this.name = myname
+    })
     
     // this.router.events.subscribe(event => {
     //   if (event instanceof NavigationStart) {
@@ -115,7 +121,7 @@ export class MainVideoCallComponent {
   
   async subscribeToVideo(peer:any){
     const videoTrack = await this.mediaservice.jmClient.subscribeMedia(peer,"video");
-    videoTrack.play(peer.peerId);
+    videoTrack.play(peer.peerId, {mirror:false});
   }
 
   togglePanOverlay(){

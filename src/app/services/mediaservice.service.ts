@@ -471,7 +471,9 @@ export class MediaserviceService {
         .setVideoDevice(videoSettings)
         .then(()=>{
           console.log('Camera Flipped');
-          console.log("Facing Environment", navigator.mediaDevices.getUserMedia())
+          console.log("Facing Environment", navigator.mediaDevices.getUserMedia({
+            video:  {facingMode: 'environment'}
+          }))
           this.cameraFlipped = !this.cameraFlipped;
         })
         .catch((error: any) => {
@@ -487,7 +489,7 @@ export class MediaserviceService {
         .setVideoDevice(videoSettings)
         .then(()=>{
           console.log('Camera Flipped');
-          console.log("Facing User", navigator.mediaDevices.getUserMedia())
+          console.log("Facing User", navigator.mediaDevices.getUserMedia({video:true}))
           this.cameraFlipped = !this.cameraFlipped;
         })
         .catch((error: any) => {

@@ -58,6 +58,9 @@ export class MainVideoCallComponent {
   }
 
 	ngOnInit(){
+    this.mediaservice.getChatOpened().subscribe(async (boolvalue)=> {
+      this.isChatActive=boolvalue;
+    })
 
     this.mediaservice.getMyName().subscribe((myname)=>{
       this.myName.push(myname);

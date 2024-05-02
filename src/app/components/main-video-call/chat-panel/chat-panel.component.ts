@@ -71,18 +71,22 @@ export class ChatPanelComponent {
       documentUrl: ''
     }] as IJMSendChatMessageAttachment[]
 
-
-    try{
-      await this.jmClient.sendChatMessage(inputValue, true, attachments)
-      .then(()=>{
-        (document.querySelector('input') as HTMLInputElement).value = ''
-        console.log('Message Sent')
-        this.textAnyoneSends.push({key: 'me', value :inputValue})
-      })
+    if(inputValue == '' || inputValue.trim() === '' ){
+      console.log('Cannot send empty message')
+    }else{
+      try{
+        await this.jmClient.sendChatMessage(inputValue, true, attachments)
+        .then(()=>{
+          (document.querySelector('input') as HTMLInputElement).value = ''
+          console.log('Message Sent')
+          this.textAnyoneSends.push({key: 'me', value :inputValue})
+        })
+      }
+      catch{
+        console.log('Failed to send message')
+      }
     }
-    catch{
-      console.log('Failed to send message')
-    }
+    
   }
 
 

@@ -122,7 +122,7 @@ join() {
     this.meetingcreds.value.displayName.toString(),
     {
         isMicMuted: !this.isLocalMicOn,
-        VideoMuted: !this.isLocalVideoOn,
+        VideoMuted: this.isLocalVideoOn,
         audioInputDeviceId: '',
         audioOutputDeviceId: '',
         videoDeviceId: '',

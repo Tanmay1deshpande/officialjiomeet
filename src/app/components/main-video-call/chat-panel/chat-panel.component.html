@@ -1,6 +1,6 @@
 <div class="chat-panel-main">
-    <div class="chat-top" *ngFor="let user of participantsInCall; let i=index" >
-        <div class="customer-name" > {{user?.name}}
+    <div class="chat-top" >
+        <div class="customer-name" > Hello 
             <!-- <p class="name"> {{remotePeer?.name}} </p> -->
         </div>
 
@@ -24,16 +24,18 @@
     </div>
 
     <div class="chat-keyboard">
-        <div class="keyboard-panel">
+        <form class="keyboard-panel" (ngSubmit)="sendChatMsg()" aria-required="true" >
             <input 
+                required
                 #myInput
                 class="chat-input"
                 type="text" 
                 name="texttosend"
                 placeholder="Type your message...">
             <button 
+                type="submit"
                 class="send-msg"
-                (click)="sendChatMsg()" >Send</button>
-        </div>
+                >Send</button>
+        </form>
     </div>
 </div>

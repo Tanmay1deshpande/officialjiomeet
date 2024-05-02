@@ -535,8 +535,8 @@ export class MediaserviceService {
         this.router.navigate(['/main-video']);
         setTimeout(async () => {
           this.addJMEventListeners();
+          this.toggleLocalVideoStatus();
 
-          
           let sourceType: 'image' | 'none' | 'blur' = 'none';
           let localUserConfig = {
             trackSettings: {

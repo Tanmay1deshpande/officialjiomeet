@@ -11,7 +11,7 @@ import * as html2canvas from 'html2canvas';
 export class CallControlsComponent {
 
   
-  isLocalVideoOn = false;
+  isLocalVideoOn = true;
   isLocalMicOn = false;
   isBackgroundBlur = false;
   isScreenShare = false;

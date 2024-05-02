@@ -3,8 +3,10 @@
     flex-direction: column;
     border-radius: 10px;
     border-left: 1px solid rgb(134,134,134);
-    height: 87vh;
+    height: 84vh;
     position: relative;
+    margin-left: 1px;
+    margin-top: 5px;
 }
 
 .chat-top{
@@ -41,9 +43,16 @@ mat-icon{
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;   /* Firefox */
     /* border: 1px solid rgb(202, 202, 202); */
 }
+
+.chat-message-panel::-webkit-scrollbar {
+    display: none;  /*Hide scrollbar for Chrome, Safari and Opera */
+  }
 
 .chat-keyboard{
     position: absolute;

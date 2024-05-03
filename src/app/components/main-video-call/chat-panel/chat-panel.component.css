@@ -75,7 +75,7 @@ mat-icon{
     border: 1px solid gray;
     border-radius: 5px;
     background-color: black;
-    width: 65%;
+    width: 73%;
     color: white;
 }
 
@@ -106,6 +106,8 @@ input:focus-visible{
 }
 
 .bubble {
+    max-width: 18vw;
+    word-wrap: break-word;
     font-size: 16px;
     position: relative;
     display: inline-block;
@@ -173,12 +175,28 @@ input:focus-visible{
     }
 }
 
+.bubble-details{
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 6px;
+}
+
 .timestamp{
     font-size: 9px;
     color: #545252;
     position: inherit;
     right: 0;
-    bottom: 0;
+    top: 0;
+    margin: 1px;
+}
+
+.bubble-name{
+    font-size: 9px;
+    color: #545252;
+    position: inherit;
+    left: 0;
+    top: 0;
     margin: 1px;
 }
 

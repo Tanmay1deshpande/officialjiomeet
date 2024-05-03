@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { IJMChatPayloadConfig, IJMSendChatMessageAttachment, JMClient } from '@jiomeet/core-sdk-web';
 import { Subscription, combineLatest } from 'rxjs';
 import { MediaserviceService } from 'src/app/services/mediaservice.service';
@@ -10,6 +10,10 @@ import { MediaserviceService } from 'src/app/services/mediaservice.service';
 })
 export class ChatPanelComponent {
 
+  
+  @ViewChild('chatMessagePanel') chatMessagePanel!: ElementRef;
+
+
   jmClient = new JMClient; 
   @Input() remotePeer!: any;
   participantsInCall: any[] = [];
@@ -18,6 +22,7 @@ export class ChatPanelComponent {
   textAnyoneSends :any[] =[]
   rpeerid :any[] =[]
   chatInputDate: string=''
+  chatInputTime: string=''
 
   // rpname :any[] =[]
   // messages: string[] = [];
@@ -48,18 +53,19 @@ export class ChatPanelComponent {
   
 
   this.mediaservice.getChatReceieved().subscribe( (text)=>{
-    console.log('text from chat panel: '+ text.text)
-    console.log('sent from peer id: '+ text.senderpeerid)
-    this.chatInputDate = this.formatDateTime(text.time)
-    console.log( "Text sent on: ", this.chatInputDate)
+    // console.log('text from chat panel: '+ text.text)
+    // console.log('sent from peer id: '+ text.senderpeerid)
+    this.chatInputTime = this.formatDateTime(text.time)
+    this.chatInputDate = this.formatDate(text.time)
+    console.log( "Text sent on: ", this.chatInputTime)
 
       if(text.senderpeerid == peerid.peerId){
-        this.textAnyoneSends.push({key: 'peer', value :text.text, timeSentOn: this.chatInputDate });
+        this.textAnyoneSends.push({key: 'peer', value :text.text, timeSentOn: this.chatInputTime, bubbleName: "Customer" });
       }
 
       if(text.senderpeerid != peerid.peerId){
         const inputValue = (document.querySelector('input') as HTMLInputElement).value;
-        this.textAnyoneSends.push({key: 'me', value :inputValue, timeSentOn: this.chatInputDate });
+        this.textAnyoneSends.push({key: 'me', value :inputValue, timeSentOn: this.chatInputTime, bubbleName: "You" });
       }
       
     })
@@ -103,6 +109,17 @@ export class ChatPanelComponent {
     const formattedDate = `${dayOfWeek}, ${formattedTime}`;
     return formattedDate;
   }
+
+  formatDate(inputDate: string): string {
+    const date = new Date(inputDate);
+    return date.toDateString();
+  }
+
+  scrollToBottom():void {
+    const container = this.chatMessagePanel.nativeElement as HTMLElement;
+    container.scrollTop = container.scrollHeight;
+  }
+  
 
 
 }

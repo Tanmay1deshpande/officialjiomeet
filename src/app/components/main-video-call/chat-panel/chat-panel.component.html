@@ -12,25 +12,31 @@
         
     </div>
 
-    <div class="chat-message-panel">
-        <!-- <div class="conversation-start">
-            <span  style="    color: #bfbfbf;font-size: 12px;">Monday, 1:27 PM</span>
-        </div> -->
+    <div class="chat-message-panel"  #chatMessagePanel>
+        <div class="conversation-start">
+            <span  style="    color: #bfbfbf;font-size: 12px;"> {{ this.chatInputDate }} </span>
+        </div>
         
         <div class="bubble" *ngFor="let text of textAnyoneSends" [ngClass]="{'you': text.key === 'peer', 'me': text.key === 'me'} ">
-            {{ text.value }}
-            <div class="timestamp">
-                {{ text.timeSentOn }}
+            
+            <div class="bubble-details">
+                <div class="bubble-name"> {{text.bubbleName}} </div>
+                <div class="timestamp">
+                    {{ text.timeSentOn }}
+                </div>
             </div>
+
+            {{ text.value }}
         </div>
 
     </div>
 
     <div class="chat-keyboard">
-        <form class="keyboard-panel" (ngSubmit)="sendChatMsg()" aria-required="true" >
+        <form class="keyboard-panel" (ngSubmit)="[scrollToBottom(), sendChatMsg()]" aria-required="true" >
             <input 
                 required
                 #myInput
+                (keydown.enter)="scrollToBottom()"
                 class="chat-input"
                 type="text" 
                 name="texttosend"

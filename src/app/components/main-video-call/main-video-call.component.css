@@ -72,6 +72,7 @@
     height: 25vh;
     position: absolute;
     z-index: 4;
+    border: 1px solid #414040;
     bottom: 0;
     right: 0;
     margin: 0px 13px 15px 0px;
@@ -84,9 +85,10 @@
     height: 22vh;
     position: absolute;
     z-index: 4;
+    border: 1px solid #414040;
     bottom: 0;
     right: 0;
-    margin: 0px 13px 12px 0px;
+    margin: 0px 7px 19px 0px;
 }
 
 

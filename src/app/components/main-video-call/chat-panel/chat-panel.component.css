@@ -33,17 +33,17 @@ mat-icon{
 .customer-name{
     font-size: 18px;
     font-weight: 500px;
-    text-transform:uppercase;
+    text-transform: capitalize;
     color: wheat;
 }
 
 .chat-message-panel{
     width: 100%;
-    height: max-content;
-    display: flex;
+    height: 67vh;
+    /* display: flex; */
     flex-direction: column;
     justify-content: flex-end;
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
     -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;   /* Firefox */
@@ -171,6 +171,15 @@ input:focus-visible{
             right: 0;
         }
     }
+}
+
+.timestamp{
+    font-size: 9px;
+    color: #545252;
+    position: inherit;
+    right: 0;
+    bottom: 0;
+    margin: 1px;
 }
 
 @keyframes slideFromLeft {

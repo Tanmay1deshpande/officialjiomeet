@@ -1,6 +1,6 @@
 <div class="chat-panel-main">
-    <div class="chat-top" >
-        <div class="customer-name" > Hello 
+    <div class="chat-top" *ngFor="let user of participantsInCall" >
+        <div class="customer-name" > {{ user }}
             <!-- <p class="name"> {{remotePeer?.name}} </p> -->
         </div>
 
@@ -13,12 +13,15 @@
     </div>
 
     <div class="chat-message-panel">
-        <div class="conversation-start">
+        <!-- <div class="conversation-start">
             <span  style="    color: #bfbfbf;font-size: 12px;">Monday, 1:27 PM</span>
-        </div>
+        </div> -->
         
         <div class="bubble" *ngFor="let text of textAnyoneSends" [ngClass]="{'you': text.key === 'peer', 'me': text.key === 'me'} ">
             {{ text.value }}
+            <div class="timestamp">
+                {{ text.timeSentOn }}
+            </div>
         </div>
 
     </div>

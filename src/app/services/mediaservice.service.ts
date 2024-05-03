@@ -216,7 +216,8 @@ export class MediaserviceService {
 
               this.chatReceived$.next({
                   text: zero.message.text,
-                  senderpeerid: zero.senderPeerId
+                  senderpeerid: zero.senderPeerId,
+                  time: zero.time
               })
               
             } else {

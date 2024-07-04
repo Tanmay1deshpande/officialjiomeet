@@ -60,7 +60,7 @@ export class PreviewscreenComponent {
 async registerDevices() {
   await JMDeviceManager.getMediaPermissions(true, true);
   JMDeviceManager.getDevices();
-  console.log("Devices registered: ", JMDeviceManager.getDevices());
+  // console.log("Devices registered: ", JMDeviceManager.getDevices());
 }
 
 // testFunction() {
@@ -108,7 +108,7 @@ async toggleBlur(){
 join() {
 
   console.log('Thank you for joining');
-  console.log(this.meetingcreds.value);
+  // console.log(this.meetingcreds.value);
 
   const displayNameValue = (document.getElementById('displayName') as HTMLInputElement).value;
 

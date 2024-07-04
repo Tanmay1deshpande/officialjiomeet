@@ -13,6 +13,6 @@ export class TestmainComponent {
 
 
   ngAfterViewInit(){
-    console.log("Bro: ",this.main.callGrandchild());
+    // console.log("Bro: ",this.main.callGrandchild());
   }
 }

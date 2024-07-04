@@ -94,19 +94,19 @@ export class GalleryComponent  implements OnInit, AfterViewInit {
     // this.participantsInCall.push(this.mediaservice.jmClient.localPeer);
     this.subs.push(
       this.mediaservice.getLocalParticipant().subscribe(async (data) => {
-        console.log("Data from gallery", data)
+        // console.log("Data from gallery", data)
         if (data.action == 'joined' && this.mediaservice.jmClient.remotePeers.length<2) {
           this.participantsInCall.push(data.localpeer);
         }
         this.localpeer = data.localpeer;
-        console.log(this.participantsInCall);
+        // console.log(this.participantsInCall);
         if (data.action == 'videoOn') {
-          console.log("Video action received in gallery");
+          // console.log("Video action received in gallery");
           const videoTrack = this.localpeer.videoTrack;
-          console.log("Video track received", videoTrack);
+          // console.log("Video track received", videoTrack);
           videoTrack.play(data.localpeer.peerId, { mirror: false });
           this.mediaservice.updateCameraStatus(data?.localpeer?.peerId);
-          console.log("Video track played in gallery");
+          // console.log("Video track played in gallery");
         }
       }),
     );
@@ -114,7 +114,7 @@ export class GalleryComponent  implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log(this.parentDiv.nativeElement);
+    // console.log(this.parentDiv.nativeElement);
   }
 
   async subscribeToVideo(peer: any) {

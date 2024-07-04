@@ -13,8 +13,6 @@ export class ChatPanelComponent {
   
   @ViewChild('chatMessagePanel') chatMessagePanel!: ElementRef;
 
-
-  jmClient = new JMClient; 
   @Input() remotePeer!: any;
   reversedObject!: { [key: string]: any };
   participantsInCall: any[] = [];
@@ -22,76 +20,84 @@ export class ChatPanelComponent {
   textCustomerSends :String[] =[]
   textAnyoneSends :any[] =[]
   loadChatTextBox :any[] =[]
+  customChatBox :any[] =[]
   rpeerid :any[] =[]
   chatInputDate: string=''
   chatInputTime: string=''
+  messageKey: string = ''
+  bubbleName: string = ''
+  chatMessageObject: any;
 
   // rpname :any[] =[]
   // messages: string[] = [];
   private subscription!: Subscription;
 
   constructor(
-    private mediaservice: MediaserviceService
+    private mediaservice: MediaserviceService,
   ){ }
 
   ngOnInit(){
-  //   this.participantsInCall = this.mediaservice.jmClient.remotePeers;
-  //   this.mediaservice.getLocalParticipant().subscribe(async (data) => {
-  //   if (data.action == 'joined' && this.mediaservice.jmClient.remotePeers.length<2) {
-  //     this.participantsInCall.push(data.localpeer);
-  //   }
-  // });
-
   // let chatPayload : IJMChatPayloadConfig ={
   //   isGroupChat: true,
   //   members: [''],
   //   context:'' ,
   //   admins: ['']
   // }
-  // this.jmClient.loadChat(chatPayload)
-
+  this.mediaservice.loadChatBox()
+  this.chatMessagesMain();
   this.mediaservice.remotePeerObservable.subscribe((peerid)=>{
+    console.log("Peer id", peerid);
     this.participantsInCall.push(peerid.name)
   
 
   this.mediaservice.getChatReceieved().subscribe( (text)=>{
     this.chatInputTime = this.formatDateTime(text.time)
     this.chatInputDate = this.formatDate(text.time)
-    console.log(typeof(text));
-
-  // this.mediaservice.getLoadChatMessages().subscribe( (loadChatText)=>{
-  //   this.chatInputTime = this.formatDateTime(loadChatText.time)
-  //   this.chatInputDate = this.formatDate(loadChatText.time)
-  
+    // console.log(typeof(text));
 
       if(text.senderpeerid == peerid.peerId){
-        if(this.hasKey(text,text.name)){
-          for(let i=0; i<text.length;i++){
-            this.loadChatTextBox.push({key: 'peer', value :text[i].text, timeSentOn: text[i].time, bubbleName: "Customer" });
-            console.log( "loadChatbox array: ", this.loadChatTextBox)
-          }
-        }else{
           this.textAnyoneSends.push({key: 'peer', value :text.text, timeSentOn: this.chatInputTime, bubbleName: "Customer" });
-          console.log("else box for equal id, textanyone sends: ", this.textAnyoneSends)
-        }
-
+          // console.log("remotePeer text, textanyone sends: ", this.textAnyoneSends)
       }else{
-
         const inputValue = (document.querySelector('input') as HTMLInputElement).value;
-        if(this.hasKey(text, text.name)){
-          for(let i=0; i < text.length; i++){
-            this.loadChatTextBox.push({key: 'me', value :text[i].text, timeSentOn: text[i].time, bubbleName: "You" });
-            console.log( "loadChatbox array: ", this.loadChatTextBox)
-          }
-        }else{
           this.textAnyoneSends.push({key: 'me', value :inputValue, timeSentOn: this.chatInputTime, bubbleName: "You" });
-          console.log( "textanyone sends array: ", this.textAnyoneSends)
-        } 
-      }
+          // console.log( "Localpeer text: ", this.textAnyoneSends)
+        }
     // })
     })
   })
 
+  }
+
+  chatMessagesMain(){
+    this.mediaservice.sharedChatMessageObject.subscribe((chaChaCha) => {
+
+      console.log("chatmessage method of jmclient after subscription: ",chaChaCha);
+      this.chatMessageObject = chaChaCha;
+      for (const messageId in this.chatMessageObject) {
+        if (Object.prototype.hasOwnProperty.call(this.chatMessageObject, messageId)) {
+            const message = this.chatMessageObject[messageId];
+            const messageT = this.formatDateTimeCustom(message.time.toString())
+            if(message.senderName == 'Tanmay1'){
+              this.messageKey = 'peer'
+              this.bubbleName = 'Customer'
+            }else{
+              this.messageKey = 'me'
+              this.bubbleName = 'You'
+            }
+            this.customChatBox.push({value: message.message.text, timeSentOn: messageT, key: this.messageKey, bubbleName: this.bubbleName});
+            this.customChatBox.sort(function(x,y){
+              return x.timeSentOn - y.timeSentOn;
+            })
+            console.log("text: ",message.message.text); 
+            // console.log("time: ",messageT); 
+            console.log("time: ",this.messageKey); 
+            console.log("customChatBox: ",this.customChatBox);
+        }
+      }
+  })
+  // const oneChatMessage = chatMessageObject
+  // console.log("firstt: ",chatMessageObject);
   }
 
   hasKey(obj: any, key: any): boolean {
@@ -121,7 +127,7 @@ export class ChatPanelComponent {
       console.log('Cannot send empty message')
     }else{
       try{
-        await this.jmClient.sendChatMessage(inputValue, true, attachments)
+        this.mediaservice.jmClient.sendChatMessage(inputValue, true, attachments)
         .then(()=>{
           (document.querySelector('input') as HTMLInputElement).value = ''
           // console.log('Message Sent')
@@ -143,6 +149,21 @@ export class ChatPanelComponent {
     const formattedTime = `${hour}:${minutes < 10 ? '0' : ''}${minutes}`;
     const formattedDate = `${dayOfWeek}, ${formattedTime}`;
     return formattedDate;
+  }
+
+  formatDateTimeCustom(timestamp: string): string{
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+    console.log(formattedDateTime); // Output: 2024-07-04 12:00:00
+
+    return formattedDateTime;
   }
 
   formatDate(inputDate: string): string {

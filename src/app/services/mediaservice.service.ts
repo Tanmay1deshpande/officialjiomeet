@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {  Injectable } from '@angular/core';
 import { EventManager, JMClient, IJMRemotePeer, IJMLocalPeer, IFacingMode, IJMVideoSettings, IJMChatPayloadConfig, IJMSendChatMessageAttachment, IJMMessage } from '@jiomeet/core-sdk-web';
 import { IJM_EVENTS } from '../constants';
 import { BehaviorSubject, Observable, Subject, config } from 'rxjs';
@@ -43,7 +43,12 @@ export class MediaserviceService {
   private cameraStatus = new BehaviorSubject<any>('');
   public sharedCameraStatus = this.cameraStatus.asObservable();
 
-  constructor(private router: Router) {
+  private chatMessageObject = new BehaviorSubject<any>('');
+  public sharedChatMessageObject = this.chatMessageObject.asObservable();
+
+  constructor(
+    private router: Router,
+  ) {
     this.type = 'none';
     this.jmClient.setLogLevel(3);
   }
@@ -206,6 +211,9 @@ export class MediaserviceService {
 
           case (IJM_EVENTS.CHAT_MESSAGE):
             const { messages } = data;
+
+            this.updateChatMessageObject(this.jmClient.chatMessages.messages);
+            console.log("from mediaservice: ",this.jmClient.chatMessages.messages);
             
             if(messages.length != 0) {
               const zero = messages[0];
@@ -226,7 +234,6 @@ export class MediaserviceService {
             if(messages.length>1){
               console.log(messages.length, " This is the len of messsages array")
               for(let i=0;i<messages.length;i++){
-                // this.loadChatMessages$.next({
                 this.chatReceived$.next({
                   text: messages[i].message.text,
                   senderpeerid: messages[i].senderPeerId,
@@ -234,14 +241,6 @@ export class MediaserviceService {
                   name: messages[i].senderName
                 })
               }
-            }else{
-              console.log("Multiple messages not found for loadChat event")
-            }
-
-            let messagecomp: IJMMessageComp = {
-              text: 'YY',
-              isGroupChat: true,
-              attachments: []
             }
   
             break
@@ -532,7 +531,7 @@ export class MediaserviceService {
 
           await this.jmClient.publish(localUserConfig).then(() => {
 
-            console.log(this.getLocalUser());
+            // console.log(this.getLocalUser());
               this.participantsUpdated$.next({
                 user: this.getLocalUser(), // Assuming this returns the local user information
                 state: 'joined',
@@ -641,10 +640,6 @@ export class MediaserviceService {
 
   }
 
-  messageSend(){
-    //message: IJMMessageInput
-  }
-
   loadChatBox(){
     try{
         let chatPayload : IJMChatPayloadConfig ={
@@ -665,42 +660,6 @@ export class MediaserviceService {
       console.log('Error while loading Chat')
     }
     
-  }
-
-  getChatevent(){
-    let attachments: IJMSendChatMessageAttachment[]=[{
-      fileID: '',
-      fileSize: '',
-      fileName: '',
-      documentUrl: ''
-    }]
-
-    let messagecomp: IJMMessageComp = {
-      text: '',
-      isGroupChat: true,
-      attachments: attachments
-    }
-
-    let messageMain : IJMMessage={
-      id: '',
-      senderName: '',
-      time: new Date,
-      read: false,
-      isGroupChat: true,
-      type: 'TEXT',
-      message: messagecomp
-    }
-
-    let chatmessageinterface : IJMChatMessages={
-      messages: {
-        '0':  messageMain 
-      },
-      privateMessages: {
-        '1':  messageMain 
-      }
-    }
-
-    console.log('The messagecomp text is: ' + messagecomp.text + messageMain.time)
   }
 
   getChatReceieved(){
@@ -724,6 +683,10 @@ export class MediaserviceService {
 
   updateCameraStatus(status: any){
     this.cameraStatus.next(status);
+  }
+
+  updateChatMessageObject(status: any){
+    this.chatMessageObject.next(status);
   }
 
 }

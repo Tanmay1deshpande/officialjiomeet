@@ -66,7 +66,7 @@ export class ParticipantsViewComponent implements OnChanges, OnInit,AfterViewIni
 
   setInitialColor(){
     let first_letter =this.remotePeer?.name?.toLowerCase().substring(0, 1).toString();
-    console.log(first_letter);
+    // console.log(first_letter);
     this.initialColor=this.colors[first_letter as keyof typeof this.colors];
   }
 

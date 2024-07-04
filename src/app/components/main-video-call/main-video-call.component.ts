@@ -114,7 +114,7 @@ export class MainVideoCallComponent implements AfterViewInit {
   ngAfterViewInit() {
     // Access child component's DOM element after view initialization
     if (this.gallerycomponent) {
-      console.log("parentdiviv: ",this.gallerycomponent.parentDiv.nativeElement);
+      // console.log("parentdiviv: ",this.gallerycomponent.parentDiv.nativeElement);
     }
   }
 
@@ -185,16 +185,20 @@ export class MainVideoCallComponent implements AfterViewInit {
   downloadScreenshot(imageData: string) {
     const link = document.createElement('a');
     link.href = imageData;
-    link.download = 'screenshot.jpg'; 
+    link.download = 'screenshot.jpeg'; 
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   }
 
-  toggleChat(){
-    this.mediaservice.loadChatBox();
-    this.isChatActive = !this.isChatActive
-  }
+  // toggleChat(){
+  //   if(!this.isChatActive){
+  //     this.mediaservice.loadChatBox();
+  //     console.log("in if block: ",this.isChatActive);
+  //   }
+  //   this.isChatActive = !this.isChatActive
+  //   console.log("outside if block: ",this.isChatActive);
+  // }
 
 
   // ngOnDestroy() {
@@ -204,11 +208,11 @@ export class MainVideoCallComponent implements AfterViewInit {
 
   captureScreenshot() {
     const parentElement = this.gallerycomponent.parentDiv.nativeElement;
-    console.log("parent",parentElement);
+    // console.log("parent",parentElement);
     const overlayElement = this.overlayDiv.nativeElement;
-    console.log("pan",overlayElement);
+    // console.log("pan",overlayElement);
     const faceOverlayElement = this.faceOverlayDiv.nativeElement;
-    console.log("face",faceOverlayElement);
+    // console.log("face",faceOverlayElement);
 
     const parentRect = parentElement.getBoundingClientRect();
     const overlayRect = overlayElement.getBoundingClientRect();
@@ -232,7 +236,7 @@ export class MainVideoCallComponent implements AfterViewInit {
         y: overlayY,
         scale: window.devicePixelRatio * 2
       }).then(canvas => {
-        const imageData = canvas.toDataURL('image/jpg');
+        const imageData = canvas.toDataURL('image/jpeg');
         // const img = new Image();
         // img.src = imageData;
         // document.body.appendChild(img); 
@@ -246,7 +250,7 @@ export class MainVideoCallComponent implements AfterViewInit {
         y: faceOverlayY,
         scale: window.devicePixelRatio * 2
       }).then(canvas => {
-        const imageData = canvas.toDataURL('image/jpg');
+        const imageData = canvas.toDataURL('image/jpeg',1.0);
         // const img = new Image();
         // img.src = imageData;
         // document.body.appendChild(img); 

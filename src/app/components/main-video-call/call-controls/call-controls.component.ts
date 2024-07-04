@@ -166,7 +166,7 @@ export class CallControlsComponent {
   // }
 
   toggleChat(){
-    this.mediaservice.loadChatBox();
+    // this.mediaservice.loadChatBox();
     this.isChatActive = !this.isChatActive
     this.mediaservice.getChatOpened().next(this.isChatActive);
   }

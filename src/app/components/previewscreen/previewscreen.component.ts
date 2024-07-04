@@ -6,7 +6,7 @@ import {merge} from 'rxjs';
 import { MediaserviceService } from 'src/app/services/mediaservice.service';
 import { JMClient, JMDeviceManager } from '@jiomeet/core-sdk-web';
 // import { LoaderComponent } from '../loader/loader/loader.component';
-import { addressValidator, firstCharNotSpaceValidator, noSpacesValidator, maxLengthValidator, maxLengthValidatorForPin } from './validations';
+import { addressValidator, firstCharNotSpaceValidator, noSpacesValidator, maxLengthValidator, maxLengthValidatorForPin, handleKeyPress } from './validations';
 import { LoaderService } from '../loader/loader.service';
 
 
@@ -59,8 +59,8 @@ export class PreviewscreenComponent {
 }
 async registerDevices() {
   await JMDeviceManager.getMediaPermissions(true, true);
-
   JMDeviceManager.getDevices();
+  console.log("Devices registered: ", JMDeviceManager.getDevices());
 }
 
 // testFunction() {

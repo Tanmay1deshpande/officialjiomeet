@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MediaserviceService } from 'src/app/services/mediaservice.service';
 
@@ -9,7 +9,7 @@ import { MediaserviceService } from 'src/app/services/mediaservice.service';
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.css']
 })
-export class GalleryComponent  implements OnInit { 
+export class GalleryComponent  implements OnInit, AfterViewInit { 
 
   name = '';
   num = 0;
@@ -19,7 +19,14 @@ export class GalleryComponent  implements OnInit {
   screenSharingUser: any;
   dominantSpeaker: any;
   subs : any[] = [];
-  constructor(private mediaservice: MediaserviceService, private router: Router) {}
+
+  @ViewChild('parentDiv') parentDiv!: ElementRef;
+
+  constructor(
+    private mediaservice: MediaserviceService,
+    private router: Router,
+    private elementref : ElementRef,
+  ) {}
 
   ngOnInit(): void {
     // this.participantsInCall = this.mediaservice.jmClient.remotePeers;
@@ -87,24 +94,29 @@ export class GalleryComponent  implements OnInit {
     // this.participantsInCall.push(this.mediaservice.jmClient.localPeer);
     this.subs.push(
       this.mediaservice.getLocalParticipant().subscribe(async (data) => {
-        // console.log("Data from gallery", data)
+        console.log("Data from gallery", data)
         if (data.action == 'joined' && this.mediaservice.jmClient.remotePeers.length<2) {
           this.participantsInCall.push(data.localpeer);
         }
         this.localpeer = data.localpeer;
-        // console.log(this.participantsInCall);
+        console.log(this.participantsInCall);
         if (data.action == 'videoOn') {
-          // console.log("Video action received in gallery");
+          console.log("Video action received in gallery");
           const videoTrack = this.localpeer.videoTrack;
-          // console.log("Video track received", videoTrack);
+          console.log("Video track received", videoTrack);
           videoTrack.play(data.localpeer.peerId, { mirror: false });
-          // console.log("Video track played in gallery");
+          this.mediaservice.updateCameraStatus(data?.localpeer?.peerId);
+          console.log("Video track played in gallery");
         }
       }),
     );
     
   }
-  
+
+  ngAfterViewInit() {
+    console.log(this.parentDiv.nativeElement);
+  }
+
   async subscribeToVideo(peer: any) {
     const videoTrack = await this.mediaservice.jmClient.subscribeMedia(
       peer,

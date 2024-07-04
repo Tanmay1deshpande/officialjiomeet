@@ -1,0 +1,18 @@
+.whitespace{
+    display: flex;
+    gap: 30px;
+    background-color: rgb(254, 254, 145);
+    margin: 20px;
+}
+
+.whitespaceright{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main{
+    width: 420px;
+    height: 450px;
+}

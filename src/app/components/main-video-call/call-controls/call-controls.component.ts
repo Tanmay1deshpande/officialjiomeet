@@ -10,7 +10,7 @@ import * as html2canvas from 'html2canvas';
 })
 export class CallControlsComponent {
 
-  
+  screenshotDiv: any;
   isLocalVideoOn = true;
   isLocalMicOn = false;
   isBackgroundBlur = false;
@@ -26,6 +26,7 @@ export class CallControlsComponent {
   signalQuality='NONE'
   @ViewChild('network')
   networkIndicator!: ElementRef;
+  context!: CanvasRenderingContext2D | null;
   //jmClient = new JMClient();
 
   constructor(
@@ -170,19 +171,21 @@ export class CallControlsComponent {
     this.mediaservice.getChatOpened().next(this.isChatActive);
   }
 
-  captureScreenshot() {
-    const element = document.getElementById('main-video-container');
-    console.log(element);
-    if(element){
-    html2canvas.default(element).then((canvas: { toDataURL: (arg0: string) => any; }) => {
-      // Convert canvas to base64 image
-      const imageData = canvas.toDataURL('image/png');
-      this.downloadScreenshot(imageData);
-    });
-  }else {
-    console.log('element not found')
-  }
-  }
+  // captureScreenshot() {
+  //   const element = document.getElementById('screenshotDiv');
+  //   console.log(element);
+  //   if(element){
+  //   html2canvas.default(element).then((canvas: { toDataURL: (arg0: string) => any; }) => {
+  //     // Convert canvas to base64 image
+  //     const imageData = canvas.toDataURL('image/jpg');  
+  //     console.log("typeof img: ",typeof(imageData));
+  //     console.log("size of img: ",imageData.size);
+  //     this.downloadScreenshot(imageData);
+  //   });
+  // }else {
+  //   console.log('element not found')
+  // }
+  // }
 
   downloadScreenshot(imageData: string) {
     const link = document.createElement('a');
@@ -192,4 +195,28 @@ export class CallControlsComponent {
     link.click();
     document.body.removeChild(link);
   }
+
+  captureScreen() {
+    const element = document.getElementById('screenshotDiv');
+    if(element){
+      html2canvas.default(element).then((canvas: { toBlob: (arg0: (blob: any) => void) => void; }) => {
+        canvas.toBlob((blob: Blob) => {
+          this.saveBlob(blob, 'screenshot.jpg');
+        });
+      });
+    }
+  }
+  
+  saveBlob(blob: Blob, fileName: string) {
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+  
+  
 }

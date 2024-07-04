@@ -1,19 +1,20 @@
-import { Component, ViewChild, ElementRef, HostListener} from '@angular/core';
+import { Component, ViewChild, ElementRef, HostListener, AfterViewInit} from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { MediaserviceService } from '../../services/mediaservice.service';
-import { IJMChatPayloadConfig, JMClient, JMDeviceManager } from '@jiomeet/core-sdk-web';
+import { IJMChatPayloadConfig, IJMVideoSettings, JMClient, JMDeviceManager } from '@jiomeet/core-sdk-web';
 import * as html2canvas from 'html2canvas';
 import { Subject, fromEvent, takeUntil } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogComponent } from '../mat-dialog/mat-dialog.component';
+import { GalleryComponent } from './gallery/gallery.component';
 
 @Component({
   selector: 'app-main-video-call',
   templateUrl: './main-video-call.component.html',
   styleUrls: ['./main-video-call.component.css']
 })
-export class MainVideoCallComponent {
+export class MainVideoCallComponent implements AfterViewInit {
 
   private unsubscriber: Subject<void> = new Subject<void>();
   showloader!: boolean;
@@ -31,11 +32,17 @@ export class MainVideoCallComponent {
   participantsInCall:any[]=[];
   dominantSpeaker: any;
   jmClient = new JMClient();
+
 	@ViewChild('videoElement') videoElement!:ElementRef;
+  @ViewChild(GalleryComponent, { static: false }) gallerycomponent!: GalleryComponent;
+  @ViewChild('panOverlayIn') overlayDiv!: ElementRef;
+  @ViewChild('faceOverlayIn') faceOverlayDiv!: ElementRef;
+
   optionsController={
     more:false
   }
   private confirmedNavigation = false;
+  vSettings!: IJMVideoSettings;
   constructor(
     public mediaservice: MediaserviceService,
     private router : Router, 
@@ -104,6 +111,13 @@ export class MainVideoCallComponent {
     // );
 	}
 
+  ngAfterViewInit() {
+    // Access child component's DOM element after view initialization
+    if (this.gallerycomponent) {
+      console.log("parentdiviv: ",this.gallerycomponent.parentDiv.nativeElement);
+    }
+  }
+
   openDialog(){
     this.matDialog.open(MatDialogComponent,{
       width: '350px'
@@ -137,19 +151,19 @@ export class MainVideoCallComponent {
     console.log('facetoggled')
   }
 
-  captureScreenshot() {
-    const element = document.getElementById('main-video-container');
-    console.log(element);
-    if(element){
-    html2canvas.default(element).then((canvas: { toDataURL: (arg0: string) => any; }) => {
-      // Convert canvas to base64 image
-      const imageData = canvas.toDataURL('image/png');
-      this.downloadScreenshot(imageData);
-    });
-  }else {
-    console.log('element not found')
-  }
-  }
+  // captureScreenshot() {
+  //   const element = document.getElementById('main-video-container');
+  //   console.log(element);
+  //   if(element){
+  //   html2canvas.default(element, { scale:0.8 }).then((canvas: { toDataURL: (arg0: string) => any; }) => {
+  //     // Convert canvas to base64 image
+  //     const imageData = canvas.toDataURL('image/png');
+  //     this.downloadScreenshot(imageData);
+  //   });
+  // }else {
+  //   console.log('element not found')
+  // }
+  // }
 
   lockMeeting(){
     this.isMeetingLocked = !this.isMeetingLocked;
@@ -171,7 +185,7 @@ export class MainVideoCallComponent {
   downloadScreenshot(imageData: string) {
     const link = document.createElement('a');
     link.href = imageData;
-    link.download = 'screenshot.png'; 
+    link.download = 'screenshot.jpg'; 
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -187,6 +201,64 @@ export class MainVideoCallComponent {
   //   // Removing the event listener when the component is destroyed
   //   window.removeEventListener('beforeunload', this.onPageRefresh);
   // }
+
+  captureScreenshot() {
+    const parentElement = this.gallerycomponent.parentDiv.nativeElement;
+    console.log("parent",parentElement);
+    const overlayElement = this.overlayDiv.nativeElement;
+    console.log("pan",overlayElement);
+    const faceOverlayElement = this.faceOverlayDiv.nativeElement;
+    console.log("face",faceOverlayElement);
+
+    const parentRect = parentElement.getBoundingClientRect();
+    const overlayRect = overlayElement.getBoundingClientRect();
+    const faceOverlayRect = faceOverlayElement.getBoundingClientRect();
+
+    const overlayX = overlayRect.left - parentRect.left;
+    const overlayY = overlayRect.top - parentRect.top;
+    const overlayWidth = overlayRect.width;
+    const overlayHeight = overlayRect.height;
+
+    const faceOverlayX = faceOverlayRect.left - parentRect.left;
+    const faceOverlayY = faceOverlayRect.top - parentRect.top;
+    const faceOverlayWidth = faceOverlayRect.width;
+    const faceOverlayHeight = faceOverlayRect.height;
+
+    if(this.enablePanOverlay){
+      html2canvas.default(parentElement, { 
+        width: overlayWidth,
+        height: overlayHeight,
+        x: overlayX,
+        y: overlayY,
+        scale: window.devicePixelRatio * 2
+      }).then(canvas => {
+        const imageData = canvas.toDataURL('image/jpg');
+        // const img = new Image();
+        // img.src = imageData;
+        // document.body.appendChild(img); 
+        this.downloadScreenshot(imageData); // For demonstration, append image to body
+      });
+    }else if(this.enableFaceOverlay){
+      html2canvas.default(parentElement, { 
+        width: faceOverlayWidth,
+        height: faceOverlayHeight,
+        x: faceOverlayX,
+        y: faceOverlayY,
+        scale: window.devicePixelRatio * 2
+      }).then(canvas => {
+        const imageData = canvas.toDataURL('image/jpg');
+        // const img = new Image();
+        // img.src = imageData;
+        // document.body.appendChild(img); 
+        this.downloadScreenshot(imageData); // For demonstration, append image to body
+      });
+    }
+    
+  }
+
+  callGrandchild(){
+    return this.gallerycomponent.parentDiv.nativeElement;
+  }
   
   
 }

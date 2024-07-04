@@ -16,10 +16,12 @@ export class ChatPanelComponent {
 
   jmClient = new JMClient; 
   @Input() remotePeer!: any;
+  reversedObject!: { [key: string]: any };
   participantsInCall: any[] = [];
   textiSend :String[] =[]
   textCustomerSends :String[] =[]
   textAnyoneSends :any[] =[]
+  loadChatTextBox :any[] =[]
   rpeerid :any[] =[]
   chatInputDate: string=''
   chatInputTime: string=''
@@ -39,38 +41,71 @@ export class ChatPanelComponent {
   //     this.participantsInCall.push(data.localpeer);
   //   }
   // });
-  let chatPayload : IJMChatPayloadConfig ={
-    isGroupChat: true,
-    members: [''],
-    context:'' ,
-    admins: ['']
-  }
-  this.jmClient.loadChat(chatPayload)
+
+  // let chatPayload : IJMChatPayloadConfig ={
+  //   isGroupChat: true,
+  //   members: [''],
+  //   context:'' ,
+  //   admins: ['']
+  // }
+  // this.jmClient.loadChat(chatPayload)
 
   this.mediaservice.remotePeerObservable.subscribe((peerid)=>{
-    console.log("Peerid in chat component", peerid.peerId);
     this.participantsInCall.push(peerid.name)
   
 
   this.mediaservice.getChatReceieved().subscribe( (text)=>{
-    // console.log('text from chat panel: '+ text.text)
-    // console.log('sent from peer id: '+ text.senderpeerid)
     this.chatInputTime = this.formatDateTime(text.time)
     this.chatInputDate = this.formatDate(text.time)
-    console.log( "Text sent on: ", this.chatInputTime)
+    console.log(typeof(text));
+
+  // this.mediaservice.getLoadChatMessages().subscribe( (loadChatText)=>{
+  //   this.chatInputTime = this.formatDateTime(loadChatText.time)
+  //   this.chatInputDate = this.formatDate(loadChatText.time)
+  
 
       if(text.senderpeerid == peerid.peerId){
-        this.textAnyoneSends.push({key: 'peer', value :text.text, timeSentOn: this.chatInputTime, bubbleName: "Customer" });
-      }
+        if(this.hasKey(text,text.name)){
+          for(let i=0; i<text.length;i++){
+            this.loadChatTextBox.push({key: 'peer', value :text[i].text, timeSentOn: text[i].time, bubbleName: "Customer" });
+            console.log( "loadChatbox array: ", this.loadChatTextBox)
+          }
+        }else{
+          this.textAnyoneSends.push({key: 'peer', value :text.text, timeSentOn: this.chatInputTime, bubbleName: "Customer" });
+          console.log("else box for equal id, textanyone sends: ", this.textAnyoneSends)
+        }
 
-      if(text.senderpeerid != peerid.peerId){
+      }else{
+
         const inputValue = (document.querySelector('input') as HTMLInputElement).value;
-        this.textAnyoneSends.push({key: 'me', value :inputValue, timeSentOn: this.chatInputTime, bubbleName: "You" });
+        if(this.hasKey(text, text.name)){
+          for(let i=0; i < text.length; i++){
+            this.loadChatTextBox.push({key: 'me', value :text[i].text, timeSentOn: text[i].time, bubbleName: "You" });
+            console.log( "loadChatbox array: ", this.loadChatTextBox)
+          }
+        }else{
+          this.textAnyoneSends.push({key: 'me', value :inputValue, timeSentOn: this.chatInputTime, bubbleName: "You" });
+          console.log( "textanyone sends array: ", this.textAnyoneSends)
+        } 
       }
-      
+    // })
     })
   })
 
+  }
+
+  hasKey(obj: any, key: any): boolean {
+    return obj.hasOwnProperty(key);
+  }
+
+  reverseObjectOrder(obj: any): any {
+    const reversedObject: { [key: string]: any } = {};
+    const keys = Object.keys(obj);
+    for (let i = keys.length - 1; i >= 0; i--) {
+      const key = keys[i];
+      reversedObject[key] = obj[key];
+    }
+    return reversedObject;
   }
 
   async sendChatMsg(){
@@ -89,7 +124,7 @@ export class ChatPanelComponent {
         await this.jmClient.sendChatMessage(inputValue, true, attachments)
         .then(()=>{
           (document.querySelector('input') as HTMLInputElement).value = ''
-          console.log('Message Sent')
+          // console.log('Message Sent')
           // this.textAnyoneSends.push({key: 'me', value :inputValue})
         })
       }

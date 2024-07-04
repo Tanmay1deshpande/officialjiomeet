@@ -43,3 +43,38 @@ export function firstCharNotSpaceValidator(): ValidatorFn {
       return null; // Valid
     };
   }
+
+  // export function symbolsOnly(): ValidatorFn {
+  //   return (control: AbstractControl): {[key: string]: any} | null => {
+  //     if ( !/^[^`~!@#$%\^&*()_+={}|[\]\\:';"<>?,./]*$/.test(control.value)) {
+  //       return { 'symbols': true };
+  //     }
+  //     return null;
+  //   }
+  // }
+  export function symbolsOnly(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      if (control.value && !/^[^`~!@#$%\^&*()_+={}|[\]\\:';"<>?,./]*$/.test(control.value)) {
+        control.setErrors({ 'symbols': true });
+      } else {
+        control.setErrors(null);
+      }
+      return null;
+    }
+  }
+  
+  export function handleKeyPress(event: KeyboardEvent) {
+    const inputElement = event.target as HTMLInputElement;
+    const currentValue = inputElement.value;
+    const charCode = event.charCode;
+  
+    if (charCode === 32 && currentValue.length === 0) {
+      event.preventDefault();
+    }
+  }
+  // export function symbolsOnly1(control: AbstractControl) {
+  //   if ( !/^[^`~!@#$%\^&*()_+={}|[\]\\:';"<>?,./]*$/.test(control.value)) {
+  //     return { symbols: true };
+  //   }
+  //   return null;
+  //   }

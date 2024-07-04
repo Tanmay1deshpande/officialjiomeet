@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input'
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatTableModule } from '@angular/material/table';
 
 import { MainVideoCallComponent } from './components/main-video-call/main-video-call.component';
 import { CallControlsComponent } from './components/main-video-call/call-controls/call-controls.component';
@@ -22,6 +23,7 @@ import { GalleryComponent } from './components/main-video-call/gallery/gallery.c
 import { CallAudioSettingsComponent } from './components/call-settings/call-audio-settings/call-audio-settings.component';
 import { MatDialogComponent } from './components/mat-dialog/mat-dialog.component';
 import { ChatPanelComponent } from './components/main-video-call/chat-panel/chat-panel.component';
+import { TestmainComponent } from './components/testmain/testmain.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { ChatPanelComponent } from './components/main-video-call/chat-panel/chat
     GalleryComponent,
     CallAudioSettingsComponent,
     MatDialogComponent,
-    ChatPanelComponent
+    ChatPanelComponent,
+    TestmainComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,7 @@ import { ChatPanelComponent } from './components/main-video-call/chat-panel/chat
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatTableModule,
     ReactiveFormsModule,
     FormsModule
     // LoaderModule

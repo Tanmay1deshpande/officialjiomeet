@@ -28,13 +28,17 @@
 
             <mat-form-field>
                 <mat-label >Meeting ID</mat-label>
-                <input matInput
+                <input 
+                matInput
                 placeholder="Ex. abcd2"
                 formControlName="meetingId"
                 autocomplete="on"
                 type="text"
                 name="meetingId"
                 (keydown.enter)="$event.preventDefault()"
+                onkeypress="if((event.target instanceof HTMLInputElement && event.target.selectionStart === 0 && event.key === ' ') || (this.value.replace(/\s/g, ' ').length==50) || (/[^a-zA-Z0-9-/\s]/i.test(event.key))) return false"
+                onpaste="return false"
+                ondrop="return false"
                 required>
                 <mat-error *ngIf="meetingcreds.get('meetingId')?.hasError('firstCharSpace')">
                     First character cannot be whitespace.
@@ -51,6 +55,7 @@
                 <mat-label>Meeting Pin</mat-label>
                 <input 
                 matInput
+                onkeypress="if(event.target instanceof HTMLInputElement && event.target.selectionStart === 0 && event.key === ' ') return false"
                 type="text"
                 name="meetingPin"
                 autocomplete="on"

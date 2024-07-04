@@ -3,10 +3,8 @@
     flex-direction: column;
     border-radius: 10px;
     border-left: 1px solid rgb(134,134,134);
-    height: 84vh;
-    position: relative;
-    margin-left: 1px;
-    margin-top: 5px;
+    height: 62.5vh;
+    /* position: relative; */
 }
 
 .chat-top{
@@ -46,7 +44,8 @@ mat-icon{
     overflow-y: scroll;
     overflow-x: hidden;
     -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;   /* Firefox */
+    scrollbar-width: none;   /* Firefox */
+    background-color: #212121;
     /* border: 1px solid rgb(202, 202, 202); */
 }
 
@@ -55,13 +54,13 @@ mat-icon{
   }
 
 .chat-keyboard{
-    position: absolute;
+    /* position: absolute; */
     bottom: 0;
     width: 100%;
 }
 
 .keyboard-panel {
-    position: relative;
+    /* position: relative; */
     bottom: 0;
     left: 0;
     background-color: black;
@@ -116,64 +115,76 @@ input:focus-visible{
     padding: 13px 14px;
     vertical-align: top;
     border-radius: 5px;
-    &:before {
-        position: absolute;
-        top: 19px;
-        display: block;
-        width: 8px;
-        height: 6px;
-        content: '\00a0';
-        transform: rotate(29deg) skew(-35deg);
-    }
-    &.you {
-        float: left;
-        color: black;
-        background-color: aliceblue;
-        align-self: flex-start;
-        animation-name: slideFromLeft;
-        &:before {
-            left: -3px;
-            background-color: aliceblue;
-        }
-    }
-    &.me {
-        float: right;
-        color: #1a1a1a;
-        background-color: rgb(255, 194, 80);
-        align-self: flex-end;
-        animation-name: slideFromRight;
-        &:before {
-            right: 0px;
-            background-color: rgb(255, 194, 80);
-        }
-    }
 }
+
+.bubble:before {
+    position: absolute;
+    top: 19px;
+    display: block;
+    width: 8px;
+    height: 6px;
+    content: '\00a0';
+    transform: rotate(29deg) skew(-35deg);
+}
+
+.bubble.you {
+    float: left;
+    color: black;
+    background-color: aliceblue;
+    align-self: flex-start;
+    animation-name: slideFromLeft;
+}
+
+.bubble.you:before {
+    left: -3px;
+    background-color: aliceblue;
+}
+
+.bubble.me {
+    float: right;
+    color: #1a1a1a;
+    background-color: rgb(255, 194, 80);
+    align-self: flex-end;
+    animation-name: slideFromRight;
+}
+
+.bubble.me:before {
+    right: 0px;
+    background-color: rgb(255, 194, 80);
+}
+
 .conversation-start {
     position: relative;
     width: 100%;
     margin-bottom: 27px;
     text-align: center;
-    span {
-        font-size: 14px;
-        display: inline-block;
-        color:#e3e3e3;
-        &:before,&:after {
-            position: absolute;
-            top: 10px;
-            display: inline-block;
-            width: 30%;
-            height: 1px;
-            content: '';
-            /* background-color: #e6e6e6; */
-        }
-        &:before {
-            left: 0;
-        }
-        &:after {
-            right: 0;
-        }
-    }
 }
+
+.conversation-start span {
+    font-size: 14px;
+    display: inline-block;
+    color:#e3e3e3;
+}
+
+.conversation-start span:before,
+.conversation-start span:after {
+    position: absolute;
+    top: 10px;
+    display: inline-block;
+    width: 30%;
+    height: 1px;
+    content: '';
+    /* background-color: #e6e6e6; */
+}
+
+.conversation-start span:before {
+    left: 0;
+}
+
+.conversation-start span:after {
+    right: 0;
+}
+
 
 .bubble-details{
     display: flex;

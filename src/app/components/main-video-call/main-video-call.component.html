@@ -1,10 +1,10 @@
 <div class="main-container">
-    <div id="main-video-container">
+    <div id="main-video-container" >
 
         <div class="boxes">
             <div [ngClass]="isChatActive ? ['videobox-compressed','transition-for-chat'] : ['videobox','transition-for-chat']">
                 <div [ngClass]="isChatActive ? ['gallery-view-compressed','transition-for-chat'] : ['gallery-view','transition-for-chat']">
-                    <app-gallery></app-gallery>
+                    <app-gallery id="testId" ></app-gallery>
                     <div id="localpeer" [ngClass]="isChatActive ? ['main-video-local-compressed','transition-for-chat'] : ['main-video-local','transition-for-chat']" >
                     <!-- [class.dominant-speaker]="dominantSpeaker ? dominantSpeaker?.peerId==user?.peerId:false"  -->
             
@@ -36,7 +36,7 @@
                     <app-call-controls></app-call-controls>
 
                     <div class="overlay-btns">
-                            <!-- <button 
+                            <button 
                                     mat-icon-button 
                                     matTooltip="face-overlay"
                                     (click)="toggleFaceOverlay()" 
@@ -50,7 +50,13 @@
                                     style="background-color: aliceblue;">
                                     <mat-icon>credit_card</mat-icon>
                             </button>
-                            <button 
+                            <button
+                                    mat-icon-button
+                                    (click)="captureScreenshot()"
+                                    style="color: aqua;">
+                                    <mat-icon>camera</mat-icon>
+                            </button>
+                            <!-- <button 
                                     mat-icon-button 
                                     matTooltip="flip camera"
                                     (click)="toggleFlipCam()" 
@@ -95,11 +101,11 @@
            
        <!--  PAN & Face overlay divs to be rolled out conditionally -->
         <div class="pan-overlay-out" *ngIf="enablePanOverlay">
-            <div class="pan-overlay-in" id="pan-overlay"></div>
+            <div class="pan-overlay-in" id="pan-overlay" #panOverlayIn></div>
           </div>
       
         <div *ngIf="enableFaceOverlay" class="face-overlay-out">
-            <div class="face-overlay-in" id="face-overlay"></div>
+            <div class="face-overlay-in" id="face-overlay" #faceOverlayIn></div>
         </div>
         
     </div>

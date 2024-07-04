@@ -33,11 +33,15 @@ export class MediaserviceService {
   private participantsUpdated$: Subject<any> = new Subject();
   private localParticipant$: Subject<any> = new Subject();
   private chatReceived$: Subject<any> = new Subject();
+  private loadChatMessages$: Subject<any> = new Subject();
   private myName$: Subject<any> = new Subject();
   //private remotePeerName$: Subject<any> = new Subject();
   private remotePeerName$ = new BehaviorSubject<any>('');
   private chatOpened$: Subject<boolean> = new Subject();
   public remotePeerObservable = this.remotePeerName$.asObservable();
+
+  private cameraStatus = new BehaviorSubject<any>('');
+  public sharedCameraStatus = this.cameraStatus.asObservable();
 
   constructor(private router: Router) {
     this.type = 'none';
@@ -65,18 +69,11 @@ export class MediaserviceService {
               user: remotePeer,
               state: 'joined',
             });
+            // console.log("VideoTrack: ",remotePeer?.videoTrack);
             this.remotePeerName$.next(remotePeer)
             console.log(remotePeer.name + " joined!");
             // this.remotePeerName$.next(remotePeer.name);
           });
-          // console.log(eventInfo.data.remotePeers[0].name + " joined!");
-          // localPeers.forEach((localPeer: IJMLocalPeer)=>{
-          //   this.participantsUpdated$.next({
-          //     user: localPeer,
-          //     state: 'joined'
-          //   })
-          //   console.log("yayy");
-          // })
           break;
 
         case IJM_EVENTS.PEER_UPDATED:
@@ -224,21 +221,28 @@ export class MediaserviceService {
               console.log("No messages found");
             }
 
+            //for load chat event. 
+
+            if(messages.length>1){
+              console.log(messages.length, " This is the len of messsages array")
+              for(let i=0;i<messages.length;i++){
+                // this.loadChatMessages$.next({
+                this.chatReceived$.next({
+                  text: messages[i].message.text,
+                  senderpeerid: messages[i].senderPeerId,
+                  time: messages[i].time,
+                  name: messages[i].senderName
+                })
+              }
+            }else{
+              console.log("Multiple messages not found for loadChat event")
+            }
+
             let messagecomp: IJMMessageComp = {
               text: 'YY',
               isGroupChat: true,
               attachments: []
             }
-  
-            let messageMain : IJMMessage={
-              id: '',
-              senderName: '',
-              time: new Date,
-              read: false,
-              isGroupChat: true,
-              type: 'TEXT',
-              message: messagecomp
-            } 
   
             break
         default:
@@ -471,21 +475,6 @@ export class MediaserviceService {
       }
       await this.jmClient
         .setVideoDevice(videoSettings)
-        .then(()=>{
-          console.log('Camera Flipped');
-          console.log("Facing Environment", navigator.mediaDevices.getUserMedia({
-            video:  {
-              facingMode:{
-                exact:'environment'
-              } 
-            }
-          }))
-          this.cameraFlipped = !this.cameraFlipped;
-        })
-        .catch((error: any) => {
-          console.log('Error while toggling flip camera:', error);
-          this.cameraFlipped = !this.cameraFlipped;
-        });
         
     }if(!this.cameraFlipped){
       let videoSettings : IJMVideoSettings = {
@@ -493,21 +482,6 @@ export class MediaserviceService {
       }
       await this.jmClient
         .setVideoDevice(videoSettings)
-        .then(()=>{
-          console.log('Camera Flipped');
-          console.log("Facing User", navigator.mediaDevices.getUserMedia({
-            video: {
-              facingMode: {
-                exact:'user'
-              }
-            }
-          }))
-          this.cameraFlipped = !this.cameraFlipped;
-        })
-        .catch((error: any) => {
-          console.log('Error while toggling flip camera:', error);
-          this.cameraFlipped = !this.cameraFlipped;
-        });
     }
   }
 
@@ -558,12 +532,12 @@ export class MediaserviceService {
 
           await this.jmClient.publish(localUserConfig).then(() => {
 
-            // console.log(this.getLocalUser());
-              // this.participantsUpdated$.next({
-              //   user: this.getLocalUser(), // Assuming this returns the local user information
-              //   state: 'joined',
-              // });
-              // console.log("user joined", this.getLocalUser);
+            console.log(this.getLocalUser());
+              this.participantsUpdated$.next({
+                user: this.getLocalUser(), // Assuming this returns the local user information
+                state: 'joined',
+              });
+              console.log("user joined", this.getLocalUser);
 
             if (!this.preview.previewInstance.localUserSettings?.videoMuted) {
 
@@ -742,6 +716,14 @@ export class MediaserviceService {
 
   getMyName(){
     return this.myName$
+  }
+
+  getLoadChatMessages(){
+    return this.loadChatMessages$
+  }
+
+  updateCameraStatus(status: any){
+    this.cameraStatus.next(status);
   }
 
 }

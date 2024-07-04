@@ -78,6 +78,8 @@ export class ChatPanelComponent {
         if (Object.prototype.hasOwnProperty.call(this.chatMessageObject, messageId)) {
             const message = this.chatMessageObject[messageId];
             const messageT = this.formatDateTimeCustom(message.time.toString())
+            const messagePropertyId = message.id
+
             if(message.senderName == 'Tanmay1'){
               this.messageKey = 'peer'
               this.bubbleName = 'Customer'
@@ -85,13 +87,19 @@ export class ChatPanelComponent {
               this.messageKey = 'me'
               this.bubbleName = 'You'
             }
-            this.customChatBox.push({value: message.message.text, timeSentOn: messageT, key: this.messageKey, bubbleName: this.bubbleName});
+
+            const idAlreadyExists = this.customChatBox.find(item => item.id === messagePropertyId);
+            
+            if(!idAlreadyExists){
+              this.customChatBox.push({id: messagePropertyId,value: message.message.text, timeSentOn: messageT, key: this.messageKey, bubbleName: this.bubbleName});
+            }
+            
             this.customChatBox.sort(function(x,y){
               return x.timeSentOn - y.timeSentOn;
             })
             console.log("text: ",message.message.text); 
             // console.log("time: ",messageT); 
-            console.log("time: ",this.messageKey); 
+            console.log("key: ",this.messageKey); 
             console.log("customChatBox: ",this.customChatBox);
         }
       }
